@@ -27,7 +27,7 @@
 
 ---
 
-## 👤 Li Xinru (3036807959)
+## 👤 Yin Fengling (3036807375)
 
 ### 负责模块
 - `data/` - 数据处理模块
@@ -127,8 +127,8 @@
 
 ### 🔗 依赖关系
 - **无前置依赖** - 可以立即开始
-- **被依赖** - Qin Mengmeng 和 Yin Fengling 需要你的数据处理结果
-- **协作** - 与 Wang Zhengyao 协作进行结果分析
+- **被依赖** - Qin Mengmeng 和 Wang Zhengyao 需要你的数据处理结果
+- **协作** - 与 Li Xinru 协作进行结果分析
 
 ---
 
@@ -142,8 +142,8 @@
 #### 优先级 1 (第1天完成 - 11月18日)
 
 **1.1 环境搭建**
-- [ ] 同 Li Xinru 的环境搭建步骤
-- [ ] 等待 Li Xinru 完成数据处理
+- [ ] 同 Yin Fengling 的环境搭建步骤
+- [ ] 等待 Yin Fengling 完成数据处理
 
 **1.2 测试检索组件**
 - [ ] 测试分块策略 `chunking.py`
@@ -235,13 +235,13 @@
 - 保存所有中间输出用于调试
 
 ### 🔗 依赖关系
-- **前置依赖** - 需要 Li Xinru 完成数据处理
-- **被依赖** - Yin Fengling 需要你的检索器接口
-- **协作** - 与 Yin Fengling 协调检索器API接口
+- **前置依赖** - 需要 Yin Fengling 完成数据处理
+- **被依赖** - Wang Zhengyao 需要你的检索器接口
+- **协作** - 与 Wang Zhengyao 协调检索器API接口
 
 ---
 
-## 👤 Yin Fengling (3036807375)
+## 👤 Wang Zhengyao (3036795675)
 
 ### 负责模块
 - `agent/` - 代理组件（Query Analyzer, Verifier, Reviser）
@@ -367,13 +367,13 @@
 - 注意LLM调用次数和成本
 
 ### 🔗 依赖关系
-- **前置依赖** - 需要 Li Xinru 的数据和 Qin Mengmeng 的检索器
-- **被依赖** - Wang Zhengyao 需要你的实验结果
+- **前置依赖** - 需要 Yin Fengling 的数据和 Qin Mengmeng 的检索器
+- **被依赖** -Li Xinru 需要你的实验结果
 - **协作** - 与 Qin Mengmeng 协调检索器接口
 
 ---
 
-## 👤 Wang Zhengyao (3036795675)
+## 👤 Li Xinru (3036807959)
 
 ### 负责模块
 - `experiments/` - 实验编排
@@ -543,15 +543,15 @@
 ### 关键里程碑
 
 #### ✅ 检查点1 (11月19日晚)
-- [ ] Li Xinru: 数据处理完成
+- [ ] Yin Fengling: 数据处理完成
 - [ ] Qin Mengmeng: 检索组件测试通过
-- [ ] Yin Fengling: Agent组件独立测试通过
-- [ ] Wang Zhengyao: 实验框架就绪
+- [ ] Wang Zhengyao: Agent组件独立测试通过
+- [ ] Li Xinru: 实验框架就绪
 
 #### ✅ 检查点2 (11月20日晚)
 - [ ] Qin Mengmeng: 基线系统运行成功
-- [ ] Yin Fengling: Agentic RAG集成完成
-- [ ] Wang Zhengyao: 端到端测试通过
+- [ ] Wang Zhengyao: Agentic RAG集成完成
+- [ ] Li Xinru: 端到端测试通过
 
 #### ✅ 检查点3 (11月22日晚)
 - [ ] 所有实验运行完成

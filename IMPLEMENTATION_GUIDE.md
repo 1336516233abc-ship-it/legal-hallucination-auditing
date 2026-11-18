@@ -69,7 +69,7 @@ python ui/app.py --model llama3 --port 7860
 ## Project Workflow
 
 ### Phase 1: Data Preparation (Days 1-2)
-**Owner: Li Xinru**
+**Owner: Yin Fengling**
 
 1. Download datasets:
 ```bash
@@ -118,7 +118,7 @@ python retrieval/baseline_rag.py --model llama3 --retriever bm25
 ```
 
 ### Phase 3: Agent Implementation (Days 1-3)
-**Owner: Yin Fengling**
+**Owner: Wang Zhengyao**
 
 1. Test individual components:
 ```python
@@ -143,7 +143,7 @@ python agent/agentic_rag.py --model llama3 --dataset contractnli
 ```
 
 ### Phase 4: Experiments & Evaluation (Days 4-5)
-**Owner: Wang Zhengyao**
+**Owner: Li Xinru**
 
 1. Run complete experiments:
 ```bash
@@ -327,7 +327,7 @@ experiments/results/
 
 ## Contact
 
-- Li Xinru (3036807959): Data & Evaluation
+- Yin Fengling (3036807375): Data & Evaluation
 - Qin Mengmeng (3036843769): Retrieval & Baselines
-- Yin Fengling (3036807375): Agent Components
-- Wang Zhengyao (3036795675): Experiments & Analysis
+- Wang Zhengyao (3036795675): Agent Components
+- Li Xinru (3036807959): Experiments & Analysis

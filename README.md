@@ -13,10 +13,10 @@ This project implements an agentic workflow that:
 
 ## Team Members
 
-- **Li Xinru (3036807959)**: Dataset preprocessing & evaluation metrics
+- **Yin Fengling (3036807375)**: Dataset preprocessing & evaluation metrics
 - **Qin Mengmeng (3036843769)**: Retrieval system & baseline implementations
-- **Yin Fengling (3036807375)**: Agent components (Query Analyzer, Verifier, Reviser)
-- **Wang Zhengyao (3036795675)**: Experiment orchestration, analysis & reporting
+- **Wang Zhengyao (3036795675)**: Agent components (Query Analyzer, Verifier, Reviser)
+- **Li Xinru (3036807959)**: Experiment orchestration, analysis & reporting
 
 ## Project Structure
 

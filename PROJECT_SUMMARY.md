@@ -7,7 +7,7 @@
 
 ```
 legal-hallucination-auditing/
-├── data/                           # Dataset processing (Li Xinru)
+├── data/                           # Dataset processing (Yin Fengling)
 │   ├── __init__.py
 │   ├── dataset_loader.py          # Base dataset loader
 │   ├── contractnli_processor.py   # ContractNLI dataset
@@ -25,7 +25,7 @@ legal-hallucination-auditing/
 │       ├── __init__.py
 │       └── retriever.py           # BM25, Dense, Hybrid retrievers
 │
-├── agent/                          # Agentic RAG (Yin Fengling)
+├── agent/                          # Agentic RAG (Wang Zhengyao)
 │   ├── __init__.py
 │   ├── agentic_rag.py            # Main agentic workflow
 │   ├── generator.py               # Answer generation
@@ -39,13 +39,13 @@ legal-hallucination-auditing/
 │       ├── __init__.py
 │       └── reviser.py            # Answer revision
 │
-├── evaluation/                     # Metrics & analysis (Li Xinru)
+├── evaluation/                     # Metrics & analysis (Yin Fengling)
 │   ├── __init__.py
 │   ├── metrics.py                 # All evaluation metrics
 │   ├── hallucination_detector.py  # Hallucination detection
 │   └── error_analysis.py          # Error analysis
 │
-├── experiments/                    # Experiment orchestration (Wang Zhengyao)
+├── experiments/                    # Experiment orchestration (Li Xinru)
 │   ├── __init__.py
 │   ├── run_experiments.py         # Main experiment runner
 │   ├── results/                   # Experiment outputs
@@ -57,7 +57,7 @@ legal-hallucination-auditing/
 │   ├── logger.py                  # Logging utilities
 │   └── helpers.py                 # Helper functions
 │
-├── ui/                             # Optional UI (Wang Zhengyao)
+├── ui/                             # Optional UI (Li Xinru)
 │   ├── __init__.py
 │   └── app.py                     # Gradio interface
 │
@@ -77,7 +77,7 @@ legal-hallucination-auditing/
 
 ## 📋 Key Components Implemented
 
-### 1. Data Processing Module (Li Xinru)
+### 1. Data Processing Module (Yin Fengling)
 - ✅ `dataset_loader.py` - Base loader with `LegalExample` class
 - ✅ `contractnli_processor.py` - ContractNLI processing
 - ✅ `cuad_processor.py` - CUAD processing
@@ -92,14 +92,14 @@ legal-hallucination-auditing/
 - ✅ `baseline_rag.py` - Standard RAG baseline
 - ✅ Configurable top-k and retrieval parameters
 
-### 3. Agentic RAG System (Yin Fengling)
+### 3. Agentic RAG System (Wang Zhengyao)
 - ✅ `query_analyzer.py` - Query classification and refinement
 - ✅ `generator.py` - Evidence-based answer generation
 - ✅ `verifier.py` - Claim verification against evidence
 - ✅ `reviser.py` - Answer revision with re-retrieval
 - ✅ `agentic_rag.py` - Complete integrated workflow
 
-### 4. Evaluation & Analysis (Li Xinru + Wang Zhengyao)
+### 4. Evaluation & Analysis (Li Xinru + Yin Fengling)
 - ✅ `metrics.py` - All evaluation metrics
   - Label accuracy, Macro-F1
   - Evidence recall@k
@@ -110,7 +110,7 @@ legal-hallucination-auditing/
 - ✅ `hallucination_detector.py` - Failure mode analysis
 - ✅ `error_analysis.py` - Deep error analysis
 
-### 5. Experiment Orchestration (Wang Zhengyao)
+### 5. Experiment Orchestration (Li Xinru)
 - ✅ `run_experiments.py` - Main experiment runner
 - ✅ Batch processing for all datasets
 - ✅ Support for multiple models
@@ -197,7 +197,7 @@ python ui/app.py --model llama3 --port 7860
 
 ## 📝 Team Task Assignment
 
-### Li Xinru (3036807959)
+### Yin Fengling (3036807375)
 **Module:** `data/` + `evaluation/`
 1. Download and process ContractNLI, CUAD
 2. Implement all evaluation metrics
@@ -212,7 +212,7 @@ python ui/app.py --model llama3 --port 7860
 4. Build Standard RAG baseline
 5. Run ablation studies (top-k, chunking, retriever type)
 
-### Yin Fengling (3036807375)
+### Wang Zhengyao (3036795675)
 **Module:** `agent/`
 1. Implement Query Analyzer
 2. Implement Answer Generator
@@ -221,7 +221,7 @@ python ui/app.py --model llama3 --port 7860
 5. Integrate into Agentic RAG workflow
 6. Save intermediate outputs for analysis
 
-### Wang Zhengyao (3036795675)
+### Li Xinru (3036807959)
 **Module:** `experiments/` + `ui/`
 1. Orchestrate all experiments
 2. Batch run all baselines and agent

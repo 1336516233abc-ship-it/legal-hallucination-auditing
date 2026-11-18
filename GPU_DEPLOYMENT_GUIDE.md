@@ -399,13 +399,13 @@ AutoDL GPU (实验): ¥50
 ## 📝 实施建议
 
 ### 第1步: 立即行动（今天）
-1. **Li Xinru**: 在本地笔记本配置Groq API，测试数据处理
+1. **Yin Fengling**: 在本地笔记本配置Groq API，测试数据处理
 2. **Qin Mengmeng**: 使用API测试检索系统
-3. **Yin Fengling**: 使用API测试Agent组件
-4. **Wang Zhengyao**: 准备AutoDL账号并充值¥100
+3. **Wang Zhengyao**: 使用API测试Agent组件
+4. **Li Xinru**: 准备AutoDL账号并充值¥100
 
 ### 第2步: 切换到GPU（11月21日）
-1. **Wang Zhengyao**创建AutoDL实例
+1. **Li Xinru**创建AutoDL实例
 2. 上传代码和数据
 3. 运行完整实验套件
 
