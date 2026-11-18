@@ -1,0 +1,43 @@
+# Retrieval Configuration
+
+# Retriever types
+retrievers:
+  bm25:
+    type: "bm25"
+    k1: 1.5
+    b: 0.75
+
+  dense:
+    type: "dense"
+    model_name: "sentence-transformers/all-MiniLM-L6-v2"
+    embedding_dim: 384
+    similarity_metric: "cosine"
+
+  hybrid:
+    type: "hybrid"
+    bm25_weight: 0.5
+    dense_weight: 0.5
+
+# Chunking strategies
+chunking:
+  fixed_length:
+    chunk_size: 512
+    overlap: 128
+
+  clause_level:
+    use_sentence_boundaries: true
+    max_chunk_size: 1024
+    min_chunk_size: 50
+
+# Retrieval parameters
+retrieval:
+  top_k: 5
+  top_k_ablation: [3, 5, 10]  # For ablation experiments
+  min_score_threshold: 0.0
+  rerank: false
+  rerank_model: null
+
+# Index settings
+index:
+  save_path: "outputs/indices"
+  rebuild_on_start: false

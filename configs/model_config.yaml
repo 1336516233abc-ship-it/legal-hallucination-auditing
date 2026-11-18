@@ -1,0 +1,41 @@
+# Model Configuration
+model:
+  # Primary models for experiments
+  llama3:
+    name: "meta-llama/Meta-Llama-3-8B-Instruct"
+    max_tokens: 512
+    temperature: 0.7
+    top_p: 0.9
+
+  mistral:
+    name: "mistralai/Mistral-7B-Instruct-v0.2"
+    max_tokens: 512
+    temperature: 0.7
+    top_p: 0.9
+
+  # Generation parameters
+  generation:
+    max_new_tokens: 512
+    temperature: 0.7
+    top_p: 0.9
+    do_sample: true
+    num_return_sequences: 1
+
+  # API settings (if using hosted models)
+  api:
+    base_url: null  # Set if using custom endpoint
+    api_key_env: "LLM_API_KEY"  # Environment variable name
+    timeout: 60
+    max_retries: 3
+
+# Random seeds for reproducibility
+seeds:
+  random_seed: 42
+  numpy_seed: 42
+  torch_seed: 42
+
+# Resource settings
+resources:
+  device: "cuda"  # cuda, cpu, or mps (for Mac)
+  batch_size: 4
+  num_workers: 4

@@ -1,0 +1,74 @@
+# Experiment Configuration
+
+# Experiment modes
+modes:
+  - direct_prompting
+  - standard_rag
+  - agentic_rag
+
+# Dataset configuration
+datasets:
+  contractnli:
+    enabled: true
+    split: "test"
+    sample_size: null  # null means use all
+
+  cuad:
+    enabled: true
+    clause_types: ["termination", "liability", "payment", "confidentiality", "indemnification"]
+    sample_size: null
+
+  privacyqa:
+    enabled: false  # Optional dataset
+    sample_size: 100
+
+# Models to evaluate
+models:
+  - llama3
+  - mistral
+
+# Ablation studies
+ablations:
+  retriever:
+    - bm25
+    - dense
+
+  chunking:
+    - fixed_length
+    - clause_level
+
+  top_k:
+    - 3
+    - 5
+    - 10
+
+# Evaluation metrics
+metrics:
+  - label_accuracy
+  - macro_f1
+  - evidence_recall
+  - hallucination_rate
+  - answer_completeness
+  - abstention_precision
+  - latency
+  - token_cost
+
+# Output configuration
+output:
+  save_predictions: true
+  save_intermediate_steps: true
+  save_path: "experiments/results"
+  log_path: "experiments/logs"
+
+# Logging
+logging:
+  level: "INFO"
+  console: true
+  file: true
+  wandb: false  # Set to true to enable Weights & Biases tracking
+
+# Reproducibility
+reproducibility:
+  set_seed: true
+  seed: 42
+  deterministic: true
