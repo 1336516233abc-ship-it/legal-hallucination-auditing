@@ -1,0 +1,59 @@
+{
+  "seed": 42,
+  "per_label": 2,
+  "split": "test",
+  "datasets": {
+    "contractnli": {
+      "source_sha256": "ba6aa63b66a354028703c3e3574a902f55cc751dc37cc1d9d2f2c11bd39bb116",
+      "population": 2091,
+      "rows": [
+        {
+          "id": "contractnli_test_4_nda-4",
+          "gold_label": "entailment"
+        },
+        {
+          "id": "contractnli_test_41_nda-1",
+          "gold_label": "contradiction"
+        },
+        {
+          "id": "contractnli_test_53_nda-18",
+          "gold_label": "neutral"
+        },
+        {
+          "id": "contractnli_test_59_nda-13",
+          "gold_label": "neutral"
+        },
+        {
+          "id": "contractnli_test_493_nda-2",
+          "gold_label": "contradiction"
+        },
+        {
+          "id": "contractnli_test_523_nda-8",
+          "gold_label": "entailment"
+        }
+      ]
+    },
+    "cuad": {
+      "source_sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104",
+      "population": 1020,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present"
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent"
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present"
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent"
+        }
+      ]
+    }
+  }
+}

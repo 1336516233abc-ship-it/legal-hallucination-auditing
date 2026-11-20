@@ -1,0 +1,1781 @@
+{
+  "status": "completed",
+  "checkpoint": "mistralai/Mistral-7B-Instruct-v0.2",
+  "revision": "63a8b081895390a26e140280378bc85ec8bce07a",
+  "device": "mlx",
+  "python": "3.11.17",
+  "torch": "2.15.0",
+  "transformers": "5.23.0",
+  "input_token_limit": 4096,
+  "generation_token_limit": 512,
+  "temperature": 0,
+  "seed": 42,
+  "groups": [
+    {
+      "dataset": "contractnli",
+      "mode": "direct_prompting",
+      "examples": 6,
+      "format_pass": 5,
+      "label_correct": 3,
+      "format_pass_rate": 0.8333333333333334,
+      "label_accuracy": 0.5,
+      "label_counts": {
+        "entailment": 2,
+        "contradiction": 2,
+        "neutral": 2
+      },
+      "mean_latency_seconds": 13.156982999993488,
+      "rows": [
+        {
+          "id": "contractnli_test_4_nda-4",
+          "gold_label": "entailment",
+          "prediction": "entailment",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: entailment\nAnswer: The Recipient is contractually bound to use the Confidential Information only for the Purpose stated in the Agreement.",
+          "input_tokens": 739,
+          "input_truncated": false,
+          "generated_tokens": 34,
+          "latency_seconds": 13.466626249952242,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 739,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: entailment\nAnswer: The Recipient is contractually bound to use the Confidential Information only for the Purpose stated in the Agreement.",
+              "tokens": 34,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 34
+        },
+        {
+          "id": "contractnli_test_41_nda-1",
+          "gold_label": "contradiction",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. However, it does provide a definition of Confidential Information that includes information that the Contractor views, takes notes from, copies (with written permission), possesses or is otherwise provided access to and use of by the State in relation to the Contract. Therefore, it can be inferred that some form of identification may be required or implied for the Contractor to identify Confidential Information.",
+          "input_tokens": 2483,
+          "input_truncated": false,
+          "generated_tokens": 108,
+          "latency_seconds": 19.051744083000813,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 2483,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. However, it does provide a definition of Confidential Information that includes information that the Contractor views, takes notes from, copies (with written permission), possesses or is otherwise provided access to and use of by the State in relation to the Contract. Therefore, it can be inferred that some form of identification may be required or implied for the Contractor to identify Confidential Information.",
+              "tokens": 108,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 108
+        },
+        {
+          "id": "contractnli_test_53_nda-18",
+          "gold_label": "neutral",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. However, it does include a provision in clause 13 that none of the Parties will make any public announcements, statements or otherwise publicise the subject matter of this Agreement (or its existence) without the prior written consent of the other Parties. This could be interpreted as an implicit restriction on soliciting representatives, but it is not explicitly stated.",
+          "input_tokens": 3440,
+          "input_truncated": false,
+          "generated_tokens": 108,
+          "latency_seconds": 20.61574695800664,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 3440,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. However, it does include a provision in clause 13 that none of the Parties will make any public announcements, statements or otherwise publicise the subject matter of this Agreement (or its existence) without the prior written consent of the other Parties. This could be interpreted as an implicit restriction on soliciting representatives, but it is not explicitly stated.",
+              "tokens": 108,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 108
+        },
+        {
+          "id": "contractnli_test_59_nda-13",
+          "gold_label": "neutral",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly address the issue of the Receiving Party acquiring information similar to Confidential Information from a third party.",
+          "input_tokens": 2460,
+          "input_truncated": false,
+          "generated_tokens": 35,
+          "latency_seconds": 8.303867667040322,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 2460,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly address the issue of the Receiving Party acquiring information similar to Confidential Information from a third party.",
+              "tokens": 35,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 35
+        },
+        {
+          "id": "contractnli_test_493_nda-2",
+          "gold_label": "contradiction",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that Confidential Information shall only include technical information.",
+          "input_tokens": 1964,
+          "input_truncated": false,
+          "generated_tokens": 24,
+          "latency_seconds": 6.194770083995536,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 1964,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that Confidential Information shall only include technical information.",
+              "tokens": 24,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 24
+        },
+        {
+          "id": "contractnli_test_523_nda-8",
+          "gold_label": "entailment",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "missing or invalid task label",
+          "raw_response": "Label: true\nAnswer: The contract requires the Receiving Party to notify the Disclosing Party if they are required by law, regulation, or judicial process to disclose any Confidential Information.",
+          "input_tokens": 3573,
+          "input_truncated": false,
+          "generated_tokens": 44,
+          "latency_seconds": 11.309142957965378,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 3573,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: true\nAnswer: The contract requires the Receiving Party to notify the Disclosing Party if they are required by law, regulation, or judicial process to disclose any Confidential Information.",
+              "tokens": 44,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 44
+        }
+      ]
+    },
+    {
+      "dataset": "contractnli",
+      "mode": "standard_rag",
+      "examples": 6,
+      "format_pass": 5,
+      "label_correct": 3,
+      "format_pass_rate": 0.8333333333333334,
+      "label_accuracy": 0.5,
+      "label_counts": {
+        "entailment": 2,
+        "contradiction": 2,
+        "neutral": 2
+      },
+      "mean_latency_seconds": 15.859186881842712,
+      "rows": [
+        {
+          "id": "contractnli_test_4_nda-4",
+          "gold_label": "entailment",
+          "prediction": "entailment",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: entailment\nAnswer: The contract requires the Receiving Party to only use the Confidential Information for the purposes stated in the Agreement. (Refer to clause 2 in [1])",
+          "input_tokens": 765,
+          "input_truncated": false,
+          "generated_tokens": 44,
+          "latency_seconds": 7.169108416012023,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 765,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: entailment\nAnswer: The contract requires the Receiving Party to only use the Confidential Information for the purposes stated in the Agreement. (Refer to clause 2 in [1])",
+              "tokens": 44,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 44
+        },
+        {
+          "id": "contractnli_test_41_nda-1",
+          "gold_label": "contradiction",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. However, the contract does provide a definition of Confidential Information [1], which includes information that is provided by or made available by the State to the Contractor in connection with the Contract [1]. Therefore, it can be inferred that the Contractor may not always be able to identify all Confidential Information prior to receiving it from the State. Instead, the Contractor is required to limit access to Confidential Information to Contractor’s Personnel who have a demonstrable need to know such Confidential Information [1] and to obtain written consent before disseminating any portion of the Confidential Information to non-employee agents [1]. These provisions help ensure that the Contractor handles Confidential Information appropriately and maintains its confidentiality.",
+          "input_tokens": 3236,
+          "input_truncated": false,
+          "generated_tokens": 183,
+          "latency_seconds": 30.71303512499435,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 3236,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. However, the contract does provide a definition of Confidential Information [1], which includes information that is provided by or made available by the State to the Contractor in connection with the Contract [1]. Therefore, it can be inferred that the Contractor may not always be able to identify all Confidential Information prior to receiving it from the State. Instead, the Contractor is required to limit access to Confidential Information to Contractor’s Personnel who have a demonstrable need to know such Confidential Information [1] and to obtain written consent before disseminating any portion of the Confidential Information to non-employee agents [1]. These provisions help ensure that the Contractor handles Confidential Information appropriately and maintains its confidentiality.",
+              "tokens": 183,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 183
+        },
+        {
+          "id": "contractnli_test_53_nda-18",
+          "gold_label": "neutral",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that the Receiving Party shall not solicit Disclosing Party's representatives. However, it does include a provision that the Parties shall not disclose each other's confidential information to third parties without prior written consent [1]. This does not necessarily mean that soliciting representatives would be considered a disclosure of confidential information, but it is not explicitly addressed in the contract.",
+          "input_tokens": 3676,
+          "input_truncated": false,
+          "generated_tokens": 93,
+          "latency_seconds": 18.38589487504214,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 3676,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that the Receiving Party shall not solicit Disclosing Party's representatives. However, it does include a provision that the Parties shall not disclose each other's confidential information to third parties without prior written consent [1]. This does not necessarily mean that soliciting representatives would be considered a disclosure of confidential information, but it is not explicitly addressed in the contract.",
+              "tokens": 93,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 93
+        },
+        {
+          "id": "contractnli_test_59_nda-13",
+          "gold_label": "neutral",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly address the receipt of similar information from a third party by the Receiving Party. [Evidence: 1-6 (The contract does not contain any clause regarding the Receiving Party's ability or inability to acquire similar information from a third party.)]",
+          "input_tokens": 3107,
+          "input_truncated": false,
+          "generated_tokens": 69,
+          "latency_seconds": 14.557800457987469,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 3107,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly address the receipt of similar information from a third party by the Receiving Party. [Evidence: 1-6 (The contract does not contain any clause regarding the Receiving Party's ability or inability to acquire similar information from a third party.)]",
+              "tokens": 69,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 69
+        },
+        {
+          "id": "contractnli_test_493_nda-2",
+          "gold_label": "contradiction",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that Confidential Information shall only include technical information. [1] However, the definition of Confidential Information in the contract includes a broad range of information, including but not limited to technical information. [1]",
+          "input_tokens": 2524,
+          "input_truncated": false,
+          "generated_tokens": 56,
+          "latency_seconds": 12.054916084045544,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 2524,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that Confidential Information shall only include technical information. [1] However, the definition of Confidential Information in the contract includes a broad range of information, including but not limited to technical information. [1]",
+              "tokens": 56,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 56
+        },
+        {
+          "id": "contractnli_test_523_nda-8",
+          "gold_label": "entailment",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "missing or invalid task label",
+          "raw_response": "Label: true\nAnswer: The contract states that if the Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information, they shall notify the Disclosing Party [1].",
+          "input_tokens": 3560,
+          "input_truncated": false,
+          "generated_tokens": 47,
+          "latency_seconds": 12.27436633297475,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 3560,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: true\nAnswer: The contract states that if the Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information, they shall notify the Disclosing Party [1].",
+              "tokens": 47,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 47
+        }
+      ]
+    },
+    {
+      "dataset": "contractnli",
+      "mode": "verified_agentic_rag",
+      "examples": 6,
+      "format_pass": 5,
+      "label_correct": 3,
+      "format_pass_rate": 0.8333333333333334,
+      "label_accuracy": 0.5,
+      "label_counts": {
+        "entailment": 2,
+        "contradiction": 2,
+        "neutral": 2
+      },
+      "mean_latency_seconds": 67.80849921703339,
+      "rows": [
+        {
+          "id": "contractnli_test_4_nda-4",
+          "gold_label": "entailment",
+          "prediction": "entailment",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: entailment\nAnswer: The contract requires the Receiving Party to only use the Confidential Information for the purposes stated in the Agreement (clause 2).",
+          "input_tokens": 774,
+          "input_truncated": false,
+          "generated_tokens": 38,
+          "latency_seconds": 22.90538787841797,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 82,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: contract_clause_interpretation\n\nRefined Query: How does the contract define the permitted uses of Confidential Information for the Receiving Party?",
+              "tokens": 36,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 774,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: entailment\nAnswer: The contract requires the Receiving Party to only use the Confidential Information for the purposes stated in the Agreement (clause 2).",
+              "tokens": 38,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 751,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The claim is supported by the evidence as clause 2 of the Non-Disclosure Agreement explicitly states that the Receiving Party undertakes not to use the Confidential Information for any purpose except the Purpose stated in the Agreement.\nEvidence: [1], clause 2.",
+              "tokens": 69,
+              "stage": "claim_verification"
+            }
+          ],
+          "total_generated_tokens": 143,
+          "initial_label": "entailment",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Is this statement true under the contract: \"Receiving Party shall not use any Confidential Information for any purpose other than the purposes stated in Agreement.\"?",
+            "query_type": "rights_obligations",
+            "refined_query": "Query Type: contract_clause_interpretation\n\nRefined Query: How does the contract define the permitted uses of Confidential Information for the Receiving Party?",
+            "retrieval_params": {
+              "top_k": 7,
+              "chunking_strategy": "clause_level",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "supported",
+            "claims": [
+              {
+                "claim": "The contract requires the Receiving Party to only use the Confidential Information for the purposes stated in the Agreement (clause 2).",
+                "status": "supported",
+                "reasoning": "The claim is supported by the evidence as clause 2 of the Non-Disclosure Agreement explicitly states that the Receiving Party undertakes not to use the Confidential Information for any purpose except the Purpose stated in the Agreement.",
+                "supporting_evidence": [
+                  1,
+                  2
+                ],
+                "parse_error": null,
+                "claim_id": 0
+              }
+            ],
+            "hallucination_detected": false
+          },
+          "revision_type": null,
+          "revision_query": null,
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:1026b46dfa88cc6bae120a9ff6aef060b71dee153e43de76dc78a0fad7489773",
+              "start": 0,
+              "end": 2404,
+              "chunk_id": 0,
+              "score": -4.8181630255580785
+            }
+          ]
+        },
+        {
+          "id": "contractnli_test_41_nda-1",
+          "gold_label": "contradiction",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party [1]. However, the contract does require the Contractor to limit access to Confidential Information and obtain written consent before disseminating it to non-employee agents [1]. These provisions may imply some level of identification or notification, but the text does not provide a definitive answer to the question as stated.",
+          "input_tokens": 2748,
+          "input_truncated": false,
+          "generated_tokens": 94,
+          "latency_seconds": 149.46314692497253,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 76,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: contract_clause_interpretation\nRefined Query: How is the term \"Confidential Information\" defined in the contract regarding its identification requirement by the Disclosing Party?",
+              "tokens": 40,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 3245,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. However, it does require the Contractor to limit access to Confidential Information to those who have a demonstrable need to know and to provide copies of their confidentiality agreements to the State [1]. The contract also allows the State to grant, deny, or condition consent for the dissemination of Confidential Information to non-employee agents [1]. These provisions may be interpreted as implying some level of identification or notification to the Contractor or the State regarding the Confidential Information being shared. Nonetheless, the text does not provide a definitive answer to the question as stated.",
+              "tokens": 150,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 3223,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence provided in the contract does include provisions regarding the identification of Confidential Information, but it does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. The contract does require the Contractor to limit access to Confidential Information to those who have a demonstrable need to know and to provide copies of their confidentiality agreements to the State. However, it does not specifically address the requirement for express identification of all Confidential Information by the Disclosing Party.\nEvidence: [1, 2]",
+              "tokens": 125,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 3240,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The evidence clearly supports the claim that the Contractor is required to limit access to Confidential Information to those who have a demonstrable need to know and to provide copies of their confidentiality agreements to the State [1].\nEvidence: [1] The contract states that the Contractor shall limit access to the Confidential Information to the Contractor’s Personnel who have a demonstrable need to know such Confidential Information in order to perform under the Contract and who are bound by confidentiality obligations at least as restrictive as those set forth in this Agreement. The Contractor shall provide copies of such agreements to the State.",
+              "tokens": 138,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 3232,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The contract states that the Contractor must obtain the written consent of the State before disseminating any Confidential Information to non-employee agents [1]. The State is given the discretion to grant, deny, or condition any such consent.\nEvidence: [1]",
+              "tokens": 68,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 3229,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The provisions in the evidence clearly state that the Contractor is required to obtain written consent from the State before disseminating any portion of the Confidential Information to non-employee agents, and the State may grant, deny, or condition any such consent. This implies some level of identification or notification to the Contractor or the State regarding the Confidential Information being shared.\nEvidence: [1], [2], [3]",
+              "tokens": 99,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 3218,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The claim is that the text does not provide a definitive answer to a specific question. However, the text itself is not provided, so it is impossible to determine if the claim is correct based on the evidence given.\nEvidence: [1, 2, 3, 4]\nThese documents do not provide enough information to determine if the claim is correct or not. The claim requires knowledge of the specific question being asked and the text's response to that question, which is not provided in the evidence.",
+              "tokens": 120,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2748,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party [1]. However, the contract does require the Contractor to limit access to Confidential Information and obtain written consent before disseminating it to non-employee agents [1]. These provisions may imply some level of identification or notification, but the text does not provide a definitive answer to the question as stated.",
+              "tokens": 94,
+              "stage": "revision"
+            }
+          ],
+          "total_generated_tokens": 834,
+          "initial_label": "neutral",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Is this statement true under the contract: \"All Confidential Information shall be expressly identified by the Disclosing Party.\"?",
+            "query_type": "rights_obligations",
+            "refined_query": "Query Type: contract_clause_interpretation\nRefined Query: How is the term \"Confidential Information\" defined in the contract regarding its identification requirement by the Disclosing Party?",
+            "retrieval_params": {
+              "top_k": 7,
+              "chunking_strategy": "clause_level",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "partially_supported",
+            "claims": [
+              {
+                "claim": "The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party.",
+                "status": "not_enough_info",
+                "reasoning": "The evidence provided in the contract does include provisions regarding the identification of Confidential Information, but it does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. The contract does require the Contractor to limit access to Confidential Information to those who have a demonstrable need to know and to provide copies of their confidentiality agreements to the State. However, it does not specifically address the requirement for express identification of all Confidential Information by the Disclosing Party.",
+                "supporting_evidence": [
+                  1,
+                  2
+                ],
+                "parse_error": null,
+                "claim_id": 0
+              },
+              {
+                "claim": "However, it does require the Contractor to limit access to Confidential Information to those who have a demonstrable need to know and to provide copies of their confidentiality agreements to the State [1].",
+                "status": "supported",
+                "reasoning": "The evidence clearly supports the claim that the Contractor is required to limit access to Confidential Information to those who have a demonstrable need to know and to provide copies of their confidentiality agreements to the State [1].",
+                "supporting_evidence": [
+                  1
+                ],
+                "parse_error": null,
+                "claim_id": 1
+              },
+              {
+                "claim": "The contract also allows the State to grant, deny, or condition consent for the dissemination of Confidential Information to non-employee agents [1].",
+                "status": "supported",
+                "reasoning": "The contract states that the Contractor must obtain the written consent of the State before disseminating any Confidential Information to non-employee agents [1]. The State is given the discretion to grant, deny, or condition any such consent.",
+                "supporting_evidence": [
+                  1
+                ],
+                "parse_error": null,
+                "claim_id": 2
+              },
+              {
+                "claim": "These provisions may be interpreted as implying some level of identification or notification to the Contractor or the State regarding the Confidential Information being shared.",
+                "status": "supported",
+                "reasoning": "The provisions in the evidence clearly state that the Contractor is required to obtain written consent from the State before disseminating any portion of the Confidential Information to non-employee agents, and the State may grant, deny, or condition any such consent. This implies some level of identification or notification to the Contractor or the State regarding the Confidential Information being shared.",
+                "supporting_evidence": [
+                  1,
+                  2,
+                  3
+                ],
+                "parse_error": null,
+                "claim_id": 3
+              },
+              {
+                "claim": "Nonetheless, the text does not provide a definitive answer to the question as stated.",
+                "status": "not_enough_info",
+                "reasoning": "The claim is that the text does not provide a definitive answer to a specific question. However, the text itself is not provided, so it is impossible to determine if the claim is correct based on the evidence given.",
+                "supporting_evidence": [
+                  1,
+                  2,
+                  3,
+                  4
+                ],
+                "parse_error": null,
+                "claim_id": 4
+              }
+            ],
+            "hallucination_detected": true
+          },
+          "revision_type": "reretrieval",
+          "revision_query": "Is this statement true under the contract: \"All Confidential Information shall be expressly identified by the Disclosing Party.\"? The contract does not explicitly state that all Confidential Information must be expressly identified by the Disclosing Party. Nonetheless, the text does not provide a definitive answer to the question as stated.",
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:29d639a3ee48258f0dc0a56371880d8355fbe5630389f3ee097ab46751822213",
+              "start": 7733,
+              "end": 10542,
+              "chunk_id": 3,
+              "score": 3.568297426118203
+            },
+            {
+              "doc_id": "sha256:29d639a3ee48258f0dc0a56371880d8355fbe5630389f3ee097ab46751822213",
+              "start": 5196,
+              "end": 9544,
+              "chunk_id": 2,
+              "score": 3.2723559277350667
+            },
+            {
+              "doc_id": "sha256:29d639a3ee48258f0dc0a56371880d8355fbe5630389f3ee097ab46751822213",
+              "start": 0,
+              "end": 3528,
+              "chunk_id": 0,
+              "score": 3.2607263971015894
+            }
+          ]
+        },
+        {
+          "id": "contractnli_test_53_nda-18",
+          "gold_label": "neutral",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. While the contract includes a provision in clause 16 that states the Disclosing Party's rights are not exclusive, it does not make clear whether this includes solicitation restrictions [1].",
+          "input_tokens": 2504,
+          "input_truncated": false,
+          "generated_tokens": 75,
+          "latency_seconds": 95.86602663993835,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 78,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: contract_clause_compliance\nRefined Query: Does the contract include a clause that restricts the Receiving Party from soliciting certain representatives of the Disclosing Party?",
+              "tokens": 44,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. However, it does include a provision in clause 16 that states that the Disclosing Party's rights under this Agreement are in addition to and not exclusive of rights under the general law and may be waived only in writing and specifically. It is possible that such general provisions could include solicitation restrictions, but the contract does not make this clear. [1]",
+              "tokens": 111,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 4076,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence provided in the confidentiality agreement does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. The agreement focuses on the confidentiality obligations of the Receiving Party regarding the Information disclosed by the Disclosing Party.\nEvidence: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]",
+              "tokens": 112,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The claim is supported by the text in clause 16 of the agreement which states \"The Disclosing Party's rights under this Agreement are in addition to and not exclusive of rights under the general law and may be waived only in writing and specifically.\"\nEvidence: [1]",
+              "tokens": 71,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 4072,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence does not clearly indicate whether or not the confidentiality agreement includes solicitation restrictions. While the agreement does include provisions regarding the use and disclosure of confidential information, it does not specifically mention solicitation restrictions.\nEvidence: [1, 2, 3, 4, 5, 6]",
+              "tokens": 81,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2504,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. While the contract includes a provision in clause 16 that states the Disclosing Party's rights are not exclusive, it does not make clear whether this includes solicitation restrictions [1].",
+              "tokens": 75,
+              "stage": "revision"
+            }
+          ],
+          "total_generated_tokens": 494,
+          "initial_label": "neutral",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Is this statement true under the contract: \"Receiving Party shall not solicit some of Disclosing Party's representatives.\"?",
+            "query_type": "rights_obligations",
+            "refined_query": "Query Type: contract_clause_compliance\nRefined Query: Does the contract include a clause that restricts the Receiving Party from soliciting certain representatives of the Disclosing Party?",
+            "retrieval_params": {
+              "top_k": 7,
+              "chunking_strategy": "clause_level",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "partially_supported",
+            "claims": [
+              {
+                "claim": "The contract does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives.",
+                "status": "not_enough_info",
+                "reasoning": "The evidence provided in the confidentiality agreement does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. The agreement focuses on the confidentiality obligations of the Receiving Party regarding the Information disclosed by the Disclosing Party.",
+                "supporting_evidence": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11
+                ],
+                "parse_error": null,
+                "claim_id": 0
+              },
+              {
+                "claim": "However, it does include a provision in clause 16 that states that the Disclosing Party's rights under this Agreement are in addition to and not exclusive of rights under the general law and may be waived only in writing and specifically.",
+                "status": "supported",
+                "reasoning": "The claim is supported by the text in clause 16 of the agreement which states \"The Disclosing Party's rights under this Agreement are in addition to and not exclusive of rights under the general law and may be waived only in writing and specifically.\"",
+                "supporting_evidence": [
+                  1
+                ],
+                "parse_error": null,
+                "claim_id": 1
+              },
+              {
+                "claim": "It is possible that such general provisions could include solicitation restrictions, but the contract does not make this clear.",
+                "status": "not_enough_info",
+                "reasoning": "The evidence does not clearly indicate whether or not the confidentiality agreement includes solicitation restrictions. While the agreement does include provisions regarding the use and disclosure of confidential information, it does not specifically mention solicitation restrictions.",
+                "supporting_evidence": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6
+                ],
+                "parse_error": null,
+                "claim_id": 2
+              }
+            ],
+            "hallucination_detected": true
+          },
+          "revision_type": "reretrieval",
+          "revision_query": "Is this statement true under the contract: \"Receiving Party shall not solicit some of Disclosing Party's representatives.\"? The contract does not explicitly state that the Receiving Party shall not solicit some of the Disclosing Party's representatives. It is possible that such general provisions could include solicitation restrictions, but the contract does not make this clear.",
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:04cc809651cf3789a787218055989ca2cab3103f28d7dd6d0c24cc7622517c37",
+              "start": 12008,
+              "end": 14758,
+              "chunk_id": 5,
+              "score": 10.841553465071017
+            },
+            {
+              "doc_id": "sha256:04cc809651cf3789a787218055989ca2cab3103f28d7dd6d0c24cc7622517c37",
+              "start": 0,
+              "end": 3378,
+              "chunk_id": 0,
+              "score": 10.652704399048075
+            },
+            {
+              "doc_id": "sha256:04cc809651cf3789a787218055989ca2cab3103f28d7dd6d0c24cc7622517c37",
+              "start": 2539,
+              "end": 5665,
+              "chunk_id": 1,
+              "score": 10.37782291492443
+            }
+          ]
+        },
+        {
+          "id": "contractnli_test_59_nda-13",
+          "gold_label": "neutral",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not explicitly address whether the Receiving Party may acquire information similar to Confidential Information from a third party. [1]",
+          "input_tokens": 2366,
+          "input_truncated": false,
+          "generated_tokens": 36,
+          "latency_seconds": 37.271769762039185,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 73,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: contract interpretation\nRefined Query: Under what circumstances, if any, is the Receiving Party permitted to obtain information similar to the Confidential Information from a third party, according to the contract terms?",
+              "tokens": 45,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 3112,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly address the situation where the Receiving Party may acquire information similar to Confidential Information from a third party. [1]",
+              "tokens": 38,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 3097,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence provided does not explicitly address the situation where the Buyer may acquire information similar to Confidential Information from a third party and whether this would constitute a breach of the confidentiality agreement.\nEvidence: [1-9]",
+              "tokens": 63,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2366,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly address whether the Receiving Party may acquire information similar to Confidential Information from a third party. [1]",
+              "tokens": 36,
+              "stage": "revision"
+            }
+          ],
+          "total_generated_tokens": 182,
+          "initial_label": "neutral",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Is this statement true under the contract: \"Receiving Party may acquire information similar to Confidential Information from a third party.\"?",
+            "query_type": "general",
+            "refined_query": "Query Type: contract interpretation\nRefined Query: Under what circumstances, if any, is the Receiving Party permitted to obtain information similar to the Confidential Information from a third party, according to the contract terms?",
+            "retrieval_params": {
+              "top_k": 5,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "partially_supported",
+            "claims": [
+              {
+                "claim": "The contract does not explicitly address the situation where the Receiving Party may acquire information similar to Confidential Information from a third party.",
+                "status": "not_enough_info",
+                "reasoning": "The evidence provided does not explicitly address the situation where the Buyer may acquire information similar to Confidential Information from a third party and whether this would constitute a breach of the confidentiality agreement.",
+                "supporting_evidence": [
+                  1,
+                  9
+                ],
+                "parse_error": null,
+                "claim_id": 0
+              }
+            ],
+            "hallucination_detected": true
+          },
+          "revision_type": "reretrieval",
+          "revision_query": "Is this statement true under the contract: \"Receiving Party may acquire information similar to Confidential Information from a third party.\"? The contract does not explicitly address the situation where the Receiving Party may acquire information similar to Confidential Information from a third party.",
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:d26ce13ab14f9ee0b804885805638e07f0036087ed8584e1fd489c4e2f419baa",
+              "start": 2530,
+              "end": 5863,
+              "chunk_id": 1,
+              "score": 2.770234983049757
+            },
+            {
+              "doc_id": "sha256:d26ce13ab14f9ee0b804885805638e07f0036087ed8584e1fd489c4e2f419baa",
+              "start": 0,
+              "end": 3341,
+              "chunk_id": 0,
+              "score": 1.3185229789972246
+            },
+            {
+              "doc_id": "sha256:d26ce13ab14f9ee0b804885805638e07f0036087ed8584e1fd489c4e2f419baa",
+              "start": 7456,
+              "end": 9344,
+              "chunk_id": 3,
+              "score": 1.254095351284613
+            }
+          ]
+        },
+        {
+          "id": "contractnli_test_493_nda-2",
+          "gold_label": "contradiction",
+          "prediction": "neutral",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "Label: neutral\nAnswer: The contract does not state that Confidential Information only includes technical information [1]. While technical information is included in the definition of Confidential Information, other types of information are also covered [1].",
+          "input_tokens": 2457,
+          "input_truncated": false,
+          "generated_tokens": 47,
+          "latency_seconds": 80.95054388046265,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 69,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: contract_clause_interpretation\n\nRefined Query: How is the term \"Confidential Information\" defined in the contract, specifically in relation to technical information?",
+              "tokens": 38,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 2533,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not explicitly state that Confidential Information shall only include technical information. [1] However, the definition of Confidential Information in the contract includes various types of information such as trade secrets, know-how, inventions, designs, methods, techniques, systems, processes, software programs, works of authorship, business plans, customer lists, projects, plans, pricing, proposals, and any other information. [2] Therefore, while technical information is included in the definition, it is not the only type of Confidential Information.",
+              "tokens": 117,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 2511,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence does not explicitly state that Confidential Information shall only include technical information. The definition of Confidential Information in the agreement includes various types of information such as trade secrets, know-how, inventions, business plans, customer lists, and pricing, among others. While technical information may be included in Confidential Information, the agreement does not limit Confidential Information to only technical information.\nEvidence: [1, 2]",
+              "tokens": 102,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2563,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The claim is supported by the evidence as the definition of Confidential Information in the contract includes the types of information mentioned in the claim.\nEvidence: [1] (Definitions section under point 1)",
+              "tokens": 54,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2520,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The definition of Confidential Information in the provided text includes \"any trade secrets, know-how, inventions, products, designs, methods, techniques, systems, processes, software programs, works of authorship, business plans, customer lists, projects, plans, pricing, proposals and any other information\" (Clause 1.A in the evidence). This broad definition clearly indicates that technical information is not the only type of Confidential Information.\n\nEvidence: [1, 2]",
+              "tokens": 111,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2457,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: neutral\nAnswer: The contract does not state that Confidential Information only includes technical information [1]. While technical information is included in the definition of Confidential Information, other types of information are also covered [1].",
+              "tokens": 47,
+              "stage": "revision"
+            }
+          ],
+          "total_generated_tokens": 469,
+          "initial_label": "neutral",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Is this statement true under the contract: \"Confidential Information shall only include technical information.\"?",
+            "query_type": "rights_obligations",
+            "refined_query": "Query Type: contract_clause_interpretation\n\nRefined Query: How is the term \"Confidential Information\" defined in the contract, specifically in relation to technical information?",
+            "retrieval_params": {
+              "top_k": 7,
+              "chunking_strategy": "clause_level",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "partially_supported",
+            "claims": [
+              {
+                "claim": "The contract does not explicitly state that Confidential Information shall only include technical information.",
+                "status": "not_enough_info",
+                "reasoning": "The evidence does not explicitly state that Confidential Information shall only include technical information. The definition of Confidential Information in the agreement includes various types of information such as trade secrets, know-how, inventions, business plans, customer lists, and pricing, among others. While technical information may be included in Confidential Information, the agreement does not limit Confidential Information to only technical information.",
+                "supporting_evidence": [
+                  1,
+                  2
+                ],
+                "parse_error": null,
+                "claim_id": 0
+              },
+              {
+                "claim": "[1] However, the definition of Confidential Information in the contract includes various types of information such as trade secrets, know-how, inventions, designs, methods, techniques, systems, processes, software programs, works of authorship, business plans, customer lists, projects, plans, pricing, proposals, and any other information.",
+                "status": "supported",
+                "reasoning": "The claim is supported by the evidence as the definition of Confidential Information in the contract includes the types of information mentioned in the claim.",
+                "supporting_evidence": [
+                  1,
+                  1
+                ],
+                "parse_error": null,
+                "claim_id": 1
+              },
+              {
+                "claim": "[2] Therefore, while technical information is included in the definition, it is not the only type of Confidential Information.",
+                "status": "supported",
+                "reasoning": "The definition of Confidential Information in the provided text includes \"any trade secrets, know-how, inventions, products, designs, methods, techniques, systems, processes, software programs, works of authorship, business plans, customer lists, projects, plans, pricing, proposals and any other information\" (Clause 1.A in the evidence). This broad definition clearly indicates that technical information is not the only type of Confidential Information.",
+                "supporting_evidence": [
+                  1,
+                  2
+                ],
+                "parse_error": null,
+                "claim_id": 2
+              }
+            ],
+            "hallucination_detected": true
+          },
+          "revision_type": "reretrieval",
+          "revision_query": "Is this statement true under the contract: \"Confidential Information shall only include technical information.\"? The contract does not explicitly state that Confidential Information shall only include technical information.",
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:dcce262b4b7eafa01b0b56c6c507ec2fc055f82bebf7fb3cb25402b76c066d1f",
+              "start": 0,
+              "end": 3334,
+              "chunk_id": 0,
+              "score": 3.371576676378564
+            },
+            {
+              "doc_id": "sha256:dcce262b4b7eafa01b0b56c6c507ec2fc055f82bebf7fb3cb25402b76c066d1f",
+              "start": 4992,
+              "end": 8131,
+              "chunk_id": 2,
+              "score": 3.1963114842116513
+            },
+            {
+              "doc_id": "sha256:dcce262b4b7eafa01b0b56c6c507ec2fc055f82bebf7fb3cb25402b76c066d1f",
+              "start": 2477,
+              "end": 5777,
+              "chunk_id": 1,
+              "score": 1.8436570781627735
+            }
+          ]
+        },
+        {
+          "id": "contractnli_test_523_nda-8",
+          "gold_label": "entailment",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "missing or invalid task label",
+          "raw_response": "Label: true\nAnswer: The contract requires the Receiving Party to notify the Disclosing Party if they are required by law, regulation, or judicial process to disclose any Confidential Information [1].",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 46,
+          "latency_seconds": 20.39412021636963,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 94,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: contract_clause_compliance\nRefined Query: Does the contract clause specify that the Receiving Party must notify the Disclosing Party if they are legally obligated to disclose Confidential Information?",
+              "tokens": 48,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Label: true\nAnswer: The contract requires the Receiving Party to notify the Disclosing Party if they are required by law, regulation, or judicial process to disclose any Confidential Information [1].",
+              "tokens": 46,
+              "stage": "initial_generation"
+            }
+          ],
+          "total_generated_tokens": 94,
+          "initial_label": "invalid",
+          "initial_parse_error": "missing or invalid task label",
+          "query_analysis": {
+            "original_query": "Is this statement true under the contract: \"Receiving Party shall notify Disclosing Party in case Receiving Party is required by law, regulation or judicial process to disclose any Confidential Information.\"?",
+            "query_type": "rights_obligations",
+            "refined_query": "Query Type: contract_clause_compliance\nRefined Query: Does the contract clause specify that the Receiving Party must notify the Disclosing Party if they are legally obligated to disclose Confidential Information?",
+            "retrieval_params": {
+              "top_k": 7,
+              "chunking_strategy": "clause_level",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": null,
+          "revision_type": null,
+          "revision_query": null,
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:73272178649abc38fb45c97f34b1ec7402095d58a8262092869abd9c7cf27857",
+              "start": 10018,
+              "end": 13140,
+              "chunk_id": 4,
+              "score": 6.229521626113657
+            },
+            {
+              "doc_id": "sha256:73272178649abc38fb45c97f34b1ec7402095d58a8262092869abd9c7cf27857",
+              "start": 2604,
+              "end": 5888,
+              "chunk_id": 1,
+              "score": 6.198567713649647
+            },
+            {
+              "doc_id": "sha256:73272178649abc38fb45c97f34b1ec7402095d58a8262092869abd9c7cf27857",
+              "start": 0,
+              "end": 3479,
+              "chunk_id": 0,
+              "score": 5.355599793068884
+            },
+            {
+              "doc_id": "sha256:73272178649abc38fb45c97f34b1ec7402095d58a8262092869abd9c7cf27857",
+              "start": 5087,
+              "end": 8487,
+              "chunk_id": 2,
+              "score": 4.024851461880321
+            },
+            {
+              "doc_id": "sha256:73272178649abc38fb45c97f34b1ec7402095d58a8262092869abd9c7cf27857",
+              "start": 7647,
+              "end": 10835,
+              "chunk_id": 3,
+              "score": 3.4509202642630323
+            },
+            {
+              "doc_id": "sha256:73272178649abc38fb45c97f34b1ec7402095d58a8262092869abd9c7cf27857",
+              "start": 14677,
+              "end": 16382,
+              "chunk_id": 6,
+              "score": 3.0650607944017234
+            },
+            {
+              "doc_id": "sha256:73272178649abc38fb45c97f34b1ec7402095d58a8262092869abd9c7cf27857",
+              "start": 12409,
+              "end": 12900,
+              "chunk_id": 5,
+              "score": 2.9439493951170284
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "dataset": "cuad",
+      "mode": "direct_prompting",
+      "examples": 4,
+      "format_pass": 0,
+      "label_correct": 0,
+      "format_pass_rate": 0.0,
+      "label_accuracy": 0.0,
+      "label_counts": {
+        "present": 2,
+        "absent": 2
+      },
+      "mean_latency_seconds": 31.943955531009124,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "citations must contain positive integer evidence numbers",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [\"The contract does not contain any clause specifically addressing the notice period required to terminate renewal.\"]}",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 45,
+          "latency_seconds": 12.276006750005763,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [\"The contract does not contain any clause specifically addressing the notice period required to terminate renewal.\"]}",
+              "tokens": 45,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 45
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"present\", \"answer\": \"i) Excite will not propose, solicit or negotiate offers from entities other than Sponsor for any retail music store sponsorships of the Excite Site, if at all, until [****] prior to the expiration of the term of this Agreement. ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site. iii) In the event that Excite intends to enter into an agreement with a third party with respect to retail music store sponsorships of the Excite Site before the expiration of the term of the Agreement, Excite will deliver to Sponsor a written notice describing the relevant opportunity. iv) If Sponsor rejects said offer or fails to notify Excite of its acceptance within the [****] period, Excite shall have the right thereafter to enter into the agreement with such third party, provided the terms and conditions of the agreement (if entered into within the subsequent ninety (90) days) are not less favorable to Excite than previously offered by Sponsor.\", \"extracted_spans\": [\"i) Excite will not propose, solicit or negotiate offers from entities other than Sponsor for any retail music store sponsorships of the Excite Site, if at all, until [****] prior to the expiration of the term of this Agreement.\", \"ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement.\", \"iii) In the event that Excite intends to enter into an agreement with",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 512,
+          "latency_seconds": 81.44502320798347,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "length",
+              "text": "{\"label\": \"present\", \"answer\": \"i) Excite will not propose, solicit or negotiate offers from entities other than Sponsor for any retail music store sponsorships of the Excite Site, if at all, until [****] prior to the expiration of the term of this Agreement. ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site. iii) In the event that Excite intends to enter into an agreement with a third party with respect to retail music store sponsorships of the Excite Site before the expiration of the term of the Agreement, Excite will deliver to Sponsor a written notice describing the relevant opportunity. iv) If Sponsor rejects said offer or fails to notify Excite of its acceptance within the [****] period, Excite shall have the right thereafter to enter into the agreement with such third party, provided the terms and conditions of the agreement (if entered into within the subsequent ninety (90) days) are not less favorable to Excite than previously offered by Sponsor.\", \"extracted_spans\": [\"i) Excite will not propose, solicit or negotiate offers from entities other than Sponsor for any retail music store sponsorships of the Excite Site, if at all, until [****] prior to the expiration of the term of this Agreement.\", \"ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement.\", \"iii) In the event that Excite intends to enter into an agreement with",
+              "tokens": 512,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 512
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "citations must contain positive integer evidence numbers",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [\"The Agreement is signed this 5th day of January, 2015 (the 'Closing Date')\"]}",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 51,
+          "latency_seconds": 12.729901125014294,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [\"The Agreement is signed this 5th day of January, 2015 (the 'Closing Date')\"]}",
+              "tokens": 51,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 51
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [\"10. Distributions.\", \"11. Procedure on Termination and Liquidation.\", \"12. Sale or Purchase of Interest of Joint Venturer Prohibited.\", \"13. Notice.\", \"14. Construction.\", \"15. Benefit.\", \"16. Counterparts.\"]} }\n\nThe contract does not contain any notice period for terminating a renewal in the provided clauses.",
+          "input_tokens": 3171,
+          "input_truncated": false,
+          "generated_tokens": 116,
+          "latency_seconds": 21.32489104103297,
+          "answer_is_extractive": null,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 3171,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [\"10. Distributions.\", \"11. Procedure on Termination and Liquidation.\", \"12. Sale or Purchase of Interest of Joint Venturer Prohibited.\", \"13. Notice.\", \"14. Construction.\", \"15. Benefit.\", \"16. Counterparts.\"]} }\n\nThe contract does not contain any notice period for terminating a renewal in the provided clauses.",
+              "tokens": 116,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 116
+        }
+      ]
+    },
+    {
+      "dataset": "cuad",
+      "mode": "standard_rag",
+      "examples": 4,
+      "format_pass": 1,
+      "label_correct": 0,
+      "format_pass_rate": 0.25,
+      "label_accuracy": 0.0,
+      "label_counts": {
+        "present": 2,
+        "absent": 2
+      },
+      "mean_latency_seconds": 22.105707708498812,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [15, 16, 18]}. The contract does not contain any clause explicitly addressing the notice period to terminate renewal.",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 55,
+          "latency_seconds": 13.80951604200527,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [15, 16, 18]}. The contract does not contain any clause explicitly addressing the notice period to terminate renewal.",
+              "tokens": 55,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 55
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "present",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "{\"label\": \"present\", \"answer\": \"ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site.\", \"extracted_spans\": [\"ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site.\"], \"citations\": [1, 2] }",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 243,
+          "latency_seconds": 40.433055332978256,
+          "answer_is_extractive": false,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"present\", \"answer\": \"ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site.\", \"extracted_spans\": [\"ii) Commencing not later than [****] prior to the expiration of the term of the Agreement, Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site.\"], \"citations\": [1, 2] }",
+              "tokens": 243,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 243
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 3, 4, 5, 7, 8]}. The contract does not contain any explicit mention of an \"Agreement Date\" that needs to be reviewed by a lawyer. However, the contract does have a date at the beginning indicating when it was entered into, but that is not the same as an \"Agreement Date\" that would need to be specifically reviewed for legal purposes.",
+          "input_tokens": 3891,
+          "input_truncated": false,
+          "generated_tokens": 111,
+          "latency_seconds": 21.194080249988474,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 3891,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 3, 4, 5, 7, 8]}. The contract does not contain any explicit mention of an \"Agreement Date\" that needs to be reviewed by a lawyer. However, the contract does have a date at the beginning indicating when it was entered into, but that is not the same as an \"Agreement Date\" that would need to be specifically reviewed for legal purposes.",
+              "tokens": 111,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 111
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 2, 3, 4]}. The contract does not contain any clause specifically addressing the notice period to terminate renewal.",
+          "input_tokens": 3934,
+          "input_truncated": false,
+          "generated_tokens": 55,
+          "latency_seconds": 12.986179209023248,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 3934,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 2, 3, 4]}. The contract does not contain any clause specifically addressing the notice period to terminate renewal.",
+              "tokens": 55,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 55
+        }
+      ]
+    },
+    {
+      "dataset": "cuad",
+      "mode": "verified_agentic_rag",
+      "examples": 4,
+      "format_pass": 1,
+      "label_correct": 1,
+      "format_pass_rate": 0.25,
+      "label_accuracy": 0.25,
+      "label_counts": {
+        "present": 2,
+        "absent": 2
+      },
+      "mean_latency_seconds": 47.69938784837723,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 2, 3, 4]}. The contract does not contain any clause specifically addressing the notice period to terminate a renewal.",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 56,
+          "latency_seconds": 26.79232621192932,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 93,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+              "tokens": 91,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 2, 3, 4]}. The contract does not contain any clause specifically addressing the notice period to terminate a renewal.",
+              "tokens": 56,
+              "stage": "initial_generation"
+            }
+          ],
+          "total_generated_tokens": 147,
+          "initial_label": "invalid",
+          "initial_parse_error": "response must contain one complete JSON object",
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+            "query_type": "termination",
+            "refined_query": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+            "retrieval_params": {
+              "top_k": 5,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": null,
+          "revision_type": null,
+          "revision_query": null,
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 97844,
+              "end": 101177,
+              "chunk_id": 40,
+              "score": 59.05861698897154
+            },
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 83389,
+              "end": 86623,
+              "chunk_id": 34,
+              "score": 58.06180629799721
+            },
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 80931,
+              "end": 84155,
+              "chunk_id": 33,
+              "score": 56.811904420173946
+            },
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 107565,
+              "end": 110778,
+              "chunk_id": 44,
+              "score": 56.12518314323026
+            },
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 100302,
+              "end": 102107,
+              "chunk_id": 41,
+              "score": 55.64396738511452
+            }
+          ]
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"present\", \"answer\": \"Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site. In the event that Excite intends to enter into an agreement with a third party before the expiration of the term of the Agreement, Excite will deliver to Sponsor a written notice describing the relevant opportunity. Sponsor will have [****] after receipt of such written notice to provide notice to Excite that it is prepared to enter into an agreement with Excite on the same terms and conditions as Excite proposes to accept from such third party. Excite and Sponsor will then promptly commence good faith negotiations to conclude the agreement. If Sponsor rejects said offer or fails to notify Excite of its acceptance within the [****] period, Excite shall have the right thereafter to enter into the agreement with such third party, provided the terms and conditions of the agreement (if entered into within the subsequent ninety (90) days) are not less favorable to Excite than previously offered by Sponsor.\", \"extracted_spans\": [\"Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site. In the event that Excite intends to enter into an agreement with a third party before the expiration of the term of the Agreement, Excite will deliver to Sponsor a written notice describing the relevant opportunity. Sponsor will have [****] after receipt of such written notice to provide notice to Excite",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 512,
+          "latency_seconds": 92.41269707679749,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 93,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+              "tokens": 91,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "length",
+              "text": "{\"label\": \"present\", \"answer\": \"Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site. In the event that Excite intends to enter into an agreement with a third party before the expiration of the term of the Agreement, Excite will deliver to Sponsor a written notice describing the relevant opportunity. Sponsor will have [****] after receipt of such written notice to provide notice to Excite that it is prepared to enter into an agreement with Excite on the same terms and conditions as Excite proposes to accept from such third party. Excite and Sponsor will then promptly commence good faith negotiations to conclude the agreement. If Sponsor rejects said offer or fails to notify Excite of its acceptance within the [****] period, Excite shall have the right thereafter to enter into the agreement with such third party, provided the terms and conditions of the agreement (if entered into within the subsequent ninety (90) days) are not less favorable to Excite than previously offered by Sponsor.\", \"extracted_spans\": [\"Excite will negotiate with Sponsor in good faith with respect to the terms and conditions under which this Agreement would be renewed. Excite will negotiate exclusively with Sponsor for the next [****] in good faith effort to negotiate and execute a written sponsorship renewal agreement. If, [****] prior to the expiration of the term of the Agreement, the parties have not entered into a written sponsorship renewal agreement, Excite may enter into negotiations with any third party with respect to retail music store sponsorships of the Excite Site. In the event that Excite intends to enter into an agreement with a third party before the expiration of the term of the Agreement, Excite will deliver to Sponsor a written notice describing the relevant opportunity. Sponsor will have [****] after receipt of such written notice to provide notice to Excite",
+              "tokens": 512,
+              "stage": "initial_generation"
+            }
+          ],
+          "total_generated_tokens": 603,
+          "initial_label": "invalid",
+          "initial_parse_error": "response must contain one complete JSON object",
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+            "query_type": "termination",
+            "refined_query": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+            "retrieval_params": {
+              "top_k": 5,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": null,
+          "revision_type": null,
+          "revision_query": null,
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 30189,
+              "end": 35092,
+              "chunk_id": 9,
+              "score": 34.78440893298337
+            },
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 40826,
+              "end": 45234,
+              "chunk_id": 12,
+              "score": 34.041178568340385
+            },
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 9546,
+              "end": 13779,
+              "chunk_id": 3,
+              "score": 32.80352077114492
+            },
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 6336,
+              "end": 10528,
+              "chunk_id": 2,
+              "score": 31.569416370557363
+            },
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 33812,
+              "end": 35433,
+              "chunk_id": 10,
+              "score": 30.308778747185162
+            }
+          ]
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present",
+          "prediction": "present",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\": \"present\", \"answer\": \"This Cooperation Agreement is signed this 5th day of January, 2015 (the \\\"Closing Date\\\"),\", \"extracted_spans\": [\"This Cooperation Agreement is signed this 5th day of January, 2015 (the \\\"Closing Date\\\"),\"], \"citations\": [1] }",
+          "input_tokens": 3028,
+          "input_truncated": false,
+          "generated_tokens": 83,
+          "latency_seconds": 43.945281982421875,
+          "answer_is_extractive": false,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 83,
+              "max_output_tokens": 100,
+              "finish_reason": "length",
+              "text": "Query Type: contract_clauses_with_agreement_date\n\nDesired Output: Identify and extract the clauses in this contract that specify or refer to the \"Agreement Date.\" These clauses should be reviewed by a lawyer for legal accuracy and implications.\n\nAdditional Information:\n\n1. The term \"Agreement Date\" may be referred to as other terms such as \"Effective Date,\" \"Commencement Date,\" or \"Start Date.\"",
+              "tokens": 100,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 3028,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"present\", \"answer\": \"This Cooperation Agreement is signed this 5th day of January, 2015 (the \\\"Closing Date\\\"),\", \"extracted_spans\": [\"This Cooperation Agreement is signed this 5th day of January, 2015 (the \\\"Closing Date\\\"),\"], \"citations\": [1] }",
+              "tokens": 83,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 2961,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The claim is supported by the text of the cooperation agreement, which states that the agreement was signed on January 5, 2015.\nEvidence: [1] (The entire agreement is relevant, but specifically the first sentence under the \"Recitals\" section)",
+              "tokens": 68,
+              "stage": "claim_verification"
+            }
+          ],
+          "total_generated_tokens": 251,
+          "initial_label": "present",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Agreement Date\" that should be reviewed by a lawyer. Details: The date of the contract",
+            "query_type": "duration_timeline",
+            "refined_query": "Query Type: contract_clauses_with_agreement_date\n\nDesired Output: Identify and extract the clauses in this contract that specify or refer to the \"Agreement Date.\" These clauses should be reviewed by a lawyer for legal accuracy and implications.\n\nAdditional Information:\n\n1. The term \"Agreement Date\" may be referred to as other terms such as \"Effective Date,\" \"Commencement Date,\" or \"Start Date.\"",
+            "retrieval_params": {
+              "top_k": 3,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.1
+            }
+          },
+          "verification": {
+            "overall_status": "supported",
+            "claims": [
+              {
+                "claim": "This Cooperation Agreement is signed this 5th day of January, 2015 (the \"Closing Date\"),",
+                "status": "supported",
+                "reasoning": "The claim is supported by the text of the cooperation agreement, which states that the agreement was signed on January 5, 2015.",
+                "supporting_evidence": [
+                  1
+                ],
+                "parse_error": null,
+                "claim_id": 0
+              }
+            ],
+            "hallucination_detected": false
+          },
+          "revision_type": null,
+          "revision_query": null,
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:98ba454bb3ccef1b7300bb7af2c43a7719eda9cb4e83f7c5d14578d32f8c5695",
+              "start": 5123,
+              "end": 8636,
+              "chunk_id": 1,
+              "score": 13.728990496037259
+            },
+            {
+              "doc_id": "sha256:98ba454bb3ccef1b7300bb7af2c43a7719eda9cb4e83f7c5d14578d32f8c5695",
+              "start": 12911,
+              "end": 16254,
+              "chunk_id": 4,
+              "score": 11.129231805885684
+            },
+            {
+              "doc_id": "sha256:98ba454bb3ccef1b7300bb7af2c43a7719eda9cb4e83f7c5d14578d32f8c5695",
+              "start": 0,
+              "end": 6001,
+              "chunk_id": 0,
+              "score": 11.06308174455492
+            }
+          ]
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "invalid",
+          "format_pass": false,
+          "label_correct": false,
+          "parse_error": "response must contain one complete JSON object",
+          "raw_response": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 11, 12, 13, 14, 15]}. The contract does not contain any clause regarding the notice period to terminate renewal.",
+          "input_tokens": 3940,
+          "input_truncated": false,
+          "generated_tokens": 65,
+          "latency_seconds": 27.64724612236023,
+          "answer_is_extractive": null,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 93,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+              "tokens": 91,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 3940,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "{\"label\": \"absent\", \"answer\": \"\", \"extracted_spans\": [], \"citations\": [1, 11, 12, 13, 14, 15]}. The contract does not contain any clause regarding the notice period to terminate renewal.",
+              "tokens": 65,
+              "stage": "initial_generation"
+            }
+          ],
+          "total_generated_tokens": 156,
+          "initial_label": "invalid",
+          "initial_parse_error": "response must contain one complete JSON object",
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+            "query_type": "termination",
+            "refined_query": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+            "retrieval_params": {
+              "top_k": 5,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": null,
+          "revision_type": null,
+          "revision_query": null,
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 10092,
+              "end": 13038,
+              "chunk_id": 4,
+              "score": 11.297273769030095
+            },
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 7688,
+              "end": 10968,
+              "chunk_id": 3,
+              "score": 9.805290911186104
+            },
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 5222,
+              "end": 8454,
+              "chunk_id": 2,
+              "score": 9.490538900983067
+            },
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 0,
+              "end": 3511,
+              "chunk_id": 0,
+              "score": 7.301424228197293
+            },
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 2660,
+              "end": 6054,
+              "chunk_id": 1,
+              "score": 6.715258650371229
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "retrieval": {
+    "type": "bm25",
+    "chunking": "fixed_length",
+    "top_k": 5,
+    "min_score_threshold": null,
+    "chunker_options": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_options": {
+      "k1": 1.5,
+      "b": 0.75
+    }
+  },
+  "agent": {
+    "verification": true,
+    "revision": true,
+    "revision_limit": 1,
+    "revision_reverified": false,
+    "reretrieval_top_k": 3,
+    "query_refinement_max_tokens": 100,
+    "claim_verification_max_tokens": 200,
+    "document_scope": "one source contract per query"
+  },
+  "backend": "mlx-lm",
+  "backend_version": "0.32.2",
+  "dtype": "bfloat16",
+  "quantized": false,
+  "prefill_step_size": 512,
+  "model_load_seconds": 0.1025100420229137,
+  "effective_max_input_tokens": 4096
+}

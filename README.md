@@ -62,6 +62,21 @@ legal-hallucination-auditing/
 └── setup.py
 ```
 
+## Retrieval and baseline development
+
+The current retrieval and baseline interfaces, verified commands, test evidence,
+and remaining integration tasks are documented in
+[Retrieval and baselines handoff (Chinese)](docs/RETRIEVAL_AND_BASELINES_HANDOFF.md).
+Use the standalone baseline commands in that document while the legacy
+experiment runner is being integrated. Retrieval-only development and tests need
+only `requirements-retrieval.txt`; Dense retrieval and model generation need the
+full model dependencies.
+
+See [Qin Mengmeng's full-test results](docs/RETRIEVAL_AND_BASELINES_HANDOFF.md#检索与基线全量结果)
+for Mistral and Llama 3 on ContractNLI and CUAD, and the
+[retrieval ablation results](docs/validation/RETRIEVAL_RESULTS.md) for the
+retriever, chunking, and top-k comparisons.
+
 ## Installation
 
 ```bash

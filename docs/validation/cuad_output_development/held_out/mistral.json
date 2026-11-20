@@ -1,0 +1,755 @@
+{
+  "status": "completed",
+  "checkpoint": "mistralai/Mistral-7B-Instruct-v0.2",
+  "revision": "63a8b081895390a26e140280378bc85ec8bce07a",
+  "device": "mlx",
+  "python": "3.11.17",
+  "torch": "2.15.0",
+  "transformers": "5.23.0",
+  "input_token_limit": 4096,
+  "generation_token_limit": 512,
+  "temperature": 0,
+  "seed": 42,
+  "groups": [
+    {
+      "dataset": "cuad",
+      "mode": "direct_prompting",
+      "examples": 4,
+      "format_pass": 4,
+      "label_correct": 2,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.5,
+      "label_counts": {
+        "present": 2,
+        "absent": 2
+      },
+      "mean_latency_seconds": 9.647431791498093,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present",
+          "prediction": "absent",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 19,
+          "latency_seconds": 9.776141250040382,
+          "answer_is_extractive": true,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+              "tokens": 19,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 19,
+          "extraction_error": null
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "present",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"present\", \"extracted_spans\":[\"commencing not later than [****] prior to the expiration of the term of the Agreement\"], \"citations\":[]}",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 39,
+          "latency_seconds": 10.790132458030712,
+          "answer_is_extractive": false,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"present\", \"extracted_spans\":[\"commencing not later than [****] prior to the expiration of the term of the Agreement\"], \"citations\":[]}",
+              "tokens": 39,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 39,
+          "extraction_error": "CUAD output contains text absent verbatim from the model evidence"
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present",
+          "prediction": "present",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"present\", \"extracted_spans\":[\"this 5th day of January, 2015 (the \\\"Closing Date\\\")\"], \"citations\":[]}",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 41,
+          "latency_seconds": 11.24377908295719,
+          "answer_is_extractive": true,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"present\", \"extracted_spans\":[\"this 5th day of January, 2015 (the \\\"Closing Date\\\")\"], \"citations\":[]}",
+              "tokens": 41,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 41,
+          "extraction_error": null
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "absent",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+          "input_tokens": 3198,
+          "input_truncated": false,
+          "generated_tokens": 19,
+          "latency_seconds": 6.779674374964088,
+          "answer_is_extractive": true,
+          "invalid_citations": null,
+          "generation_trace": [
+            {
+              "input_tokens": 3198,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+              "tokens": 19,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 19,
+          "extraction_error": null
+        }
+      ],
+      "verbatim_positive_correct": 1,
+      "gold_positive_count": 2
+    },
+    {
+      "dataset": "cuad",
+      "mode": "standard_rag",
+      "examples": 4,
+      "format_pass": 4,
+      "label_correct": 2,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.5,
+      "label_counts": {
+        "present": 2,
+        "absent": 2
+      },
+      "mean_latency_seconds": 10.467639177513774,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present",
+          "prediction": "absent",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[15,16]}",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 24,
+          "latency_seconds": 8.79137366701616,
+          "answer_is_extractive": true,
+          "invalid_citations": [
+            15,
+            16
+          ],
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[15,16]}",
+              "tokens": 24,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 24,
+          "extraction_error": null
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "present",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"present\", \"extracted_spans\":[\"[****] prior to the expiration of the term of the Agreement\"], \"citations\":[2]}",
+          "input_tokens": 4096,
+          "input_truncated": true,
+          "generated_tokens": 35,
+          "latency_seconds": 10.246230334043503,
+          "answer_is_extractive": false,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"present\", \"extracted_spans\":[\"[****] prior to the expiration of the term of the Agreement\"], \"citations\":[2]}",
+              "tokens": 35,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 35,
+          "extraction_error": "CUAD output contains text absent verbatim from the model evidence"
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present",
+          "prediction": "present",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"present\", \"extracted_spans\":[\"as of the date first set forth above\"], \"citations\":[1, 8]}",
+          "input_tokens": 3930,
+          "input_truncated": false,
+          "generated_tokens": 32,
+          "latency_seconds": 9.750458708964288,
+          "answer_is_extractive": true,
+          "invalid_citations": [
+            8
+          ],
+          "generation_trace": [
+            {
+              "input_tokens": 3930,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"present\", \"extracted_spans\":[\"as of the date first set forth above\"], \"citations\":[1, 8]}",
+              "tokens": 32,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 32,
+          "extraction_error": null
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "absent",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16]}",
+          "input_tokens": 3973,
+          "input_truncated": false,
+          "generated_tokens": 54,
+          "latency_seconds": 13.082494000031147,
+          "answer_is_extractive": true,
+          "invalid_citations": [
+            6,
+            7,
+            8,
+            9,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "generation_trace": [
+            {
+              "input_tokens": 3973,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16]}",
+              "tokens": 54,
+              "stage": "generation"
+            }
+          ],
+          "total_generated_tokens": 54,
+          "extraction_error": null
+        }
+      ],
+      "verbatim_positive_correct": 0,
+      "gold_positive_count": 2
+    },
+    {
+      "dataset": "cuad",
+      "mode": "verified_agentic_rag",
+      "examples": 4,
+      "format_pass": 4,
+      "label_correct": 3,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.75,
+      "label_counts": {
+        "present": 2,
+        "absent": 2
+      },
+      "mean_latency_seconds": 47.35725897550583,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present",
+          "prediction": "absent",
+          "format_pass": true,
+          "label_correct": false,
+          "parse_error": null,
+          "raw_response": "Based on the provided evidence, there is no explicit clause stating the notice period to terminate a renewal. The contract does mention a notice period for termination by either party under certain circumstances (Section 16.1), but it does not specify a notice period for terminating a renewal term. Therefore, the label should be \"absent\" and the answer should be:\n\n{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+          "input_tokens": 2800,
+          "input_truncated": false,
+          "generated_tokens": 100,
+          "latency_seconds": 56.159738063812256,
+          "answer_is_extractive": true,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 93,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+              "tokens": 91,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+              "tokens": 19,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 4033,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence provided does not contain any clause related to the notice period required to terminate a renewal. The sections provided deal with various aspects of the agreement such as definitions, confidentiality, liability, termination, consequences of termination, and insurance. However, none of these sections mention the notice period for terminating a renewal.\nEvidence: []",
+              "tokens": 87,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2800,
+              "max_output_tokens": 512,
+              "finish_reason": "stop",
+              "text": "Based on the provided evidence, there is no explicit clause stating the notice period to terminate a renewal. The contract does mention a notice period for termination by either party under certain circumstances (Section 16.1), but it does not specify a notice period for terminating a renewal term. Therefore, the label should be \"absent\" and the answer should be:\n\n{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+              "tokens": 100,
+              "stage": "revision"
+            }
+          ],
+          "total_generated_tokens": 297,
+          "extraction_error": null,
+          "grounding_error": null,
+          "initial_label": "absent",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+            "query_type": "termination",
+            "refined_query": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+            "retrieval_params": {
+              "top_k": 5,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "partially_supported",
+            "claims": [
+              {
+                "claim": "The evidence does not contain a clause answering this question: Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+                "status": "not_enough_info",
+                "reasoning": "The evidence provided does not contain any clause related to the notice period required to terminate a renewal. The sections provided deal with various aspects of the agreement such as definitions, confidentiality, liability, termination, consequences of termination, and insurance. However, none of these sections mention the notice period for terminating a renewal.",
+                "supporting_evidence": [],
+                "parse_error": null,
+                "available_evidence_count": 5,
+                "invalid_evidence_ids": [],
+                "claim_id": 0
+              }
+            ],
+            "hallucination_detected": true
+          },
+          "revision_type": "reretrieval",
+          "revision_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal? The evidence does not contain a clause answering this question: Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 107565,
+              "end": 110778,
+              "chunk_id": 44,
+              "score": 71.84370754707973
+            },
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 93159,
+              "end": 96218,
+              "chunk_id": 38,
+              "score": 69.02881202575013
+            },
+            {
+              "doc_id": "sha256:0a0920ff8b1ac696c1c2747491a9cb00e9babe149ccf6a396a943acdc78f1b84",
+              "start": 105120,
+              "end": 108335,
+              "chunk_id": 43,
+              "score": 68.66880970973708
+            }
+          ]
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "absent",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"absent\", \"extracted_spans\":[], \"citations\":[1, 2]}",
+          "input_tokens": 2952,
+          "input_truncated": false,
+          "generated_tokens": 24,
+          "latency_seconds": 39.86073088645935,
+          "answer_is_extractive": true,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 93,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+              "tokens": 91,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 4096,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[3,4]}",
+              "tokens": 22,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 4033,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence provided does not contain any information regarding the notice period required to terminate a renewal of the agreement.\nEvidence: []",
+              "tokens": 42,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2952,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\", \"extracted_spans\":[], \"citations\":[1, 2]}",
+              "tokens": 24,
+              "stage": "revision"
+            }
+          ],
+          "total_generated_tokens": 179,
+          "extraction_error": null,
+          "grounding_error": null,
+          "initial_label": "absent",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+            "query_type": "termination",
+            "refined_query": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+            "retrieval_params": {
+              "top_k": 5,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "partially_supported",
+            "claims": [
+              {
+                "claim": "The evidence does not contain a clause answering this question: Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+                "status": "not_enough_info",
+                "reasoning": "The evidence provided does not contain any information regarding the notice period required to terminate a renewal of the agreement.",
+                "supporting_evidence": [],
+                "parse_error": null,
+                "available_evidence_count": 5,
+                "invalid_evidence_ids": [],
+                "claim_id": 0
+              }
+            ],
+            "hallucination_detected": true
+          },
+          "revision_type": "reretrieval",
+          "revision_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal? The evidence does not contain a clause answering this question: Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 30189,
+              "end": 35092,
+              "chunk_id": 9,
+              "score": 39.20132962209465
+            },
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 6336,
+              "end": 10528,
+              "chunk_id": 2,
+              "score": 37.692084900471954
+            },
+            {
+              "doc_id": "sha256:3d51fb71a4d06f8185ebfdb7c3feae4fa2935d9fc75951cdfc4aaff4b5733b07",
+              "start": 3070,
+              "end": 7337,
+              "chunk_id": 1,
+              "score": 34.55199906879434
+            }
+          ]
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present",
+          "prediction": "present",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"present\", \"extracted_spans\":[\"this 5th day of January, 2015\"], \"citations\":[1]}",
+          "input_tokens": 3067,
+          "input_truncated": false,
+          "generated_tokens": 34,
+          "latency_seconds": 36.53066897392273,
+          "answer_is_extractive": true,
+          "invalid_citations": [],
+          "generation_trace": [
+            {
+              "input_tokens": 83,
+              "max_output_tokens": 100,
+              "finish_reason": "length",
+              "text": "Query Type: contract_clauses_with_agreement_date\n\nDesired Output: Identify and extract the clauses in this contract that specify or refer to the \"Agreement Date.\" These clauses should be reviewed by a lawyer for legal accuracy and implications.\n\nAdditional Information:\n\n1. The term \"Agreement Date\" may be referred to as other terms such as \"Effective Date,\" \"Commencement Date,\" or \"Start Date.\"",
+              "tokens": 100,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 3067,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"present\", \"extracted_spans\":[\"this 5th day of January, 2015\"], \"citations\":[1]}",
+              "tokens": 34,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 2970,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: SUPPORTED\nReasoning: The claim is the date when the cooperation agreement was signed, which is stated as \"this 5th day of January, 2015\" in the text of the agreement.\nEvidence: [1]",
+              "tokens": 56,
+              "stage": "claim_verification"
+            }
+          ],
+          "total_generated_tokens": 190,
+          "extraction_error": null,
+          "grounding_error": null,
+          "initial_label": "present",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Agreement Date\" that should be reviewed by a lawyer. Details: The date of the contract",
+            "query_type": "duration_timeline",
+            "refined_query": "Query Type: contract_clauses_with_agreement_date\n\nDesired Output: Identify and extract the clauses in this contract that specify or refer to the \"Agreement Date.\" These clauses should be reviewed by a lawyer for legal accuracy and implications.\n\nAdditional Information:\n\n1. The term \"Agreement Date\" may be referred to as other terms such as \"Effective Date,\" \"Commencement Date,\" or \"Start Date.\"",
+            "retrieval_params": {
+              "top_k": 3,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.1
+            }
+          },
+          "verification": {
+            "overall_status": "supported",
+            "claims": [
+              {
+                "claim": "this 5th day of January, 2015",
+                "status": "supported",
+                "reasoning": "The claim is the date when the cooperation agreement was signed, which is stated as \"this 5th day of January, 2015\" in the text of the agreement.",
+                "supporting_evidence": [
+                  1
+                ],
+                "parse_error": null,
+                "available_evidence_count": 3,
+                "invalid_evidence_ids": [],
+                "claim_id": 0
+              }
+            ],
+            "hallucination_detected": false
+          },
+          "revision_type": null,
+          "revision_query": null,
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:98ba454bb3ccef1b7300bb7af2c43a7719eda9cb4e83f7c5d14578d32f8c5695",
+              "start": 5123,
+              "end": 8636,
+              "chunk_id": 1,
+              "score": 13.728990496037259
+            },
+            {
+              "doc_id": "sha256:98ba454bb3ccef1b7300bb7af2c43a7719eda9cb4e83f7c5d14578d32f8c5695",
+              "start": 12911,
+              "end": 16254,
+              "chunk_id": 4,
+              "score": 11.129231805885684
+            },
+            {
+              "doc_id": "sha256:98ba454bb3ccef1b7300bb7af2c43a7719eda9cb4e83f7c5d14578d32f8c5695",
+              "start": 0,
+              "end": 6001,
+              "chunk_id": 0,
+              "score": 11.06308174455492
+            }
+          ]
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent",
+          "prediction": "absent",
+          "format_pass": true,
+          "label_correct": true,
+          "parse_error": null,
+          "raw_response": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[1,2,3,4,5,11,12,13,14,15,16]}",
+          "input_tokens": 2568,
+          "input_truncated": false,
+          "generated_tokens": 46,
+          "latency_seconds": 56.87789797782898,
+          "answer_is_extractive": true,
+          "invalid_citations": [
+            4,
+            5,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "generation_trace": [
+            {
+              "input_tokens": 93,
+              "max_output_tokens": 100,
+              "finish_reason": "stop",
+              "text": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+              "tokens": 91,
+              "stage": "query_refinement"
+            },
+            {
+              "input_tokens": 3979,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[]}",
+              "tokens": 19,
+              "stage": "initial_generation"
+            },
+            {
+              "input_tokens": 3916,
+              "max_output_tokens": 200,
+              "finish_reason": "stop",
+              "text": "Status: NOT_ENOUGH_INFO\nReasoning: The evidence provided does not contain any clause related to the notice period required to terminate renewal. The clauses provided deal with various aspects of the joint venture agreement such as capital contributions, offices, powers and authority, division of income and losses, accounting provisions, and termination and liquidation. However, none of these clauses mention the notice period for terminating a renewal. Therefore, the evidence does not provide enough information to support, contradict, or make a determination about the claim.\n\nEvidence: []",
+              "tokens": 121,
+              "stage": "claim_verification"
+            },
+            {
+              "input_tokens": 2568,
+              "max_output_tokens": 512,
+              "finish_reason": "json_object",
+              "text": "{\"label\":\"absent\",\"extracted_spans\":[],\"citations\":[1,2,3,4,5,11,12,13,14,15,16]}",
+              "tokens": 46,
+              "stage": "revision"
+            }
+          ],
+          "total_generated_tokens": 277,
+          "extraction_error": null,
+          "grounding_error": "answer cited evidence outside the model input",
+          "initial_label": "absent",
+          "initial_parse_error": null,
+          "query_analysis": {
+            "original_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+            "query_type": "termination",
+            "refined_query": "Query Type: Contract Termination Clause\n\nRefined Query: Please locate and highlight the specific sections of this contract that outline the notice period required to terminate or not renew the agreement. It would be helpful to identify the duration of the notice period, any conditions that must be met during the notice period, and any consequences or penalties for failing to provide timely notice. A thorough review of these provisions by a legal professional is recommended.",
+            "retrieval_params": {
+              "top_k": 5,
+              "chunking_strategy": "fixed_length",
+              "min_score_threshold": 0.0
+            }
+          },
+          "verification": {
+            "overall_status": "partially_supported",
+            "claims": [
+              {
+                "claim": "The evidence does not contain a clause answering this question: Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+                "status": "not_enough_info",
+                "reasoning": "The evidence provided does not contain any clause related to the notice period required to terminate renewal. The clauses provided deal with various aspects of the joint venture agreement such as capital contributions, offices, powers and authority, division of income and losses, accounting provisions, and termination and liquidation. However, none of these clauses mention the notice period for terminating a renewal. Therefore, the evidence does not provide enough information to support, contradict, or make a determination about the claim.",
+                "supporting_evidence": [],
+                "parse_error": null,
+                "available_evidence_count": 5,
+                "invalid_evidence_ids": [],
+                "claim_id": 0
+              }
+            ],
+            "hallucination_detected": true
+          },
+          "revision_type": "reretrieval",
+          "revision_query": "Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal? The evidence does not contain a clause answering this question: Highlight the parts (if any) of this contract related to \"Notice Period To Terminate Renewal\" that should be reviewed by a lawyer. Details: What is the notice period required to terminate renewal?",
+          "evidence_offsets": [
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 0,
+              "end": 3511,
+              "chunk_id": 0,
+              "score": 9.621036178257974
+            },
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 7688,
+              "end": 10968,
+              "chunk_id": 3,
+              "score": 9.269682501171264
+            },
+            {
+              "doc_id": "sha256:85182a8d5506adf149a0c8ea479167d6c11b979a821fa33a5da2ce1cdcd13c31",
+              "start": 10092,
+              "end": 13038,
+              "chunk_id": 4,
+              "score": 8.260664335953624
+            }
+          ]
+        }
+      ],
+      "verbatim_positive_correct": 1,
+      "gold_positive_count": 2
+    }
+  ],
+  "retrieval": {
+    "type": "bm25",
+    "chunking": "fixed_length",
+    "top_k": 5,
+    "min_score_threshold": null,
+    "chunker_options": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_options": {
+      "k1": 1.5,
+      "b": 0.75
+    }
+  },
+  "agent": {
+    "verification": true,
+    "revision": true,
+    "revision_limit": 1,
+    "revision_reverified": false,
+    "reretrieval_top_k": 3,
+    "query_refinement_max_tokens": 100,
+    "claim_verification_max_tokens": 200,
+    "document_scope": "one source contract per query"
+  },
+  "backend": "mlx-lm",
+  "backend_version": "0.32.2",
+  "dtype": "bfloat16",
+  "quantized": false,
+  "prefill_step_size": 512,
+  "model_load_seconds": 0.12222820799797773,
+  "effective_max_input_tokens": 4096
+}

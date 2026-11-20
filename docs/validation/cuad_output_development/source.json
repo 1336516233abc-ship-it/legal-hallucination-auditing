@@ -1,0 +1,53 @@
+{
+  "archive_sha256": "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a",
+  "source_member": "train_separate_questions.json",
+  "source_contracts": 408,
+  "seed": 42,
+  "test_overlap": 0,
+  "eligible_rows": {
+    "Agreement Date / absent": 31,
+    "Agreement Date / present": 377,
+    "Notice Period To Terminate Renewal / absent": 313,
+    "Notice Period To Terminate Renewal / present": 95
+  },
+  "samples": [
+    {
+      "id": "cuad_dev_TURNKEYCAPITAL,INC_07_20_2017-EX-1.1-Strategic Alliance Agreement__Agreement Date",
+      "gold_label": "present",
+      "source_chars": 12648,
+      "source_sha256": "c6d3bd7a840671da319819fad0b8c1cc1545ab83ddcf9016c7ce3aaf2b52c4de",
+      "evidence_spans": [
+        [
+          130,
+          151
+        ]
+      ]
+    },
+    {
+      "id": "cuad_dev_FOUNDATIONMEDICINE,INC_02_02_2015-EX-10.2-Collaboration Agreement__Agreement Date",
+      "gold_label": "absent",
+      "source_chars": 172142,
+      "source_sha256": "75ee54e34508350f537d8c765a2567c3ab99bbd7533fac6880739d5b850f53ce",
+      "evidence_spans": []
+    },
+    {
+      "id": "cuad_dev_ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement__Notice Period To Terminate Renewal",
+      "gold_label": "present",
+      "source_chars": 45002,
+      "source_sha256": "16bb9d1715c4e0e41dd3f47b5eff2630d3848065dd31573dc4fbe77b7415dbdd",
+      "evidence_spans": [
+        [
+          22763,
+          22991
+        ]
+      ]
+    },
+    {
+      "id": "cuad_dev_IntegrityFunds_20200121_485BPOS_EX-99.E UNDR CONTR_11948727_EX-99.E UNDR CONTR_Service Agreement__Notice Period To Terminate Renewal",
+      "gold_label": "absent",
+      "source_chars": 23845,
+      "source_sha256": "2135a565bb91e5f7a162f64ff162e18cb9e1235993c1874be87ccdf5060e0f04",
+      "evidence_spans": []
+    }
+  ]
+}

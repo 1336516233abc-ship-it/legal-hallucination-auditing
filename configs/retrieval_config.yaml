@@ -10,7 +10,6 @@ retrievers:
   dense:
     type: "dense"
     model_name: "sentence-transformers/all-MiniLM-L6-v2"
-    embedding_dim: 384
     similarity_metric: "cosine"
 
   hybrid:
@@ -26,14 +25,14 @@ chunking:
 
   clause_level:
     use_sentence_boundaries: true
-    max_chunk_size: 1024
+    max_chunk_size: 512  # Match the fixed-length word budget for strategy comparisons
     min_chunk_size: 50
 
 # Retrieval parameters
 retrieval:
   top_k: 5
   top_k_ablation: [3, 5, 10]  # For ablation experiments
-  min_score_threshold: 0.0
+  min_score_threshold: null  # Preserve valid negative BM25 scores
   rerank: false
   rerank_model: null
 

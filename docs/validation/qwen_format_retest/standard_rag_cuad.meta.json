@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "mode": "standard_rag",
+  "dataset": "cuad",
+  "split": "test",
+  "seed": 42,
+  "sample_size": 2,
+  "example_count": 2,
+  "selected_ids": [
+    "cuad_test_GridironBionutrientsInc_20171206_8-K_EX-10.2_10972556_EX-10.2_Endorsement Agreement__Expiration Date",
+    "cuad_test_GSITECHNOLOGYINC_11_16_2009-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT between SONY ELECTRONICS INC. and GSI TECHNOLOGY, INC.__Expiration Date"
+  ],
+  "model": {
+    "name": "Qwen/Qwen2.5-0.5B-Instruct",
+    "max_tokens": 256,
+    "temperature": 0.0,
+    "top_p": 0.9
+  },
+  "retrieval": {
+    "retriever_type": "bm25",
+    "chunking_strategy": "fixed_length",
+    "top_k": 5,
+    "chunker_kwargs": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_kwargs": {
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "min_score_threshold": null
+  },
+  "requested_max_input_tokens": 2048,
+  "device": "cpu",
+  "dataset_sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104",
+  "created_at": "2026-11-20T02:56:13.830880+00:00",
+  "status": "completed",
+  "argv": [
+    "--dataset",
+    "cuad",
+    "--sample_size",
+    "2",
+    "--seed",
+    "42",
+    "--model_name",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "--max_tokens",
+    "256",
+    "--temperature",
+    "0",
+    "--max_input_tokens",
+    "2048",
+    "--device",
+    "cpu",
+    "--overwrite",
+    "--output",
+    "docs/validation/qwen_format_retest/standard_rag_cuad.json"
+  ],
+  "effective_max_input_tokens": 2048,
+  "resolved_model_revision": null,
+  "prediction_count": 2,
+  "parse_error_count": 0,
+  "checkpoint": "docs/validation/qwen_format_retest/standard_rag_cuad.jsonl",
+  "output": "docs/validation/qwen_format_retest/standard_rag_cuad.json",
+  "validation_status": "passed"
+}

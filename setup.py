@@ -10,6 +10,7 @@ setup(
     install_requires=[
         "torch>=2.0.0",
         "transformers>=4.30.0",
+        "accelerate>=0.26.0",
         "sentence-transformers>=2.2.0",
         "datasets>=2.12.0",
         "rank-bm25>=0.2.2",

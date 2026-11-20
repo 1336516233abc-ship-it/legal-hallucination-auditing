@@ -1,0 +1,29 @@
+{
+  "status": "failed",
+  "checkpoint": "mistralai/Mistral-7B-Instruct-v0.2",
+  "revision": "63a8b081895390a26e140280378bc85ec8bce07a",
+  "device": "mps",
+  "python": "3.11.17",
+  "torch": "2.15.0",
+  "transformers": "5.23.0",
+  "input_token_limit": 4096,
+  "generation_token_limit": 512,
+  "temperature": 0,
+  "seed": 42,
+  "groups": [],
+  "retrieval": {
+    "type": "bm25",
+    "chunking": "fixed_length",
+    "top_k": 5,
+    "min_score_threshold": null,
+    "chunker_options": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_options": {
+      "k1": 1.5,
+      "b": 0.75
+    }
+  },
+  "error": "OutOfMemoryError: MPS command buffer execution failed: Insufficient Memory (00000008:kIOGPUCommandBufferCallbackErrorOutOfMemory). This error may have been asynchronously reported, so the stack trace below might be incorrect."
+}

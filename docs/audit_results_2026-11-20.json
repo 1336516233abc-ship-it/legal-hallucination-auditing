@@ -1,0 +1,160 @@
+{
+  "review_date": "2026-11-20",
+  "head": "0166fe94c23f6e599ab54d98bbac6b49404046d8",
+  "scope": "Data validation and isolated logic probes; no LLM inference or Dense model test",
+  "python": "3.11.17",
+  "datasets": {
+    "contractnli": {
+      "examples": 2091,
+      "unique_ids": 2091,
+      "distinct_contexts": 122,
+      "labels": {
+        "neutral": 903,
+        "entailment": 968,
+        "contradiction": 220
+      },
+      "evidence_spans": 2404,
+      "invalid_spans": 0,
+      "examples_with_evidence": 1188,
+      "null_answers": 2091,
+      "empty_contexts": 0,
+      "document_count": 123,
+      "sha256": "ba6aa63b66a354028703c3e3574a902f55cc751dc37cc1d9d2f2c11bd39bb116"
+    },
+    "cuad": {
+      "examples": 1020,
+      "unique_ids": 1020,
+      "distinct_contexts": 102,
+      "labels": {
+        "present": 599,
+        "absent": 421
+      },
+      "evidence_spans": 1116,
+      "invalid_spans": 0,
+      "examples_with_evidence": 599,
+      "null_answers": 421,
+      "empty_contexts": 0,
+      "document_count": 102,
+      "sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104"
+    }
+  },
+  "probes": {
+    "normal_data_package_import": {
+      "returncode": 1,
+      "last_error": "ModuleNotFoundError: No module named 'dataset_loader'"
+    },
+    "json_to_LegalExample": {
+      "contractnli": 2091,
+      "cuad": 1020
+    },
+    "classification_sanity": {
+      "accuracy": 0.5
+    },
+    "evidence_hit_rate_after_previous_hit": {
+      "actual": 0.5,
+      "expected": 1.0
+    },
+    "evidence_recall_without_context": {
+      "actual": 1.0,
+      "expected": "reject missing context instead of returning 1.0"
+    },
+    "nli_per_class_names": [
+      "present",
+      "absent",
+      "neutral"
+    ],
+    "cuad_null_answer": "AttributeError: 'NoneType' object has no attribute 'lower'",
+    "agent_verification_metric_adapter": {
+      "actual": null,
+      "expected": 1.0
+    },
+    "fixed_chunk_offsets": {
+      "input": "Alpha  beta\nGamma delta.",
+      "chunks": [
+        {
+          "text": "Alpha beta Gamma",
+          "start": 0,
+          "end": 16,
+          "chunk_id": 0,
+          "metadata": {},
+          "slice_matches": false
+        },
+        {
+          "text": "Gamma delta.",
+          "start": 12,
+          "end": 24,
+          "chunk_id": 1,
+          "metadata": {},
+          "slice_matches": true
+        }
+      ]
+    },
+    "repeated_word_offsets": {
+      "actual_starts": [
+        0,
+        2,
+        4
+      ],
+      "expected_starts": [
+        0,
+        4,
+        8
+      ]
+    },
+    "fixed_offsets_on_supplied_contracts": {
+      "contractnli": {
+        "chunks": 601,
+        "slice_mismatches": 598
+      },
+      "cuad": {
+        "chunks": 1943,
+        "slice_mismatches": 1924
+      }
+    },
+    "clause_short_text": {
+      "chunks": [],
+      "expected": "nonempty evidence"
+    },
+    "cross_contract_retrieval": {
+      "query_document": 0,
+      "retrieved_document": 1
+    },
+    "shared_kwargs": "TypeError: BM25Retriever.__init__() got an unexpected keyword argument 'chunk_size'",
+    "cuad_label_parser": {
+      "input": "Label: present",
+      "actual": "neutral",
+      "expected": "present"
+    },
+    "direct_context_truncation": {
+      "tail_survives": false
+    },
+    "bm25_top_k_zero": {
+      "returned": 3,
+      "expected": 0
+    },
+    "python_syntax": {
+      "files": 34,
+      "status": "passed"
+    }
+  },
+  "official_release_comparison": {
+    "contractnli": {
+      "compared": 2091,
+      "mismatches": {}
+    },
+    "cuad": {
+      "compared": 1020,
+      "mismatches": {}
+    }
+  },
+  "source_archives": {
+    "contract-nli.zip": "e03fc77bbf8b53e2976a250e81d8a294bc3d5e5fb014521e477dee9340d6287b",
+    "cuad-data.zip": "f8161d18bea4e9c05e78fa6dda61c19c846fb8087ea969c172753bc2f45b999a"
+  },
+  "audit_dependencies": {
+    "numpy": "2.4.6",
+    "scikit-learn": "1.9.1",
+    "rank-bm25": "0.2.2",
+    "datasets": "5.2.0"
+  }
+}

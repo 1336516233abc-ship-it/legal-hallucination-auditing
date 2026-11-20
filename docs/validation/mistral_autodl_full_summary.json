@@ -1,0 +1,362 @@
+{
+  "status": "completed",
+  "started_at": "2026-11-20T09:05:57+00:00",
+  "updated_at": "2026-11-20T10:32:18+00:00",
+  "pid": 8865,
+  "completed": 9333,
+  "planned": 9333,
+  "predictions_per_second": 1.8015548477035979,
+  "model_calls": 19784,
+  "estimated_remaining_seconds": 0.0,
+  "settings": {
+    "checkpoint": "mistralai/Mistral-7B-Instruct-v0.2",
+    "revision": "63a8b081895390a26e140280378bc85ec8bce07a",
+    "backend": "vllm",
+    "dtype": "bfloat16",
+    "python": "3.12.3",
+    "quantized": false,
+    "workers": 8,
+    "pilot": false,
+    "temperature": 0,
+    "seed": 42,
+    "input_tokens": 4096,
+    "output_tokens": 512,
+    "methods": [
+      "direct_prompting",
+      "standard_rag",
+      "verified_agentic_rag"
+    ],
+    "retrieval": {
+      "retrieval": {
+        "top_k": 5,
+        "top_k_ablation": [
+          3,
+          5,
+          10
+        ],
+        "min_score_threshold": null,
+        "rerank": false,
+        "rerank_model": null
+      },
+      "chunker_kwargs": {
+        "chunk_size": 512,
+        "overlap": 128
+      },
+      "retriever_kwargs": {
+        "k1": 1.5,
+        "b": 0.75
+      }
+    },
+    "packages": {
+      "vllm": "0.10.2",
+      "requests": "2.32.5",
+      "torch": "2.8.0+cu128",
+      "transformers": "4.56.2",
+      "huggingface-hub": "0.34.4",
+      "rank-bm25": "0.2.2",
+      "numpy": "2.2.6",
+      "pyyaml": "6.0.3"
+    },
+    "datasets": {
+      "contractnli": {
+        "count": 2091,
+        "sha256": "ba6aa63b66a354028703c3e3574a902f55cc751dc37cc1d9d2f2c11bd39bb116"
+      },
+      "cuad": {
+        "count": 1020,
+        "sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104"
+      }
+    },
+    "source_sha256": {
+      "agent/__init__.py": "40a172d00f54e46a1cbdd4d05e5494ffb52e2c691c27529f5e65ea8629d69d86",
+      "agent/agentic_rag.py": "3cd8769cb3ca04f623e8e8704dcad6f35a54cf95d0b978098a51555b63d6173d",
+      "agent/generator.py": "af98ac77d8342a58aa57a3d659554c504110c6445ef1b15e6d81926a690ef272",
+      "agent/query_analyzer/__init__.py": "ccdb63065f335db3bb4239e40bf453e0874e7bcd4508e5e49458711ca87406a0",
+      "agent/query_analyzer/analyzer.py": "e94692b86186623c46dcea092007c8ed60f80fd7597d7d6e09420309cf791db5",
+      "agent/reviser/__init__.py": "e2b572674d0ce9f5671b5998c0bbc44530803582ccc958558021467218469f9c",
+      "agent/reviser/reviser.py": "063b098e7797e4de9514847c92d69efa224eb5467d4c89e6712f130d3f313a63",
+      "agent/verifier/__init__.py": "e16b8f9825d45902d258cd76865e8964625907da984195d8cca2889747e77a90",
+      "agent/verifier/verifier.py": "1d467614e41c81b078762088853c545e69acced3384eab75ddd530ac6a8234c7",
+      "data/__init__.py": "0529bbc02d390f058f86e0f344972579ff7797252c7f74a65ca44573e3b2be23",
+      "data/contractnli_processor.py": "6ab9a75632521253e0440bb888d5001010798d46365c7e331b02bbbeb47bcb7a",
+      "data/cuad_processor.py": "a233eaddde125af1b06b589997c540eab7e09d736a160f6326922a3a6940a75a",
+      "data/dataset_loader.py": "acb900ab5059fca96700ae7e1993f7d83a604af8dfe760eb378c91e093f2f8bc",
+      "data/privacyqa_processor.py": "8997e56e5e5f34a732632149ca40fbcce639a63973a2f7fbee84459b92e3bac6",
+      "experiments/__init__.py": "15d5776d6322f1d3e78d0ba79847ecc65cb7eb30a98b97a422239d25baa76cbf",
+      "experiments/prepare_cuad_development.py": "07e91931f0e68a7c91f189ac27e54665f194e3f97531a3d1107114977647c85a",
+      "experiments/run_baseline_pilot.py": "573bff7facfffe2bcb4bf5cf6eacf314cc57e87bf4ad450f5228858dd9c583eb",
+      "experiments/run_experiments.py": "c2a18fa22286a4057d6cea80f4387d5ee3a1b5a9d8733dd4baeb67d84d07c1b0",
+      "experiments/run_full_mistral.py": "4d2d629b3a675b5a8e402eb8f5973b55435112bf6badbcd95acc7a7f74041454",
+      "experiments/vllm_mistral.py": "1957b39df3cf6a0c0760fabb93f80fa03086085221fe18d8cd4f66ff1c3ee642",
+      "retrieval/__init__.py": "8b6e412a386f8dc9cae61d948aa4b80b9f295742b94169b6343172d7d28c415b",
+      "retrieval/baseline_direct.py": "37aa3188dea633303ca8add6b4535ae8b6b5982b1de63399a4806a0b1d16a488",
+      "retrieval/baseline_rag.py": "87b54ad83d0da89507a76e68ca4c6b44c5b9ac270000ed45336abd3f7a4a858c",
+      "retrieval/chunking.py": "0617195ddbce6637f44f9333ce41292ca418a5cb9a2a46a4feeb907542e75f16",
+      "retrieval/cli.py": "ae4ed6d5ffda59ee799e69958f7313adeb4efcf44f46acd8fa203b38efc08d9f",
+      "retrieval/common.py": "904a5e6376e304c60755dd98da7ebfcbc976ba63aeba4757dca38c59fe261e88",
+      "retrieval/evaluate_retrieval.py": "5cd307df34306759fc66660c55640ae459e3577efb0b8f1e46ad20b903da32e7",
+      "retrieval/evidence.py": "db38eed86bfd9497e7f5bf2a84f5a84392888792d612042be46817d74884cdc7",
+      "retrieval/retrievers/__init__.py": "f48b313e316e89a13b02eb71311096c05abd874f8222434c60cc0982bff49b00",
+      "retrieval/retrievers/retriever.py": "d81952cbb21180a88784dd4768922d9034bc397950a42c2677fc664989d481c9",
+      "utils/__init__.py": "d4f8735824fd26704dedbf84c765b38a9e4bacb81f08fe6fbedcf4704e7bd0be",
+      "utils/helpers.py": "fd7eaf243506c8faea309ec0580718fd51baa23ee90e5f33f06b901f457a794d",
+      "utils/llm_interface.py": "fde6e85ec5e4db6f1071a83df4d9661530640ba1b70dc988f7a7690675024a85",
+      "utils/logger.py": "8153b984ac47c6f1464a161c2421141bb8f6dd4e73ac8ea8dd947223bb37b7ce"
+    },
+    "gpu": "NVIDIA RTX 6000D"
+  },
+  "groups": [
+    {
+      "dataset": "contractnli",
+      "method": "direct_prompting",
+      "planned": 2091,
+      "completed": 2091,
+      "format_pass": 1750,
+      "label_correct": 908,
+      "format_pass_rate": 0.8369201339072214,
+      "label_accuracy": 0.43424198947871834,
+      "macro_f1": 0.3253394843786747,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 20,
+          "entailment": 5,
+          "invalid": 7,
+          "neutral": 188
+        },
+        "entailment": {
+          "contradiction": 42,
+          "entailment": 115,
+          "invalid": 266,
+          "neutral": 545
+        },
+        "neutral": {
+          "contradiction": 27,
+          "entailment": 35,
+          "invalid": 68,
+          "neutral": 773
+        }
+      },
+      "mean_latency_seconds": 1.9296051471809033,
+      "model_calls": 2091,
+      "format_or_execution_errors": {
+        "missing or invalid task label": 341
+      },
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 0,
+      "revisions": 0,
+      "gold_evidence_rows": 1188,
+      "fully_covered_gold_rows": 1177,
+      "label_accuracy_when_gold_fully_covered": 0.11384876805437553,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0
+    },
+    {
+      "dataset": "contractnli",
+      "method": "standard_rag",
+      "planned": 2091,
+      "completed": 2091,
+      "format_pass": 1718,
+      "label_correct": 876,
+      "format_pass_rate": 0.8216164514586323,
+      "label_accuracy": 0.41893830703012913,
+      "macro_f1": 0.2707187211391265,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 4,
+          "entailment": 4,
+          "invalid": 8,
+          "neutral": 204
+        },
+        "entailment": {
+          "contradiction": 34,
+          "entailment": 73,
+          "invalid": 290,
+          "neutral": 571
+        },
+        "neutral": {
+          "contradiction": 7,
+          "entailment": 22,
+          "invalid": 75,
+          "neutral": 799
+        }
+      },
+      "mean_latency_seconds": 2.524731799276454,
+      "model_calls": 2091,
+      "format_or_execution_errors": {
+        "missing or invalid task label": 373
+      },
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 100,
+      "revisions": 0,
+      "gold_evidence_rows": 1188,
+      "fully_covered_gold_rows": 1148,
+      "label_accuracy_when_gold_fully_covered": 0.06707317073170732,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0
+    },
+    {
+      "dataset": "contractnli",
+      "method": "verified_agentic_rag",
+      "planned": 2091,
+      "completed": 2091,
+      "format_pass": 1577,
+      "label_correct": 775,
+      "format_pass_rate": 0.7541846006695361,
+      "label_accuracy": 0.3706360593017695,
+      "macro_f1": 0.23050640267031,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 3,
+          "invalid": 18,
+          "neutral": 199
+        },
+        "entailment": {
+          "contradiction": 37,
+          "entailment": 21,
+          "invalid": 372,
+          "neutral": 538
+        },
+        "neutral": {
+          "contradiction": 27,
+          "entailment": 1,
+          "invalid": 124,
+          "neutral": 751
+        }
+      },
+      "mean_latency_seconds": 10.819633911010582,
+      "model_calls": 10089,
+      "format_or_execution_errors": {
+        "missing or invalid task label": 514
+      },
+      "grounding_errors": 112,
+      "rows_with_out_of_range_citations": 112,
+      "revisions": 1466,
+      "gold_evidence_rows": 1188,
+      "fully_covered_gold_rows": 1101,
+      "label_accuracy_when_gold_fully_covered": 0.021798365122615803,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0
+    },
+    {
+      "dataset": "cuad",
+      "method": "direct_prompting",
+      "planned": 1020,
+      "completed": 1020,
+      "format_pass": 877,
+      "label_correct": 684,
+      "format_pass_rate": 0.8598039215686275,
+      "label_accuracy": 0.6705882352941176,
+      "macro_f1": 0.7214130833639123,
+      "confusion": {
+        "absent": {
+          "absent": 342,
+          "invalid": 53,
+          "present": 26
+        },
+        "present": {
+          "absent": 167,
+          "invalid": 90,
+          "present": 342
+        }
+      },
+      "mean_latency_seconds": 1.5066765464358396,
+      "model_calls": 1020,
+      "format_or_execution_errors": {
+        "citations must contain positive integer evidence numbers": 92,
+        "extracted_spans must contain nonempty strings": 16,
+        "response must contain one complete JSON object": 33,
+        "present responses require an extracted answer": 2
+      },
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 0,
+      "revisions": 0,
+      "gold_evidence_rows": 599,
+      "fully_covered_gold_rows": 446,
+      "label_accuracy_when_gold_fully_covered": 0.6928251121076233,
+      "gold_positive_count": 599,
+      "verbatim_positive_correct": 226
+    },
+    {
+      "dataset": "cuad",
+      "method": "standard_rag",
+      "planned": 1020,
+      "completed": 1020,
+      "format_pass": 928,
+      "label_correct": 711,
+      "format_pass_rate": 0.9098039215686274,
+      "label_accuracy": 0.6970588235294117,
+      "macro_f1": 0.7284482258185383,
+      "confusion": {
+        "absent": {
+          "absent": 389,
+          "invalid": 14,
+          "present": 18
+        },
+        "present": {
+          "absent": 199,
+          "invalid": 78,
+          "present": 322
+        }
+      },
+      "mean_latency_seconds": 1.3878446088172496,
+      "model_calls": 1020,
+      "format_or_execution_errors": {
+        "response must contain one complete JSON object": 14,
+        "present responses require an extracted answer": 23,
+        "extracted_spans must contain nonempty strings": 23,
+        "citations must contain positive integer evidence numbers": 30,
+        "response has no JSON object or Answer/Label fields": 2
+      },
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 107,
+      "revisions": 0,
+      "gold_evidence_rows": 599,
+      "fully_covered_gold_rows": 356,
+      "label_accuracy_when_gold_fully_covered": 0.6292134831460674,
+      "gold_positive_count": 599,
+      "verbatim_positive_correct": 179
+    },
+    {
+      "dataset": "cuad",
+      "method": "verified_agentic_rag",
+      "planned": 1020,
+      "completed": 1020,
+      "format_pass": 828,
+      "label_correct": 645,
+      "format_pass_rate": 0.8117647058823529,
+      "label_accuracy": 0.6323529411764706,
+      "macro_f1": 0.6970591854312784,
+      "confusion": {
+        "absent": {
+          "absent": 350,
+          "invalid": 62,
+          "present": 9
+        },
+        "present": {
+          "absent": 174,
+          "invalid": 130,
+          "present": 295
+        }
+      },
+      "mean_latency_seconds": 6.316643156958562,
+      "model_calls": 3473,
+      "format_or_execution_errors": {
+        "response must contain one complete JSON object": 51,
+        "extracted_spans must contain nonempty strings": 37,
+        "present responses require an extracted answer": 52,
+        "response has no JSON object or Answer/Label fields": 14,
+        "citations must contain positive integer evidence numbers": 25,
+        "missing or invalid task label": 13
+      },
+      "grounding_errors": 223,
+      "rows_with_out_of_range_citations": 128,
+      "revisions": 662,
+      "gold_evidence_rows": 599,
+      "fully_covered_gold_rows": 346,
+      "label_accuracy_when_gold_fully_covered": 0.615606936416185,
+      "gold_positive_count": 599,
+      "verbatim_positive_correct": 132
+    }
+  ],
+  "error": null
+}

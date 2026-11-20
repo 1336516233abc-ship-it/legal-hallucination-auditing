@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "mode": "standard_rag",
+  "dataset": "contractnli",
+  "split": "test",
+  "seed": 42,
+  "sample_size": 2,
+  "example_count": 2,
+  "selected_ids": [
+    "contractnli_test_11_nda-11",
+    "contractnli_test_50_nda-13"
+  ],
+  "model": {
+    "name": "Qwen/Qwen2.5-0.5B-Instruct",
+    "max_tokens": 256,
+    "temperature": 0.0,
+    "top_p": 0.9
+  },
+  "retrieval": {
+    "retriever_type": "bm25",
+    "chunking_strategy": "fixed_length",
+    "top_k": 5,
+    "chunker_kwargs": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_kwargs": {
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "min_score_threshold": null
+  },
+  "requested_max_input_tokens": 2048,
+  "device": "cpu",
+  "dataset_sha256": "ba6aa63b66a354028703c3e3574a902f55cc751dc37cc1d9d2f2c11bd39bb116",
+  "created_at": "2026-11-20T02:32:45.415856+00:00",
+  "status": "completed",
+  "argv": [
+    "--dataset",
+    "contractnli",
+    "--sample_size",
+    "2",
+    "--seed",
+    "42",
+    "--model_name",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "--max_tokens",
+    "256",
+    "--temperature",
+    "0",
+    "--max_input_tokens",
+    "2048",
+    "--device",
+    "cpu",
+    "--overwrite",
+    "--output",
+    "docs/validation/qwen_smoke/standard_rag_contractnli.json"
+  ],
+  "effective_max_input_tokens": 2048,
+  "resolved_model_revision": null,
+  "prediction_count": 2,
+  "parse_error_count": 2,
+  "checkpoint": "docs/validation/qwen_smoke/standard_rag_contractnli.jsonl",
+  "output": "docs/validation/qwen_smoke/standard_rag_contractnli.json",
+  "validation_status": "has_parse_errors"
+}
