@@ -1,0 +1,29 @@
+{
+  "status": "blocked",
+  "checkpoint": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "revision": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2",
+  "device": "mps",
+  "python": "3.11.17",
+  "torch": "2.15.0",
+  "transformers": "5.23.0",
+  "input_token_limit": 4096,
+  "generation_token_limit": 512,
+  "temperature": 0,
+  "seed": 42,
+  "groups": [],
+  "retrieval": {
+    "type": "bm25",
+    "chunking": "fixed_length",
+    "top_k": 5,
+    "min_score_threshold": null,
+    "chunker_options": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_options": {
+      "k1": 1.5,
+      "b": 0.75
+    }
+  },
+  "error": "GatedRepoError: 401 Client Error. (Request ID: Root=1-6affb8a9-1cadf70b22e182685a00d4ec;3a682f0b-e185-477c-ae34-22ebd0867c1e)"
+}

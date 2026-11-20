@@ -13,10 +13,12 @@ import json
 import os
 import argparse
 from typing import List, Dict
-from datasets import load_dataset
 import logging
 
-from dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
+if __package__:
+    from .dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
+else:
+    from dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -33,6 +35,8 @@ class ContractNLIProcessor(DatasetLoader):
     def download(self):
         """Download ContractNLI dataset from HuggingFace."""
         logger.info("Downloading ContractNLI dataset...")
+        from datasets import load_dataset
+
         try:
             dataset = load_dataset("coastalcph/lex_glue", "contract_nli")
 

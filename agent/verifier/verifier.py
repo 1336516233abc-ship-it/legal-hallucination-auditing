@@ -9,8 +9,11 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from typing import Dict, List
+import json
+import re
+from typing import Dict, List, Optional
 from utils.llm_interface import LLMInterface
+from retrieval.common import fit_evidence
 import logging
 
 logger = logging.getLogger(__name__)
@@ -32,7 +35,10 @@ class EvidenceVerifier:
         self,
         claims: List[str],
         evidence: List[str],
-        answer: str = None
+        answer: str = None,
+        max_input_tokens: Optional[int] = None,
+        *,
+        strict_evidence: bool = False,
     ) -> Dict:
         """
         Verify claims against evidence.
@@ -53,7 +59,7 @@ class EvidenceVerifier:
         verification_results = []
 
         for i, claim in enumerate(claims):
-            result = self._verify_claim(claim, evidence)
+            result = self._verify_claim(claim, evidence, max_input_tokens, strict_evidence)
             result['claim_id'] = i
             verification_results.append(result)
 
@@ -74,7 +80,7 @@ class EvidenceVerifier:
             'hallucination_detected': has_contradictions or has_unsupported,
         }
 
-    def _verify_claim(self, claim: str, evidence: List[str]) -> Dict:
+    def _verify_claim(self, claim: str, evidence: List[str], max_input_tokens=None, strict_evidence=False) -> Dict:
         """
         Verify a single claim against evidence.
 
@@ -85,14 +91,13 @@ class EvidenceVerifier:
         Returns:
             Dict with claim, status, supporting_evidence
         """
-        # Format evidence
-        evidence_text = "\n\n".join([
-            f"[{i+1}] {ev}"
-            for i, ev in enumerate(evidence)
-        ])
+        evidence_rule = ('Use a JSON array of integers from the evidence shown above, e.g. [1]. '
+                         'Use [] when no evidence supports the verdict.' if strict_evidence else
+                         '[List evidence numbers that are relevant]')
 
-        # Create verification prompt
-        prompt = f"""You are a fact-checking assistant. Verify if the following claim is supported by the evidence.
+        def build(chunks):
+            evidence_text = "\n\n".join(f"[{i}] {chunk['text']}" for i, chunk in enumerate(chunks, 1))
+            return f"""You are a fact-checking assistant. Verify if the following claim is supported by the evidence.
 
 Evidence:
 {evidence_text}
@@ -107,55 +112,99 @@ Determine if the claim is:
 Format your response as:
 Status: [SUPPORTED/CONTRADICTED/NOT_ENOUGH_INFO]
 Reasoning: [Brief explanation]
-Evidence: [List evidence numbers that are relevant]
+Evidence: {evidence_rule}
 """
 
-        result = self.llm.generate(prompt, max_tokens=200, temperature=0.3)
+        chunks = [{"text": source, "start": 0} for source in evidence]
+        if max_input_tokens is None:
+            used = chunks
+            prompt = build(used)
+        else:
+            tokenizer = getattr(self.llm, "baseline_tokenizer", getattr(self.llm, "tokenizer", None))
+            used, prompt, _ = fit_evidence(chunks, build, tokenizer, max_input_tokens)
+        if max_input_tokens is None and not strict_evidence:
+            result = self.llm.generate(prompt, max_tokens=200, temperature=0.3)
+        else:
+            generate = getattr(self.llm, "generate_for_baseline", self.llm.generate)
+            result = generate(prompt, max_tokens=200, temperature=0)
 
         # Parse verification result
-        parsed = self._parse_verification(result['text'])
-
-        return {
+        parsed = self._parse_verification(result['text'], evidence_count=len(used) if strict_evidence else None)
+        verdict = {
             'claim': claim,
-            'status': parsed['status'],
+            'status': ('not_enough_info' if (max_input_tokens is not None or strict_evidence) and parsed['parse_error'] else
+                       parsed['status']),
             'reasoning': parsed['reasoning'],
             'supporting_evidence': parsed['evidence_ids'],
+            'parse_error': parsed['parse_error'],
         }
+        if strict_evidence:
+            verdict['available_evidence_count'] = len(used)
+            verdict['invalid_evidence_ids'] = parsed['invalid_evidence_ids']
+        return verdict
 
-    def _parse_verification(self, response: str) -> Dict:
+    def _parse_verification(self, response: str, *, evidence_count=None) -> Dict:
         """Parse verification response."""
         lines = response.strip().split('\n')
 
         status = "not_enough_info"  # Default
         reasoning = ""
         evidence_ids = []
+        status_fields, evidence_fields = [], []
+        parse_error = "missing or invalid verifier status"
 
         for line in lines:
             line = line.strip()
 
             if line.lower().startswith("status:"):
                 status_text = line.split(":", 1)[1].strip().lower()
+                status_fields.append(status_text)
                 if "supported" in status_text and "not" not in status_text:
                     status = "supported"
                 elif "contradicted" in status_text:
                     status = "contradicted"
                 else:
                     status = "not_enough_info"
+                if status_text in {"supported", "contradicted", "not_enough_info"}:
+                    parse_error = None
 
             elif line.lower().startswith("reasoning:"):
                 reasoning = line.split(":", 1)[1].strip()
 
             elif line.lower().startswith("evidence:"):
                 evidence_text = line.split(":", 1)[1].strip()
-                # Extract numbers
-                import re
+                evidence_fields.append(evidence_text)
                 evidence_ids = [int(m) for m in re.findall(r'\d+', evidence_text)]
+
+        if evidence_count is not None:
+            evidence_ids, invalid_ids, evidence_error = self._check_evidence_fields(evidence_fields, evidence_count)
+            if len(status_fields) != 1 or status_fields[0] not in {"supported", "contradicted", "not_enough_info"}:
+                parse_error = "missing or invalid verifier status"
+            elif evidence_error:
+                parse_error = evidence_error
+            elif status != "not_enough_info" and not evidence_ids:
+                parse_error = "verifier verdict requires cited evidence"
+            return {'status': status, 'reasoning': reasoning, 'evidence_ids': evidence_ids,
+                    'parse_error': parse_error, 'invalid_evidence_ids': invalid_ids}
 
         return {
             'status': status,
             'reasoning': reasoning,
             'evidence_ids': evidence_ids,
+            'parse_error': parse_error,
         }
+
+    def _check_evidence_fields(self, fields, evidence_count):
+        try:
+            ids = json.loads(fields[0]) if len(fields) == 1 else None
+        except json.JSONDecodeError:
+            ids = None
+        if not isinstance(ids, list) or any(type(i) is not int for i in ids):
+            return [], [], "verifier evidence must be a JSON array of integers"
+        invalid = [i for i in ids if not 1 <= i <= evidence_count]
+        if invalid:
+            return [], invalid, "verifier cited evidence outside the model input"
+        return ids, [], None
 
     def _extract_claims(self, answer: str) -> List[str]:
         """Extract individual claims from answer text."""

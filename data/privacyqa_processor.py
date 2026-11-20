@@ -14,7 +14,10 @@ import argparse
 from typing import List
 import logging
 
-from dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
+if __package__:
+    from .dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
+else:
+    from dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

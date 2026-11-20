@@ -1,0 +1,29 @@
+{
+  "seed": 42,
+  "per_label": 2,
+  "split": "test",
+  "datasets": {
+    "cuad": {
+      "source_sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104",
+      "population": 1020,
+      "rows": [
+        {
+          "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "gold_label": "present"
+        },
+        {
+          "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent"
+        },
+        {
+          "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "gold_label": "present"
+        },
+        {
+          "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+          "gold_label": "absent"
+        }
+      ]
+    }
+  }
+}

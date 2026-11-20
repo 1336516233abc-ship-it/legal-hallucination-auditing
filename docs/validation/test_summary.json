@@ -1,0 +1,271 @@
+{
+  "date": "2026-11-20",
+  "full_environment": {
+    "tests": 141,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "passed": 141,
+    "seconds": 5.413
+  },
+  "minimal_environment": {
+    "tests": 126,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 3,
+    "passed": 123,
+    "seconds": 1.57
+  },
+  "real_model_smoke": [
+    {
+      "mode": "direct_prompting",
+      "dataset": "contractnli",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "model_revision": null,
+      "examples": 2,
+      "execution_status": "completed",
+      "stored_parse_errors": 1,
+      "current_parser_errors": 1,
+      "format_validation": "failed",
+      "research_performance_claim": false
+    },
+    {
+      "mode": "direct_prompting",
+      "dataset": "cuad",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "model_revision": null,
+      "examples": 2,
+      "execution_status": "completed",
+      "stored_parse_errors": 2,
+      "current_parser_errors": 0,
+      "format_validation": "passed",
+      "research_performance_claim": false
+    },
+    {
+      "mode": "standard_rag",
+      "dataset": "contractnli",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "model_revision": null,
+      "examples": 2,
+      "execution_status": "completed",
+      "stored_parse_errors": 2,
+      "current_parser_errors": 0,
+      "format_validation": "passed",
+      "research_performance_claim": false
+    },
+    {
+      "mode": "standard_rag",
+      "dataset": "cuad",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "model_revision": null,
+      "examples": 2,
+      "execution_status": "completed",
+      "stored_parse_errors": 2,
+      "current_parser_errors": 0,
+      "format_validation": "passed",
+      "research_performance_claim": false
+    }
+  ],
+  "response_format_comparison": [
+    {
+      "mode": "direct_prompting",
+      "dataset": "contractnli",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "examples": 2,
+      "original_failures": 1,
+      "parser_only_failures": 1,
+      "rerun_failures": 0,
+      "cases": [
+        {
+          "id": "contractnli_test_11_nda-11",
+          "original_parse_error": "missing or invalid task label",
+          "parser_only_error": "response must contain one complete JSON object",
+          "original_tokens": 113,
+          "rerun_parse_error": null,
+          "rerun_label": "contradiction",
+          "rerun_tokens": 38,
+          "same_prompt": false,
+          "same_raw_response": false
+        },
+        {
+          "id": "contractnli_test_50_nda-13",
+          "original_parse_error": null,
+          "parser_only_error": null,
+          "original_tokens": 87,
+          "rerun_parse_error": null,
+          "rerun_label": "contradiction",
+          "rerun_tokens": 86,
+          "same_prompt": false,
+          "same_raw_response": false
+        }
+      ]
+    },
+    {
+      "mode": "direct_prompting",
+      "dataset": "cuad",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "examples": 2,
+      "original_failures": 2,
+      "parser_only_failures": 0,
+      "rerun_failures": 0,
+      "cases": [
+        {
+          "id": "cuad_test_GridironBionutrientsInc_20171206_8-K_EX-10.2_10972556_EX-10.2_Endorsement Agreement__Expiration Date",
+          "original_parse_error": "missing or invalid task label",
+          "parser_only_error": null,
+          "original_tokens": 84,
+          "rerun_parse_error": null,
+          "rerun_label": "absent",
+          "rerun_tokens": 84,
+          "same_prompt": true,
+          "same_raw_response": true
+        },
+        {
+          "id": "cuad_test_GSITECHNOLOGYINC_11_16_2009-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT between SONY ELECTRONICS INC. and GSI TECHNOLOGY, INC.__Expiration Date",
+          "original_parse_error": "missing or invalid task label",
+          "parser_only_error": null,
+          "original_tokens": 82,
+          "rerun_parse_error": null,
+          "rerun_label": "absent",
+          "rerun_tokens": 82,
+          "same_prompt": true,
+          "same_raw_response": true
+        }
+      ]
+    },
+    {
+      "mode": "standard_rag",
+      "dataset": "contractnli",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "examples": 2,
+      "original_failures": 2,
+      "parser_only_failures": 0,
+      "rerun_failures": 0,
+      "cases": [
+        {
+          "id": "contractnli_test_11_nda-11",
+          "original_parse_error": "citations must contain positive integer evidence numbers",
+          "parser_only_error": null,
+          "original_tokens": 125,
+          "rerun_parse_error": null,
+          "rerun_label": "contradiction",
+          "rerun_tokens": 68,
+          "same_prompt": false,
+          "same_raw_response": false
+        },
+        {
+          "id": "contractnli_test_50_nda-13",
+          "original_parse_error": "citations must contain positive integer evidence numbers",
+          "parser_only_error": null,
+          "original_tokens": 114,
+          "rerun_parse_error": null,
+          "rerun_label": "contradiction",
+          "rerun_tokens": 90,
+          "same_prompt": false,
+          "same_raw_response": false
+        }
+      ]
+    },
+    {
+      "mode": "standard_rag",
+      "dataset": "cuad",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "examples": 2,
+      "original_failures": 2,
+      "parser_only_failures": 0,
+      "rerun_failures": 0,
+      "cases": [
+        {
+          "id": "cuad_test_GridironBionutrientsInc_20171206_8-K_EX-10.2_10972556_EX-10.2_Endorsement Agreement__Expiration Date",
+          "original_parse_error": "missing or invalid task label",
+          "parser_only_error": null,
+          "original_tokens": 87,
+          "rerun_parse_error": null,
+          "rerun_label": "absent",
+          "rerun_tokens": 87,
+          "same_prompt": true,
+          "same_raw_response": true
+        },
+        {
+          "id": "cuad_test_GSITECHNOLOGYINC_11_16_2009-EX-10.2-INTELLECTUAL PROPERTY AGREEMENT between SONY ELECTRONICS INC. and GSI TECHNOLOGY, INC.__Expiration Date",
+          "original_parse_error": "missing or invalid task label",
+          "parser_only_error": null,
+          "original_tokens": 85,
+          "rerun_parse_error": null,
+          "rerun_label": "absent",
+          "rerun_tokens": 85,
+          "same_prompt": true,
+          "same_raw_response": true
+        }
+      ]
+    }
+  ],
+  "retrieval_matrix": {
+    "configurations": 36,
+    "examples": {
+      "contractnli": 2091,
+      "cuad": 1020
+    },
+    "kind": "retrieval_only",
+    "definition": "macro full-gold-span union coverage over non-whitespace characters; no-evidence examples excluded"
+  },
+  "source_sha256": {
+    "agent/__init__.py": "40a172d00f54e46a1cbdd4d05e5494ffb52e2c691c27529f5e65ea8629d69d86",
+    "agent/agentic_rag.py": "3cd8769cb3ca04f623e8e8704dcad6f35a54cf95d0b978098a51555b63d6173d",
+    "agent/generator.py": "af98ac77d8342a58aa57a3d659554c504110c6445ef1b15e6d81926a690ef272",
+    "agent/query_analyzer/__init__.py": "ccdb63065f335db3bb4239e40bf453e0874e7bcd4508e5e49458711ca87406a0",
+    "agent/query_analyzer/analyzer.py": "e94692b86186623c46dcea092007c8ed60f80fd7597d7d6e09420309cf791db5",
+    "agent/reviser/__init__.py": "e2b572674d0ce9f5671b5998c0bbc44530803582ccc958558021467218469f9c",
+    "agent/reviser/reviser.py": "063b098e7797e4de9514847c92d69efa224eb5467d4c89e6712f130d3f313a63",
+    "agent/verifier/__init__.py": "e16b8f9825d45902d258cd76865e8964625907da984195d8cca2889747e77a90",
+    "agent/verifier/verifier.py": "1d467614e41c81b078762088853c545e69acced3384eab75ddd530ac6a8234c7",
+    "configs/experiment_config.yaml": "6197230d55d352b4a59bc1931a869431a5416c4f2a22a25899765b0d878bdd7f",
+    "configs/model_config.yaml": "fe2364bc680ad45bb98ea59dc284b18fe697878a545a6ab92096425b7cb38b8f",
+    "configs/retrieval_config.yaml": "e88e2248308617252454c3f729f5225e52f38e412ecc395982b9d4f46b2183f7",
+    "data/__init__.py": "0529bbc02d390f058f86e0f344972579ff7797252c7f74a65ca44573e3b2be23",
+    "data/contractnli_processor.py": "6ab9a75632521253e0440bb888d5001010798d46365c7e331b02bbbeb47bcb7a",
+    "data/cuad_processor.py": "a233eaddde125af1b06b589997c540eab7e09d736a160f6326922a3a6940a75a",
+    "data/dataset_loader.py": "acb900ab5059fca96700ae7e1993f7d83a604af8dfe760eb378c91e093f2f8bc",
+    "data/privacyqa_processor.py": "8997e56e5e5f34a732632149ca40fbcce639a63973a2f7fbee84459b92e3bac6",
+    "evaluation/__init__.py": "5606cc97e3b519294f1efe6ca574fa3348af508fa4ba2144caba57fa8fe184e0",
+    "evaluation/error_analysis.py": "a9e9ef46c9ca14ad3c75bc2aba9012fd6a48d5687eed06803a88b736ca1bcbf4",
+    "evaluation/hallucination_detector.py": "fd033d22334648904c3e0e2570f10e0d1aea06691335761808ec16c2f216d703",
+    "evaluation/metrics.py": "695cffed9f70ebcb04f6446423f89fced167028c98c84322df359acfc189a6bd",
+    "experiments/__init__.py": "15d5776d6322f1d3e78d0ba79847ecc65cb7eb30a98b97a422239d25baa76cbf",
+    "experiments/prepare_cuad_development.py": "07e91931f0e68a7c91f189ac27e54665f194e3f97531a3d1107114977647c85a",
+    "experiments/run_baseline_pilot.py": "573bff7facfffe2bcb4bf5cf6eacf314cc57e87bf4ad450f5228858dd9c583eb",
+    "experiments/run_experiments.py": "c2a18fa22286a4057d6cea80f4387d5ee3a1b5a9d8733dd4baeb67d84d07c1b0",
+    "experiments/run_full_mistral.py": "16077566f11e5f7ad2d02d23e0afbdb0490529eaf0576dde1981745a74da8f6f",
+    "requirements-retrieval.txt": "0e450c03e954f646d40c5ef70af6d7eaf70c622feab82b7c58b6a638aa9bb811",
+    "requirements.txt": "6d3100ee79ce816dde43a1ada758b6ca6a7d1e99b28d2129276cabd1228ea88c",
+    "retrieval/__init__.py": "8b6e412a386f8dc9cae61d948aa4b80b9f295742b94169b6343172d7d28c415b",
+    "retrieval/baseline_direct.py": "37aa3188dea633303ca8add6b4535ae8b6b5982b1de63399a4806a0b1d16a488",
+    "retrieval/baseline_rag.py": "87b54ad83d0da89507a76e68ca4c6b44c5b9ac270000ed45336abd3f7a4a858c",
+    "retrieval/chunking.py": "0617195ddbce6637f44f9333ce41292ca418a5cb9a2a46a4feeb907542e75f16",
+    "retrieval/cli.py": "ae4ed6d5ffda59ee799e69958f7313adeb4efcf44f46acd8fa203b38efc08d9f",
+    "retrieval/common.py": "904a5e6376e304c60755dd98da7ebfcbc976ba63aeba4757dca38c59fe261e88",
+    "retrieval/evaluate_retrieval.py": "5cd307df34306759fc66660c55640ae459e3577efb0b8f1e46ad20b903da32e7",
+    "retrieval/evidence.py": "db38eed86bfd9497e7f5bf2a84f5a84392888792d612042be46817d74884cdc7",
+    "retrieval/retrievers/__init__.py": "f48b313e316e89a13b02eb71311096c05abd874f8222434c60cc0982bff49b00",
+    "retrieval/retrievers/retriever.py": "d81952cbb21180a88784dd4768922d9034bc397950a42c2677fc664989d481c9",
+    "scripts/audit_project.py": "e0e18c84c12afab3747e7265bf75d6b19122d2733c7832243eddc88ef3f9f09a",
+    "scripts/update_validation_report.py": "2a51e091e0f8e58c378c4e0347008361ba050a3ee5f1e76daa2edafe02c40739",
+    "setup.py": "7cff9cfb4b9a65657c9e198b28523f33a2699e3f792397e929a4e64b98bdf3db",
+    "tests/conftest.py": "04d5769802d207cfb6c332eb563f2eea3a161e1aa539d4fff3282c4558ff83fd",
+    "tests/test_agentic_pilot.py": "18bbfa5371fb59d6c260562e0e6bc8902e39aaac5a9b007384d3c4b59cd1f944",
+    "tests/test_baselines.py": "432e0533fa8ae7c8386bb62dd8031bf7ec7bd06a68d1669df75491d56ea8d4bf",
+    "tests/test_chunking.py": "d3e6d6729a7fd3fd6aa98677ccd3e471c59a98936addf81b48b3c269cbcb3fe8",
+    "tests/test_cli.py": "0e6a64cc03fac32bbcd62883ac35003d375e6b8b2eede137f0d37ddb8fb5afd6",
+    "tests/test_evidence.py": "69dad9d821f20eb171e7c5b1c4347583d3aada7913970a05919eb469aee3b59a",
+    "tests/test_full_mistral.py": "26740bf57a37934743448295d7e648a546921ff98d632cc105fc30338ab23788",
+    "tests/test_llm_interface.py": "689ff3b2af31dc399335a921e39ef30c57fddf22d2698eccb62407919bf020a7",
+    "tests/test_retrievers.py": "f2660d069c923c272dbed9376fa41934b8747f089bc66add88a975f56d1c41d3",
+    "ui/__init__.py": "1f4c973b8c7edef1aba59324e94d6e0bc4275b5c53fc37679488cbc40bd41acb",
+    "ui/app.py": "dca3e685512a100aa240ac0b72fb7a36c36f0cc47c8c423fd0ac033de0b0cca5",
+    "utils/__init__.py": "d4f8735824fd26704dedbf84c765b38a9e4bacb81f08fe6fbedcf4704e7bd0be",
+    "utils/helpers.py": "fd7eaf243506c8faea309ec0580718fd51baa23ee90e5f33f06b901f457a794d",
+    "utils/llm_interface.py": "fde6e85ec5e4db6f1071a83df4d9661530640ba1b70dc988f7a7690675024a85",
+    "utils/logger.py": "8153b984ac47c6f1464a161c2421141bb8f6dd4e73ac8ea8dd947223bb37b7ce",
+    "verify_installation.py": "5af90e4ec29be2746b7ae29988953ed11180d138c2db841985c29a61cdbd6da7"
+  }
+}

@@ -17,6 +17,7 @@ from agent.generator import AnswerGenerator
 from agent.verifier.verifier import EvidenceVerifier
 from agent.reviser.reviser import AnswerReviser
 from retrieval.chunking import get_chunker
+from retrieval.common import check_cuad_extraction, document_id, example_dict, validate_dataset
 from retrieval.retrievers.retriever import get_retriever
 from utils.logger import setup_logger
 
@@ -33,6 +34,8 @@ class AgenticRAG:
         chunking_strategy: str = "fixed_length",
         enable_verification: bool = True,
         enable_revision: bool = True,
+        chunker_kwargs=None,
+        retriever_kwargs=None,
         **kwargs
     ):
         """
@@ -52,8 +55,8 @@ class AgenticRAG:
 
         # Initialize components
         self.query_analyzer = QueryAnalyzer(llm=llm)
-        self.chunker = get_chunker(chunking_strategy, **kwargs)
-        self.retriever = get_retriever(retriever_type, **kwargs)
+        self.chunker = get_chunker(chunking_strategy, **{**kwargs, **(chunker_kwargs or {})})
+        self.retriever = get_retriever(retriever_type, **{**kwargs, **(retriever_kwargs or {})})
         self.generator = AnswerGenerator(llm)
         self.verifier = EvidenceVerifier(llm)
         self.reviser = AnswerReviser(llm, retriever=self.retriever)
@@ -75,7 +78,7 @@ class AgenticRAG:
         self.retriever.index(all_chunks)
         self.indexed = True
 
-    def answer(self, query: str, context: str = None) -> Dict:
+    def answer(self, query: str, context: str = None, *, dataset=None, max_input_tokens=None) -> Dict:
         """
         Answer query using full agentic workflow.
 
@@ -87,6 +90,10 @@ class AgenticRAG:
             Complete result dict with all intermediate steps
         """
         start_time = time.time()
+        if dataset is not None:
+            validate_dataset(dataset)
+            if not isinstance(context, str):
+                raise ValueError("Task-aware Agentic RAG requires one source contract per query")
 
         # Step 1: Query Analysis
         logger.info("Step 1: Analyzing query...")
@@ -94,7 +101,11 @@ class AgenticRAG:
 
         # Step 2: Retrieval
         logger.info("Step 2: Retrieving evidence...")
-        if not self.indexed and context:
+        if dataset is not None:
+            source_id = document_id(context, dataset=dataset)
+            self.retriever.index(self.chunker.chunk(context, metadata={"doc_id": source_id}))
+            self.indexed = False
+        elif not self.indexed and context:
             self.index_documents([context])
 
         refined_query = query_analysis['refined_query']
@@ -106,6 +117,9 @@ class AgenticRAG:
         )
         evidence_chunks = [doc for doc, score in retrieved]
         evidence_texts = [chunk['text'] for chunk in evidence_chunks]
+        if dataset is not None:
+            chunks = [{**chunk, "score": score} for chunk, score in retrieved]
+            return self._answer_task(query, dataset, chunks, query_analysis, max_input_tokens, start_time)
 
         # Step 3: Initial Answer Generation
         logger.info("Step 3: Generating initial answer...")
@@ -174,6 +188,35 @@ class AgenticRAG:
 
         return result
 
+    def _answer_task(self, query, dataset, chunks, analysis, max_input_tokens, start_time):
+        initial = self.generator.generate_task(query, chunks, dataset, analysis["query_type"], max_input_tokens)
+        self._check_task_grounding(initial, dataset)
+        verification = revision = None
+        if self.enable_verification and not (initial["parse_error"] or initial["grounding_error"]):
+            evidence = [chunk["text"] for chunk in initial["prompt_evidence"]]
+            claims = initial["extracted_spans"]
+            if dataset == "cuad" and initial["label"] == "absent":
+                claims = [f"The evidence does not contain a clause answering this question: {query}"]
+            verification = self.verifier.verify(claims, evidence, answer=initial["answer"],
+                                                max_input_tokens=max_input_tokens, strict_evidence=True)
+            if self.enable_revision and verification["hallucination_detected"]:
+                revision = self.reviser.revise_task(query, dataset, initial, verification, max_input_tokens)
+                self._check_task_grounding(revision, dataset)
+
+        final = revision if revision is not None else initial
+        final_answer = "" if final["parse_error"] or final["grounding_error"] else final["answer"]
+        return {**final, "query": query, "dataset": dataset, "query_analysis": analysis,
+                "retrieved_chunks": chunks, "initial": initial, "verification": verification,
+                "revision": revision, "final_answer": final_answer, "latency": time.time() - start_time}
+
+    def _check_task_grounding(self, response, dataset):
+        evidence = [chunk["text"] for chunk in response["prompt_evidence"]]
+        response["invalid_citations"] = [i for i in response["citations"] if i > len(evidence)]
+        if dataset == "cuad":
+            response.update(check_cuad_extraction(response, evidence))
+        response["grounding_error"] = ("answer cited evidence outside the model input" if response["invalid_citations"]
+                                       else response.get("extraction_error"))
+
     def _count_total_tokens(self, *results) -> int:
         """Count total tokens used across all steps."""
         total = 0
@@ -182,7 +225,7 @@ class AgenticRAG:
                 total += result.get('tokens', 0)
         return total
 
-    def batch_answer(self, examples: List[Dict]) -> List[Dict]:
+    def batch_answer(self, examples: List[Dict], *, dataset=None, max_input_tokens=None, on_prediction=None) -> List[Dict]:
         """
         Answer multiple queries in batch.
 
@@ -192,6 +235,18 @@ class AgenticRAG:
         Returns:
             List of prediction dicts
         """
+        if dataset is not None:
+            predictions = []
+            for i, example in enumerate(examples):
+                example = example_dict(example)
+                result = self.answer(example["query"], context=example["context"], dataset=dataset,
+                                     max_input_tokens=max_input_tokens)
+                result["id"] = example.get("id", f"example_{i}")
+                predictions.append(result)
+                if on_prediction is not None:
+                    on_prediction(result)
+            return predictions
+
         # Index all documents
         contexts = [ex['context'] for ex in examples]
         self.index_documents(contexts)

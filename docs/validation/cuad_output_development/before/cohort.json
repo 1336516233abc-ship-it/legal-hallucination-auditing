@@ -1,0 +1,29 @@
+{
+  "seed": 42,
+  "per_label": 2,
+  "split": "dev",
+  "datasets": {
+    "cuad": {
+      "source_sha256": "5b8515853d3e838421d91cf6450eb5147e7e151ba0f102b3085613d28897726d",
+      "population": 4,
+      "rows": [
+        {
+          "id": "cuad_dev_TURNKEYCAPITAL,INC_07_20_2017-EX-1.1-Strategic Alliance Agreement__Agreement Date",
+          "gold_label": "present"
+        },
+        {
+          "id": "cuad_dev_FOUNDATIONMEDICINE,INC_02_02_2015-EX-10.2-Collaboration Agreement__Agreement Date",
+          "gold_label": "absent"
+        },
+        {
+          "id": "cuad_dev_ASIANDRAGONGROUPINC_08_11_2005-EX-10.5-Reseller Agreement__Notice Period To Terminate Renewal",
+          "gold_label": "present"
+        },
+        {
+          "id": "cuad_dev_IntegrityFunds_20200121_485BPOS_EX-99.E UNDR CONTR_11948727_EX-99.E UNDR CONTR_Service Agreement__Notice Period To Terminate Renewal",
+          "gold_label": "absent"
+        }
+      ]
+    }
+  }
+}

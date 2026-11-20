@@ -1,251 +1,155 @@
-"""
-Retriever implementations: BM25 and Dense retrieval.
+"""Deterministic sparse, dense and hybrid ranking with optional document scope."""
 
-Author: Qin Mengmeng (3036843769)
-"""
+import math
+import re
+from typing import Dict, List, Optional, Tuple
 
-from typing import List, Dict, Optional, Tuple
 import numpy as np
 from rank_bm25 import BM25Okapi
-from sentence_transformers import SentenceTransformer
-import logging
 
-logger = logging.getLogger(__name__)
+
+def _tokens(text):
+    return re.findall(r"\w+(?:['’-]\w+)*", text.casefold())
+
+
+def _normalize(scores):
+    if len(scores) == 0:
+        return scores
+    minimum, maximum = float(np.min(scores)), float(np.max(scores))
+    if maximum == minimum:
+        return np.ones_like(scores) if maximum > 0 else np.zeros_like(scores)
+    return (scores - minimum) / (maximum - minimum)
 
 
 class Retriever:
-    """Base class for retrievers."""
+    """Index chunks; retrieve returns (original chunk, finite Python float) pairs."""
+
+    def __init__(self):
+        self.documents = []
+        self.indexed = False
 
     def index(self, documents: List[Dict]):
-        """Index documents for retrieval."""
+        for document in documents:
+            if not isinstance(document.get("text"), str):
+                raise ValueError("Each indexed document must contain a string text field")
+        self.documents = list(documents)
+        self.indexed = True
+
+    def _scores(self, query):
         raise NotImplementedError
 
-    def retrieve(self, query: str, top_k: int = 5) -> List[Tuple[Dict, float]]:
-        """
-        Retrieve top-k documents for query.
-
-        Args:
-            query: Query string
-            top_k: Number of documents to retrieve
-
-        Returns:
-            List of (document, score) tuples
-        """
-        raise NotImplementedError
+    def retrieve(self, query: str, top_k: int = 5, doc_id: Optional[str] = None) -> List[Tuple[Dict, float]]:
+        if not self.indexed:
+            raise ValueError("Must call index() before retrieve()")
+        if isinstance(top_k, bool) or not isinstance(top_k, int) or top_k < 0:
+            raise ValueError("top_k must be a nonnegative integer")
+        if top_k == 0 or not self.documents:
+            return []
+        candidates = [i for i, document in enumerate(self.documents)
+                      if doc_id is None or document.get("doc_id", document.get("metadata", {}).get("doc_id")) == doc_id]
+        if not candidates:
+            return []
+        scores = np.asarray(self._scores(query), dtype=float)
+        if scores.shape != (len(self.documents),) or not np.isfinite(scores).all():
+            raise ValueError("Retriever produced invalid scores")
+        ranked = sorted(candidates, key=lambda i: (-scores[i], i))[:top_k]
+        return [(self.documents[i], float(scores[i])) for i in ranked]
 
 
 class BM25Retriever(Retriever):
-    """BM25 sparse retrieval."""
+    """BM25 with punctuation-aware tokenization and stable tie breaking."""
 
     def __init__(self, k1: float = 1.5, b: float = 0.75):
-        """
-        Initialize BM25 retriever.
-
-        Args:
-            k1: BM25 k1 parameter
-            b: BM25 b parameter
-        """
-        self.k1 = k1
-        self.b = b
+        super().__init__()
+        if not math.isfinite(k1) or k1 <= 0 or not math.isfinite(b) or not 0 <= b <= 1:
+            raise ValueError("BM25 requires k1 > 0 and 0 <= b <= 1")
+        self.k1, self.b = k1, b
         self.bm25 = None
-        self.documents = []
         self.tokenized_docs = []
 
     def index(self, documents: List[Dict]):
-        """Index documents using BM25."""
-        self.documents = documents
+        super().index(documents)
+        self.tokenized_docs = [_tokens(doc["text"]) for doc in self.documents]
+        self.bm25 = (BM25Okapi(self.tokenized_docs, k1=self.k1, b=self.b)
+                     if any(self.tokenized_docs) else None)
 
-        # Tokenize documents
-        self.tokenized_docs = [doc['text'].lower().split() for doc in documents]
-
-        # Build BM25 index
-        self.bm25 = BM25Okapi(self.tokenized_docs, k1=self.k1, b=self.b)
-
-        logger.info(f"Indexed {len(documents)} documents with BM25")
-
-    def retrieve(self, query: str, top_k: int = 5) -> List[Tuple[Dict, float]]:
-        """Retrieve using BM25 scoring."""
+    def _scores(self, query):
         if self.bm25 is None:
-            raise ValueError("Must call index() before retrieve()")
-
-        # Tokenize query
-        tokenized_query = query.lower().split()
-
-        # Get BM25 scores
-        scores = self.bm25.get_scores(tokenized_query)
-
-        # Get top-k indices
-        top_indices = np.argsort(scores)[-top_k:][::-1]
-
-        # Return documents with scores
-        results = [(self.documents[i], scores[i]) for i in top_indices]
-
-        return results
+            return np.zeros(len(self.documents))
+        return self.bm25.get_scores(_tokens(query))
 
 
 class DenseRetriever(Retriever):
-    """Dense retrieval using sentence transformers."""
+    """Load SentenceTransformer on first use; encoder injection supports tests."""
 
-    def __init__(
-        self,
-        model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
-        similarity_metric: str = "cosine"
-    ):
-        """
-        Initialize dense retriever.
-
-        Args:
-            model_name: Sentence transformer model name
-            similarity_metric: Similarity metric ("cosine" or "dot")
-        """
-        self.model_name = model_name
-        self.similarity_metric = similarity_metric
-
-        # Load sentence transformer
-        logger.info(f"Loading sentence transformer: {model_name}")
-        self.encoder = SentenceTransformer(model_name)
-
-        self.documents = []
+    def __init__(self, model_name: str = "sentence-transformers/all-MiniLM-L6-v2",
+                 similarity_metric: str = "cosine", encoder=None):
+        super().__init__()
+        if similarity_metric not in {"cosine", "dot"}:
+            raise ValueError("similarity_metric must be cosine or dot")
+        self.model_name, self.similarity_metric = model_name, similarity_metric
+        self.encoder = encoder
         self.embeddings = None
 
+    def _encode(self, texts):
+        if self.encoder is None:
+            from sentence_transformers import SentenceTransformer
+            self.encoder = SentenceTransformer(self.model_name)
+        embeddings = np.asarray(self.encoder.encode(texts, convert_to_numpy=True, show_progress_bar=False), dtype=float)
+        if embeddings.ndim != 2 or embeddings.shape[0] != len(texts) or not np.isfinite(embeddings).all():
+            raise ValueError("Encoder must return a finite 2D embedding matrix")
+        return embeddings
+
     def index(self, documents: List[Dict]):
-        """Index documents by computing embeddings."""
-        self.documents = documents
+        self.indexed = False
+        self.embeddings = None
+        super().index(documents)
+        self.indexed = False
+        self.embeddings = self._encode([d["text"] for d in self.documents]) if self.documents else np.empty((0, 0))
+        self.indexed = True
 
-        # Extract texts
-        texts = [doc['text'] for doc in documents]
-
-        # Encode documents
-        logger.info(f"Encoding {len(documents)} documents...")
-        self.embeddings = self.encoder.encode(
-            texts,
-            show_progress_bar=True,
-            convert_to_numpy=True
-        )
-
-        logger.info(f"Indexed {len(documents)} documents with dense retrieval")
-
-    def retrieve(self, query: str, top_k: int = 5) -> List[Tuple[Dict, float]]:
-        """Retrieve using dense similarity."""
-        if self.embeddings is None:
-            raise ValueError("Must call index() before retrieve()")
-
-        # Encode query
-        query_embedding = self.encoder.encode([query], convert_to_numpy=True)[0]
-
-        # Compute similarities
+    def _scores(self, query):
+        query_embedding = self._encode([query])[0]
+        scores = np.dot(self.embeddings, query_embedding)
         if self.similarity_metric == "cosine":
-            # Cosine similarity
-            similarities = np.dot(self.embeddings, query_embedding) / (
-                np.linalg.norm(self.embeddings, axis=1) * np.linalg.norm(query_embedding)
-            )
-        else:  # dot product
-            similarities = np.dot(self.embeddings, query_embedding)
-
-        # Get top-k indices
-        top_indices = np.argsort(similarities)[-top_k:][::-1]
-
-        # Return documents with scores
-        results = [(self.documents[i], similarities[i]) for i in top_indices]
-
-        return results
+            norms = np.linalg.norm(self.embeddings, axis=1) * np.linalg.norm(query_embedding)
+            scores = np.divide(scores, norms, out=np.zeros_like(scores), where=norms > 0)
+            scores = np.clip(scores, -1.0, 1.0)
+        return scores
 
 
 class HybridRetriever(Retriever):
-    """Hybrid retriever combining BM25 and dense retrieval."""
+    """Weighted min-max normalized scores over the complete indexed candidate set."""
 
-    def __init__(
-        self,
-        bm25_weight: float = 0.5,
-        dense_weight: float = 0.5,
-        dense_model: str = "sentence-transformers/all-MiniLM-L6-v2"
-    ):
-        """
-        Initialize hybrid retriever.
-
-        Args:
-            bm25_weight: Weight for BM25 scores
-            dense_weight: Weight for dense scores
-            dense_model: Dense retrieval model
-        """
-        self.bm25_weight = bm25_weight
-        self.dense_weight = dense_weight
-
-        self.bm25_retriever = BM25Retriever()
-        self.dense_retriever = DenseRetriever(model_name=dense_model)
+    def __init__(self, bm25_weight: float = 0.5, dense_weight: float = 0.5,
+                 dense_model: str = "sentence-transformers/all-MiniLM-L6-v2", encoder=None,
+                 k1: float = 1.5, b: float = 0.75):
+        super().__init__()
+        if (not all(math.isfinite(w) and w >= 0 for w in [bm25_weight, dense_weight])
+                or bm25_weight + dense_weight <= 0):
+            raise ValueError("Hybrid weights must be finite, nonnegative and have a positive sum")
+        total = bm25_weight + dense_weight
+        self.bm25_weight, self.dense_weight = bm25_weight / total, dense_weight / total
+        self.bm25_retriever = BM25Retriever(k1=k1, b=b)
+        self.dense_retriever = DenseRetriever(model_name=dense_model, encoder=encoder)
 
     def index(self, documents: List[Dict]):
-        """Index with both retrievers."""
-        self.bm25_retriever.index(documents)
-        self.dense_retriever.index(documents)
+        self.indexed = False
+        super().index(documents)
+        self.indexed = False
+        self.bm25_retriever.index(self.documents)
+        if self.dense_weight:
+            self.dense_retriever.index(self.documents)
+        self.indexed = True
 
-        logger.info(f"Indexed {len(documents)} documents with hybrid retrieval")
-
-    def retrieve(self, query: str, top_k: int = 5) -> List[Tuple[Dict, float]]:
-        """Retrieve using hybrid scores."""
-        # Get results from both retrievers
-        bm25_results = self.bm25_retriever.retrieve(query, top_k=top_k * 2)
-        dense_results = self.dense_retriever.retrieve(query, top_k=top_k * 2)
-
-        # Normalize scores to [0, 1]
-        bm25_scores = {id(doc): score for doc, score in bm25_results}
-        dense_scores = {id(doc): score for doc, score in dense_results}
-
-        if bm25_scores:
-            max_bm25 = max(bm25_scores.values())
-            bm25_scores = {k: v / max_bm25 for k, v in bm25_scores.items()}
-
-        if dense_scores:
-            max_dense = max(dense_scores.values())
-            min_dense = min(dense_scores.values())
-            if max_dense > min_dense:
-                dense_scores = {
-                    k: (v - min_dense) / (max_dense - min_dense)
-                    for k, v in dense_scores.items()
-                }
-
-        # Combine scores
-        all_docs = {id(doc): doc for doc, _ in bm25_results + dense_results}
-        combined_scores = {}
-
-        for doc_id, doc in all_docs.items():
-            bm25_score = bm25_scores.get(doc_id, 0)
-            dense_score = dense_scores.get(doc_id, 0)
-
-            combined_scores[doc_id] = (
-                self.bm25_weight * bm25_score +
-                self.dense_weight * dense_score
-            )
-
-        # Sort by combined score
-        sorted_docs = sorted(
-            combined_scores.items(),
-            key=lambda x: x[1],
-            reverse=True
-        )
-
-        # Return top-k
-        results = [(all_docs[doc_id], score) for doc_id, score in sorted_docs[:top_k]]
-
-        return results
+    def _scores(self, query):
+        bm25 = _normalize(self.bm25_retriever._scores(query)) if self.bm25_weight else np.zeros(len(self.documents))
+        dense = _normalize(self.dense_retriever._scores(query)) if self.dense_weight else np.zeros(len(self.documents))
+        return self.bm25_weight * bm25 + self.dense_weight * dense
 
 
 def get_retriever(retriever_type: str, **kwargs) -> Retriever:
-    """
-    Factory function to get retriever by type.
-
-    Args:
-        retriever_type: Type of retriever ("bm25", "dense", "hybrid")
-        **kwargs: Additional arguments for retriever
-
-    Returns:
-        Retriever instance
-    """
-    if retriever_type == "bm25":
-        return BM25Retriever(**kwargs)
-    elif retriever_type == "dense":
-        return DenseRetriever(**kwargs)
-    elif retriever_type == "hybrid":
-        return HybridRetriever(**kwargs)
-    else:
+    factories = {"bm25": BM25Retriever, "dense": DenseRetriever, "hybrid": HybridRetriever}
+    if retriever_type not in factories:
         raise ValueError(f"Unknown retriever type: {retriever_type}")
+    return factories[retriever_type](**kwargs)

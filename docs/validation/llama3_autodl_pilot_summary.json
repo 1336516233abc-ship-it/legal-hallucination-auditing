@@ -1,0 +1,307 @@
+{
+  "status": "completed",
+  "started_at": "2026-11-20T10:10:21+00:00",
+  "updated_at": "2026-11-20T10:10:47+00:00",
+  "pid": 5161,
+  "completed": 30,
+  "planned": 30,
+  "predictions_per_second": 1.168849417490501,
+  "model_calls": 54,
+  "estimated_remaining_seconds": 0.0,
+  "settings": {
+    "checkpoint": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "revision": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2",
+    "backend": "vllm",
+    "dtype": "bfloat16",
+    "python": "3.12.3",
+    "quantized": false,
+    "workers": 8,
+    "pilot": true,
+    "temperature": 0,
+    "seed": 42,
+    "input_tokens": 4096,
+    "output_tokens": 512,
+    "methods": [
+      "direct_prompting",
+      "standard_rag",
+      "verified_agentic_rag"
+    ],
+    "retrieval": {
+      "retrieval": {
+        "top_k": 5,
+        "top_k_ablation": [
+          3,
+          5,
+          10
+        ],
+        "min_score_threshold": null,
+        "rerank": false,
+        "rerank_model": null
+      },
+      "chunker_kwargs": {
+        "chunk_size": 512,
+        "overlap": 128
+      },
+      "retriever_kwargs": {
+        "k1": 1.5,
+        "b": 0.75
+      }
+    },
+    "packages": {
+      "vllm": "0.10.2",
+      "requests": "2.32.5",
+      "torch": "2.8.0+cu128",
+      "transformers": "4.56.2",
+      "huggingface-hub": "0.34.4",
+      "rank-bm25": "0.2.2",
+      "numpy": "2.2.6",
+      "pyyaml": "6.0.3"
+    },
+    "datasets": {
+      "contractnli": {
+        "count": 6,
+        "sha256": "ba6aa63b66a354028703c3e3574a902f55cc751dc37cc1d9d2f2c11bd39bb116"
+      },
+      "cuad": {
+        "count": 4,
+        "sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104"
+      }
+    },
+    "source_sha256": {
+      "agent/__init__.py": "40a172d00f54e46a1cbdd4d05e5494ffb52e2c691c27529f5e65ea8629d69d86",
+      "agent/agentic_rag.py": "3cd8769cb3ca04f623e8e8704dcad6f35a54cf95d0b978098a51555b63d6173d",
+      "agent/generator.py": "af98ac77d8342a58aa57a3d659554c504110c6445ef1b15e6d81926a690ef272",
+      "agent/query_analyzer/__init__.py": "ccdb63065f335db3bb4239e40bf453e0874e7bcd4508e5e49458711ca87406a0",
+      "agent/query_analyzer/analyzer.py": "e94692b86186623c46dcea092007c8ed60f80fd7597d7d6e09420309cf791db5",
+      "agent/reviser/__init__.py": "e2b572674d0ce9f5671b5998c0bbc44530803582ccc958558021467218469f9c",
+      "agent/reviser/reviser.py": "063b098e7797e4de9514847c92d69efa224eb5467d4c89e6712f130d3f313a63",
+      "agent/verifier/__init__.py": "e16b8f9825d45902d258cd76865e8964625907da984195d8cca2889747e77a90",
+      "agent/verifier/verifier.py": "1d467614e41c81b078762088853c545e69acced3384eab75ddd530ac6a8234c7",
+      "data/__init__.py": "0529bbc02d390f058f86e0f344972579ff7797252c7f74a65ca44573e3b2be23",
+      "data/contractnli_processor.py": "6ab9a75632521253e0440bb888d5001010798d46365c7e331b02bbbeb47bcb7a",
+      "data/cuad_processor.py": "a233eaddde125af1b06b589997c540eab7e09d736a160f6326922a3a6940a75a",
+      "data/dataset_loader.py": "acb900ab5059fca96700ae7e1993f7d83a604af8dfe760eb378c91e093f2f8bc",
+      "data/privacyqa_processor.py": "8997e56e5e5f34a732632149ca40fbcce639a63973a2f7fbee84459b92e3bac6",
+      "experiments/__init__.py": "15d5776d6322f1d3e78d0ba79847ecc65cb7eb30a98b97a422239d25baa76cbf",
+      "experiments/prepare_cuad_development.py": "07e91931f0e68a7c91f189ac27e54665f194e3f97531a3d1107114977647c85a",
+      "experiments/run_baseline_pilot.py": "573bff7facfffe2bcb4bf5cf6eacf314cc57e87bf4ad450f5228858dd9c583eb",
+      "experiments/run_experiments.py": "c2a18fa22286a4057d6cea80f4387d5ee3a1b5a9d8733dd4baeb67d84d07c1b0",
+      "experiments/run_full_mistral.py": "d5d3cab73f6b976b22c2f34991d3582e63b12092aa71611157d0c4bf4084d6f9",
+      "experiments/vllm_mistral.py": "c28533a57b97816699445e9ad4dc403a1e6f9fa91510f0a7f6eab824a368c32f",
+      "retrieval/__init__.py": "8b6e412a386f8dc9cae61d948aa4b80b9f295742b94169b6343172d7d28c415b",
+      "retrieval/baseline_direct.py": "37aa3188dea633303ca8add6b4535ae8b6b5982b1de63399a4806a0b1d16a488",
+      "retrieval/baseline_rag.py": "87b54ad83d0da89507a76e68ca4c6b44c5b9ac270000ed45336abd3f7a4a858c",
+      "retrieval/chunking.py": "0617195ddbce6637f44f9333ce41292ca418a5cb9a2a46a4feeb907542e75f16",
+      "retrieval/cli.py": "ae4ed6d5ffda59ee799e69958f7313adeb4efcf44f46acd8fa203b38efc08d9f",
+      "retrieval/common.py": "904a5e6376e304c60755dd98da7ebfcbc976ba63aeba4757dca38c59fe261e88",
+      "retrieval/evaluate_retrieval.py": "5cd307df34306759fc66660c55640ae459e3577efb0b8f1e46ad20b903da32e7",
+      "retrieval/evidence.py": "db38eed86bfd9497e7f5bf2a84f5a84392888792d612042be46817d74884cdc7",
+      "retrieval/retrievers/__init__.py": "f48b313e316e89a13b02eb71311096c05abd874f8222434c60cc0982bff49b00",
+      "retrieval/retrievers/retriever.py": "d81952cbb21180a88784dd4768922d9034bc397950a42c2677fc664989d481c9",
+      "utils/__init__.py": "d4f8735824fd26704dedbf84c765b38a9e4bacb81f08fe6fbedcf4704e7bd0be",
+      "utils/helpers.py": "fd7eaf243506c8faea309ec0580718fd51baa23ee90e5f33f06b901f457a794d",
+      "utils/llm_interface.py": "fde6e85ec5e4db6f1071a83df4d9661530640ba1b70dc988f7a7690675024a85",
+      "utils/logger.py": "8153b984ac47c6f1464a161c2421141bb8f6dd4e73ac8ea8dd947223bb37b7ce"
+    },
+    "gpu": "NVIDIA RTX 6000D"
+  },
+  "groups": [
+    {
+      "dataset": "contractnli",
+      "method": "direct_prompting",
+      "planned": 6,
+      "completed": 6,
+      "format_pass": 6,
+      "label_correct": 5,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.8333333333333334,
+      "macro_f1": 0.8222222222222223,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 2
+        },
+        "entailment": {
+          "contradiction": 1,
+          "entailment": 1
+        },
+        "neutral": {
+          "neutral": 2
+        }
+      },
+      "mean_latency_seconds": 2.225994394471248,
+      "model_calls": 6,
+      "format_or_execution_errors": {},
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 0,
+      "revisions": 0,
+      "gold_evidence_rows": 4,
+      "fully_covered_gold_rows": 4,
+      "label_accuracy_when_gold_fully_covered": 0.75,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0
+    },
+    {
+      "dataset": "contractnli",
+      "method": "standard_rag",
+      "planned": 6,
+      "completed": 6,
+      "format_pass": 6,
+      "label_correct": 5,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.8333333333333334,
+      "macro_f1": 0.8222222222222223,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 2
+        },
+        "entailment": {
+          "contradiction": 1,
+          "entailment": 1
+        },
+        "neutral": {
+          "neutral": 2
+        }
+      },
+      "mean_latency_seconds": 4.0724719174516695,
+      "model_calls": 6,
+      "format_or_execution_errors": {},
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 1,
+      "revisions": 0,
+      "gold_evidence_rows": 4,
+      "fully_covered_gold_rows": 4,
+      "label_accuracy_when_gold_fully_covered": 0.75,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0
+    },
+    {
+      "dataset": "contractnli",
+      "method": "verified_agentic_rag",
+      "planned": 6,
+      "completed": 6,
+      "format_pass": 6,
+      "label_correct": 5,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.8333333333333334,
+      "macro_f1": 0.8222222222222223,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 2
+        },
+        "entailment": {
+          "contradiction": 1,
+          "entailment": 1
+        },
+        "neutral": {
+          "neutral": 2
+        }
+      },
+      "mean_latency_seconds": 11.775323033332825,
+      "model_calls": 22,
+      "format_or_execution_errors": {},
+      "grounding_errors": 2,
+      "rows_with_out_of_range_citations": 2,
+      "revisions": 3,
+      "gold_evidence_rows": 4,
+      "fully_covered_gold_rows": 4,
+      "label_accuracy_when_gold_fully_covered": 0.75,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0
+    },
+    {
+      "dataset": "cuad",
+      "method": "direct_prompting",
+      "planned": 4,
+      "completed": 4,
+      "format_pass": 4,
+      "label_correct": 2,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.5,
+      "macro_f1": 0.5,
+      "confusion": {
+        "absent": {
+          "absent": 1,
+          "present": 1
+        },
+        "present": {
+          "absent": 1,
+          "present": 1
+        }
+      },
+      "mean_latency_seconds": 1.689113257220015,
+      "model_calls": 4,
+      "format_or_execution_errors": {},
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 0,
+      "revisions": 0,
+      "gold_evidence_rows": 2,
+      "fully_covered_gold_rows": 1,
+      "label_accuracy_when_gold_fully_covered": 1.0,
+      "gold_positive_count": 2,
+      "verbatim_positive_correct": 1
+    },
+    {
+      "dataset": "cuad",
+      "method": "standard_rag",
+      "planned": 4,
+      "completed": 4,
+      "format_pass": 4,
+      "label_correct": 3,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.75,
+      "macro_f1": 0.7333333333333334,
+      "confusion": {
+        "absent": {
+          "absent": 1,
+          "present": 1
+        },
+        "present": {
+          "present": 2
+        }
+      },
+      "mean_latency_seconds": 1.7078548937570304,
+      "model_calls": 4,
+      "format_or_execution_errors": {},
+      "grounding_errors": 0,
+      "rows_with_out_of_range_citations": 2,
+      "revisions": 0,
+      "gold_evidence_rows": 2,
+      "fully_covered_gold_rows": 1,
+      "label_accuracy_when_gold_fully_covered": 1.0,
+      "gold_positive_count": 2,
+      "verbatim_positive_correct": 0
+    },
+    {
+      "dataset": "cuad",
+      "method": "verified_agentic_rag",
+      "planned": 4,
+      "completed": 4,
+      "format_pass": 4,
+      "label_correct": 1,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.25,
+      "macro_f1": 0.2,
+      "confusion": {
+        "absent": {
+          "present": 2
+        },
+        "present": {
+          "absent": 1,
+          "present": 1
+        }
+      },
+      "mean_latency_seconds": 9.938397347927094,
+      "model_calls": 12,
+      "format_or_execution_errors": {},
+      "grounding_errors": 3,
+      "rows_with_out_of_range_citations": 2,
+      "revisions": 2,
+      "gold_evidence_rows": 2,
+      "fully_covered_gold_rows": 2,
+      "label_accuracy_when_gold_fully_covered": 0.5,
+      "gold_positive_count": 2,
+      "verbatim_positive_correct": 0
+    }
+  ],
+  "error": null
+}
