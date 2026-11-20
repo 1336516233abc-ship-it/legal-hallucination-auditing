@@ -1,0 +1,44 @@
+{
+  "agentic_rag_full": {
+    "experiment_name": "agentic_rag_full",
+    "dataset": "cuad",
+    "total_examples": 20,
+    "enable_verification": true,
+    "enable_revision": true,
+    "duration_seconds": 445.97338795661926,
+    "avg_latency": 22.2967777132988,
+    "total_tokens": 72415,
+    "hallucinations_detected": 5,
+    "revisions_made": 5,
+    "abstentions": 0,
+    "timestamp": "2026-11-20T17:03:17.994182"
+  },
+  "agentic_rag_no_verification": {
+    "experiment_name": "agentic_rag_no_verification",
+    "dataset": "cuad",
+    "total_examples": 20,
+    "enable_verification": false,
+    "enable_revision": true,
+    "duration_seconds": 207.8391673564911,
+    "avg_latency": 10.390235996246338,
+    "total_tokens": 62482,
+    "hallucinations_detected": 0,
+    "revisions_made": 0,
+    "abstentions": 0,
+    "timestamp": "2026-11-20T17:07:46.688544"
+  },
+  "agentic_rag_no_revision": {
+    "experiment_name": "agentic_rag_no_revision",
+    "dataset": "cuad",
+    "total_examples": 20,
+    "enable_verification": true,
+    "enable_revision": false,
+    "duration_seconds": 395.5774884223938,
+    "avg_latency": 19.77718014717102,
+    "total_tokens": 63169,
+    "hallucinations_detected": 2,
+    "revisions_made": 0,
+    "abstentions": 0,
+    "timestamp": "2026-11-20T17:15:23.090304"
+  }
+}

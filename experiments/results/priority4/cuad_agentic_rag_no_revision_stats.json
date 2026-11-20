@@ -1,0 +1,14 @@
+{
+  "experiment_name": "agentic_rag_no_revision",
+  "dataset": "cuad",
+  "total_examples": 20,
+  "enable_verification": true,
+  "enable_revision": false,
+  "duration_seconds": 395.5774884223938,
+  "avg_latency": 19.77718014717102,
+  "total_tokens": 63169,
+  "hallucinations_detected": 2,
+  "revisions_made": 0,
+  "abstentions": 0,
+  "timestamp": "2026-11-20T17:15:23.090304"
+}

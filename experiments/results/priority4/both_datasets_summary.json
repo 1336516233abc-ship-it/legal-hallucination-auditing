@@ -1,0 +1,87 @@
+{
+  "contractnli": {
+    "full": {
+      "experiment_name": "agentic_rag_full",
+      "total_examples": 20,
+      "enable_verification": true,
+      "enable_revision": true,
+      "duration_seconds": 525.088292,
+      "avg_latency": 26.25038285255432,
+      "total_tokens": 96328,
+      "hallucinations_detected": 3,
+      "revisions_made": 3,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T16:28:30.570071"
+    },
+    "no_verification": {
+      "experiment_name": "agentic_rag_no_verification",
+      "total_examples": 20,
+      "enable_verification": false,
+      "enable_revision": true,
+      "duration_seconds": 132.700315,
+      "avg_latency": 6.626130545139313,
+      "total_tokens": 88272,
+      "hallucinations_detected": 0,
+      "revisions_made": 0,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T15:58:49.208862"
+    },
+    "no_revision": {
+      "experiment_name": "agentic_rag_no_revision",
+      "total_examples": 20,
+      "enable_verification": true,
+      "enable_revision": false,
+      "duration_seconds": 375.1937,
+      "avg_latency": 18.755929028987886,
+      "total_tokens": 87976,
+      "hallucinations_detected": 5,
+      "revisions_made": 0,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T16:08:43.829516"
+    }
+  },
+  "cuad": {
+    "full": {
+      "experiment_name": "agentic_rag_full",
+      "dataset": "cuad",
+      "total_examples": 20,
+      "enable_verification": true,
+      "enable_revision": true,
+      "duration_seconds": 445.97338795661926,
+      "avg_latency": 22.2967777132988,
+      "total_tokens": 72415,
+      "hallucinations_detected": 5,
+      "revisions_made": 5,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T17:03:17.994182"
+    },
+    "no_verification": {
+      "experiment_name": "agentic_rag_no_verification",
+      "dataset": "cuad",
+      "total_examples": 20,
+      "enable_verification": false,
+      "enable_revision": true,
+      "duration_seconds": 207.8391673564911,
+      "avg_latency": 10.390235996246338,
+      "total_tokens": 62482,
+      "hallucinations_detected": 0,
+      "revisions_made": 0,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T17:07:46.688544"
+    },
+    "no_revision": {
+      "experiment_name": "agentic_rag_no_revision",
+      "dataset": "cuad",
+      "total_examples": 20,
+      "enable_verification": true,
+      "enable_revision": false,
+      "duration_seconds": 395.5774884223938,
+      "avg_latency": 19.77718014717102,
+      "total_tokens": 63169,
+      "hallucinations_detected": 2,
+      "revisions_made": 0,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T17:15:23.090304"
+    }
+  }
+}

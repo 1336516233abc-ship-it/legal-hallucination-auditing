@@ -46,6 +46,8 @@ outputs/*
 !outputs/.gitkeep
 experiments/results/*
 !experiments/results/.gitkeep
+!experiments/results/priority3_test_results.json
+!experiments/results/priority4
 experiments/logs/*
 !experiments/logs/.gitkeep
 

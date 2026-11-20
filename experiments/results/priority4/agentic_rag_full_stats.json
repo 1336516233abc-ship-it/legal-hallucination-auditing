@@ -1,0 +1,13 @@
+{
+  "experiment_name": "agentic_rag_full",
+  "total_examples": 20,
+  "enable_verification": true,
+  "enable_revision": true,
+  "duration_seconds": 197.218636,
+  "avg_latency": 9.85850179195404,
+  "total_tokens": 77107,
+  "hallucinations_detected": 5,
+  "revisions_made": 5,
+  "abstentions": 0,
+  "timestamp": "2026-11-20T16:28:30.570071"
+}

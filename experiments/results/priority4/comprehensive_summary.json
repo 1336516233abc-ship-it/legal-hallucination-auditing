@@ -1,0 +1,63 @@
+{
+  "sample_size": 20,
+  "experiments": {
+    "full_agentic_rag": {
+      "experiment_name": "agentic_rag_full",
+      "total_examples": 20,
+      "enable_verification": true,
+      "enable_revision": true,
+      "duration_seconds": 525.088292,
+      "avg_latency": 26.25038285255432,
+      "total_tokens": 96328,
+      "hallucinations_detected": 3,
+      "revisions_made": 3,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T15:56:36.451550"
+    },
+    "no_verification": {
+      "experiment_name": "agentic_rag_no_verification",
+      "total_examples": 20,
+      "enable_verification": false,
+      "enable_revision": true,
+      "duration_seconds": 132.700315,
+      "avg_latency": 6.626130545139313,
+      "total_tokens": 88272,
+      "hallucinations_detected": 0,
+      "revisions_made": 0,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T15:58:49.208862"
+    },
+    "no_revision": {
+      "experiment_name": "agentic_rag_no_revision",
+      "total_examples": 20,
+      "enable_verification": true,
+      "enable_revision": false,
+      "duration_seconds": 375.1937,
+      "avg_latency": 18.755929028987886,
+      "total_tokens": 87976,
+      "hallucinations_detected": 5,
+      "revisions_made": 0,
+      "abstentions": 0,
+      "timestamp": "2026-11-20T16:08:43.829516"
+    }
+  },
+  "insights": {
+    "hallucination_detection_rate": {
+      "full": "15.0%",
+      "no_verification": "0% (disabled)",
+      "no_revision": "25.0%"
+    },
+    "revision_rate": {
+      "full": "15.0%",
+      "no_verification": "0% (disabled)",
+      "no_revision": "0% (disabled)"
+    },
+    "speed_comparison": {
+      "full_vs_no_verification": "3.96x",
+      "full_vs_no_revision": "1.40x"
+    },
+    "token_overhead": {
+      "verification_and_revision": "9.1%"
+    }
+  }
+}
