@@ -12,10 +12,12 @@ import json
 import os
 import argparse
 from typing import List, Dict, Optional
-from datasets import load_dataset
 import logging
 
-from dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
+if __package__:
+    from .dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
+else:
+    from dataset_loader import DatasetLoader, LegalExample, get_dataset_statistics
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -74,6 +76,8 @@ class CUADProcessor(DatasetLoader):
     def download(self):
         """Download CUAD dataset from HuggingFace."""
         logger.info("Downloading CUAD dataset...")
+        from datasets import load_dataset
+
         try:
             dataset = load_dataset("cuad", trust_remote_code=True)
 

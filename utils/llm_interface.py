@@ -8,11 +8,18 @@ Author: Shared utility
 import os
 import time
 from typing import List, Dict, Optional, Union
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 import logging
 
 logger = logging.getLogger(__name__)
+
+# Optional imports for local model inference
+try:
+    import torch
+    from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+    TRANSFORMERS_AVAILABLE = True
+except ImportError:
+    TRANSFORMERS_AVAILABLE = False
+    logger.warning("PyTorch/Transformers not available. Only API mode will work.")
 
 
 class LLMInterface:
@@ -41,12 +48,12 @@ class LLMInterface:
             api_key: API key for hosted models
         """
         self.model_name = model_name
-        self.device = device if torch.cuda.is_available() or device == "cpu" else "cpu"
+        self.device = device if (TRANSFORMERS_AVAILABLE and torch.cuda.is_available()) or device == "cpu" else "cpu"
         self.max_tokens = max_tokens
         self.temperature = temperature
         self.top_p = top_p
         self.use_api = use_api
-        self.api_key = api_key or os.getenv("LLM_API_KEY")
+        self.api_key = api_key or os.getenv("GROQ_API_KEY") or os.getenv("LLM_API_KEY")
 
         # Token tracking
         self.total_tokens = 0
@@ -61,6 +68,12 @@ class LLMInterface:
 
     def _init_local_model(self):
         """Initialize local model via HuggingFace."""
+        if not TRANSFORMERS_AVAILABLE:
+            raise ImportError(
+                "PyTorch and Transformers are required for local model inference. "
+                "Install with: pip install torch transformers"
+            )
+
         try:
             logger.info(f"Loading model {self.model_name}...")
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
@@ -90,9 +103,35 @@ class LLMInterface:
     def _init_api(self):
         """Initialize API client for hosted models."""
         logger.info(f"Using API for model {self.model_name}")
-        # Placeholder for API initialization
-        # Implement based on specific API (OpenAI, Anthropic, etc.)
-        pass
+
+        # Initialize Groq API client
+        try:
+            from groq import Groq
+            self.api_client = Groq(api_key=self.api_key)
+
+            # Map model names to Groq model IDs
+            self.model_map = {
+                "llama3": "llama3-8b-8192",
+                "llama3-8b": "llama3-8b-8192",
+                "llama3-70b": "llama3-70b-8192",
+                "mixtral": "mixtral-8x7b-32768",
+                "mistral": "mixtral-8x7b-32768",
+            }
+
+            # Get Groq model ID
+            self.groq_model = self.model_map.get(
+                self.model_name.lower(),
+                "llama3-8b-8192"  # Default to Llama3-8B
+            )
+
+            logger.info(f"Groq API initialized with model: {self.groq_model}")
+
+        except ImportError:
+            logger.error("Groq package not installed. Run: pip install groq")
+            raise
+        except Exception as e:
+            logger.error(f"Error initializing Groq API: {e}")
+            raise
 
     def generate(
         self,
@@ -176,10 +215,31 @@ class LLMInterface:
         temperature: Optional[float] = None,
         stop_sequences: Optional[List[str]] = None,
     ) -> Dict:
-        """Generate using API."""
-        # Placeholder for API generation
-        # Implement based on specific API
-        raise NotImplementedError("API generation not implemented yet")
+        """Generate using Groq API."""
+        max_tokens = max_tokens or self.max_tokens
+        temperature = temperature or self.temperature
+
+        try:
+            response = self.api_client.chat.completions.create(
+                model=self.groq_model,
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=max_tokens,
+                temperature=temperature,
+                top_p=self.top_p,
+                stop=stop_sequences,
+            )
+
+            generated_text = response.choices[0].message.content
+            num_tokens = response.usage.total_tokens
+
+            return {
+                "text": generated_text.strip(),
+                "tokens": num_tokens,
+            }
+
+        except Exception as e:
+            logger.error(f"Groq API error: {e}")
+            raise
 
     def chat(
         self,
