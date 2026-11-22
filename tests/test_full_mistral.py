@@ -7,8 +7,6 @@ from types import SimpleNamespace
 
 import pytest
 
-pytest.importorskip("torch")
-pytest.importorskip("transformers")
 
 from experiments import run_full_mistral as full
 

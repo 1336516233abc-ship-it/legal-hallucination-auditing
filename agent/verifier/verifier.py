@@ -5,6 +5,8 @@ Verifies claims against evidence to detect hallucinations.
 Author: Yin Fengling (3036807375)
 """
 
+from __future__ import annotations
+
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -12,7 +14,10 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
 import re
 from typing import Dict, List, Optional
-from utils.llm_interface import LLMInterface
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from utils.llm_interface import LLMInterface
 from retrieval.common import fit_evidence
 import logging
 

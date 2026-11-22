@@ -5,13 +5,18 @@ Integrates Query Analyzer, Retriever, Generator, Verifier, and Reviser.
 Author: Yin Fengling (3036807375)
 """
 
+from __future__ import annotations
+
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from typing import List, Dict
 import time
-from utils.llm_interface import LLMInterface
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from utils.llm_interface import LLMInterface
 from agent.query_analyzer.analyzer import QueryAnalyzer
 from agent.generator import AnswerGenerator
 from agent.verifier.verifier import EvidenceVerifier
@@ -269,6 +274,7 @@ class AgenticRAG:
 def main():
     """Example usage of Agentic RAG."""
     import argparse
+    from utils.llm_interface import LLMInterface
     from utils.helpers import load_yaml, save_json
 
     parser = argparse.ArgumentParser(description="Agentic RAG System")

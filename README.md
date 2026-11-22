@@ -67,8 +67,8 @@ legal-hallucination-auditing/
 The current retrieval and baseline interfaces, verified commands, test evidence,
 and remaining integration tasks are documented in
 [Retrieval and baselines handoff (Chinese)](docs/RETRIEVAL_AND_BASELINES_HANDOFF.md).
-Use the standalone baseline commands in that document while the legacy
-experiment runner is being integrated. Retrieval-only development and tests need
+The common experiment runner now supports task-aware scoring, frozen cohorts,
+component ablations, and checkpoint resume. Retrieval-only development and tests need
 only `requirements-retrieval.txt`; Dense retrieval and model generation need the
 full model dependencies.
 
@@ -76,6 +76,13 @@ See [Qin Mengmeng's full-test results](docs/RETRIEVAL_AND_BASELINES_HANDOFF.md#æ
 for Mistral and Llama 3 on ContractNLI and CUAD, and the
 [retrieval ablation results](docs/validation/RETRIEVAL_RESULTS.md) for the
 retriever, chunking, and top-k comparisons.
+
+Li Xinru's [Part 4 experiment handoff](docs/PART4_EXPERIMENTS.md) contains
+reproduction commands and the [new run results](docs/validation/part4_2026-11-22/RESULTS.md).
+The new runs separate 36 full-test retrieval configurations from a paired
+10-example Agent component pilot on each formal model. Archived full-test
+generation results are audited separately; independent hallucination scores
+remain unmeasured.
 
 ## Installation
 

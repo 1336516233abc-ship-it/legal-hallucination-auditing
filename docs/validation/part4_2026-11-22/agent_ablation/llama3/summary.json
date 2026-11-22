@@ -1,0 +1,496 @@
+{
+  "status": "completed",
+  "kind": "agent_component_ablation_pilot",
+  "settings": {
+    "kind": "agent_component_ablation_pilot",
+    "model": "llama3",
+    "checkpoint": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "revision": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2",
+    "backend": "mlx-lm",
+    "quantized": false,
+    "dtype": "bfloat16",
+    "seed": 42,
+    "temperature": 0,
+    "input_tokens": 4096,
+    "output_tokens": 512,
+    "cohort": {
+      "seed": 42,
+      "per_label": 2,
+      "split": "test",
+      "datasets": {
+        "contractnli": {
+          "source_sha256": "ba6aa63b66a354028703c3e3574a902f55cc751dc37cc1d9d2f2c11bd39bb116",
+          "population": 2091,
+          "rows": [
+            {
+              "id": "contractnli_test_4_nda-4",
+              "gold_label": "entailment"
+            },
+            {
+              "id": "contractnli_test_41_nda-1",
+              "gold_label": "contradiction"
+            },
+            {
+              "id": "contractnli_test_53_nda-18",
+              "gold_label": "neutral"
+            },
+            {
+              "id": "contractnli_test_59_nda-13",
+              "gold_label": "neutral"
+            },
+            {
+              "id": "contractnli_test_493_nda-2",
+              "gold_label": "contradiction"
+            },
+            {
+              "id": "contractnli_test_523_nda-8",
+              "gold_label": "entailment"
+            }
+          ]
+        },
+        "cuad": {
+          "source_sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104",
+          "population": 1020,
+          "rows": [
+            {
+              "id": "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+              "gold_label": "present"
+            },
+            {
+              "id": "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+              "gold_label": "absent"
+            },
+            {
+              "id": "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+              "gold_label": "present"
+            },
+            {
+              "id": "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal",
+              "gold_label": "absent"
+            }
+          ]
+        }
+      }
+    },
+    "weight_sha256": {
+      "model-00001-of-00004.safetensors": "d8cf9c4d0dd972e1a2131bfe656235ee98221679711a3beef6d46dadf0f20b5c",
+      "model-00002-of-00004.safetensors": "8d4782b4a69ef03845159ce1a15e272aadaaf134dc138d68f616098e8531729c",
+      "model-00003-of-00004.safetensors": "3acdd690e65c24f42a24581b8467af98bd3ca357444580f8012aacd2bd607921",
+      "model-00004-of-00004.safetensors": "67e9ad31c8c32abf3a55ee7fc7217b3ecb35fd3c74d98a5bd233e0e4d6964f46"
+    },
+    "source_sha256": {
+      "agent/__init__.py": "40a172d00f54e46a1cbdd4d05e5494ffb52e2c691c27529f5e65ea8629d69d86",
+      "agent/agentic_rag.py": "bb31f16a3455445c731061b69dd4830f4c3b413a5537ac21e56328e672c2d20c",
+      "agent/generator.py": "04bf3f4ec2456d19a3f2ecea3e6aa5b7a54eaf28fae770dc62e65d1f76b6af73",
+      "agent/query_analyzer/__init__.py": "ccdb63065f335db3bb4239e40bf453e0874e7bcd4508e5e49458711ca87406a0",
+      "agent/query_analyzer/analyzer.py": "2b603b9b772aed0d6dc0d25a540517baba60e24863ebb702f629459407c331e3",
+      "agent/query_analyzer/analyzer_openrouter.py": "b2bc5d1d17681b00febdab95040276051c720e79de965c37f4cd3db2d027b4a9",
+      "agent/reviser/__init__.py": "e2b572674d0ce9f5671b5998c0bbc44530803582ccc958558021467218469f9c",
+      "agent/reviser/reviser.py": "d08e84a828392fbffedcb7dab3fa258393065e04cbe5d56158dbf45759c9b18b",
+      "agent/verifier/__init__.py": "e16b8f9825d45902d258cd76865e8964625907da984195d8cca2889747e77a90",
+      "agent/verifier/verifier.py": "8fd0a14215179484594254e964045680347ab069ffec4dceb5d44c7e3af436b0",
+      "retrieval/__init__.py": "4a28a09712a91d7c70018d8e79329127d1081bad5e685d20665071963ea9f51f",
+      "retrieval/baseline_direct.py": "37aa3188dea633303ca8add6b4535ae8b6b5982b1de63399a4806a0b1d16a488",
+      "retrieval/baseline_rag.py": "87b54ad83d0da89507a76e68ca4c6b44c5b9ac270000ed45336abd3f7a4a858c",
+      "retrieval/chunking.py": "0617195ddbce6637f44f9333ce41292ca418a5cb9a2a46a4feeb907542e75f16",
+      "retrieval/cli.py": "ae4ed6d5ffda59ee799e69958f7313adeb4efcf44f46acd8fa203b38efc08d9f",
+      "retrieval/common.py": "904a5e6376e304c60755dd98da7ebfcbc976ba63aeba4757dca38c59fe261e88",
+      "retrieval/evaluate_retrieval.py": "5cd307df34306759fc66660c55640ae459e3577efb0b8f1e46ad20b903da32e7",
+      "retrieval/evidence.py": "db38eed86bfd9497e7f5bf2a84f5a84392888792d612042be46817d74884cdc7",
+      "retrieval/retrievers/__init__.py": "f48b313e316e89a13b02eb71311096c05abd874f8222434c60cc0982bff49b00",
+      "retrieval/retrievers/retriever.py": "d81952cbb21180a88784dd4768922d9034bc397950a42c2677fc664989d481c9",
+      "experiments/__init__.py": "15d5776d6322f1d3e78d0ba79847ecc65cb7eb30a98b97a422239d25baa76cbf",
+      "experiments/prepare_cuad_development.py": "07e91931f0e68a7c91f189ac27e54665f194e3f97531a3d1107114977647c85a",
+      "experiments/prepare_support_review.py": "4a656059cb5e7199cdbcd9a276812789e8b281ca5515522b9f8c188520ff5aae",
+      "experiments/run_agent_ablation_pilot.py": "6d801bd650079e30bd950a99e8a38d72b148ec7eb2bd8106797a6c5a4d7b8f88",
+      "experiments/run_baseline_pilot.py": "573bff7facfffe2bcb4bf5cf6eacf314cc57e87bf4ad450f5228858dd9c583eb",
+      "experiments/run_experiments.py": "5e0bbc606cda416c092f043713e4b11899a2f35f67a3a417ba0eacb72681087a",
+      "experiments/run_full_mistral.py": "d5d3cab73f6b976b22c2f34991d3582e63b12092aa71611157d0c4bf4084d6f9",
+      "experiments/summarize_part4.py": "e740e936dc51ce545f4ba792e224e2539a18166ef8cb08474ad4a7e1587dd909",
+      "experiments/summarize_results.py": "2a8dbf3d4470c2d414840ffa67d532120779a239a6042e84303d3c449f895a43",
+      "experiments/vllm_mistral.py": "c28533a57b97816699445e9ad4dc403a1e6f9fa91510f0a7f6eab824a368c32f",
+      "utils/__init__.py": "d4f8735824fd26704dedbf84c765b38a9e4bacb81f08fe6fbedcf4704e7bd0be",
+      "utils/helpers.py": "fd7eaf243506c8faea309ec0580718fd51baa23ee90e5f33f06b901f457a794d",
+      "utils/llm_interface.py": "fde6e85ec5e4db6f1071a83df4d9661530640ba1b70dc988f7a7690675024a85",
+      "utils/logger.py": "8153b984ac47c6f1464a161c2421141bb8f6dd4e73ac8ea8dd947223bb37b7ce",
+      "utils/openrouter_llm.py": "b17bdd0f6cf0c9370a83570b3ca4314edef6f54abd901bdecef11b664f9e2e92",
+      "data/__init__.py": "0529bbc02d390f058f86e0f344972579ff7797252c7f74a65ca44573e3b2be23",
+      "data/contractnli_processor.py": "c698ca2f9df52bd549f208c4ef373d5f2f40f4ba758f07e71c9d0b3ba8ef9eb8",
+      "data/cuad_processor.py": "147a9c62e1343b88af89e7e42ebc622c46a910dea02115b6278e133fa8a7f4eb",
+      "data/dataset_loader.py": "acb900ab5059fca96700ae7e1993f7d83a604af8dfe760eb378c91e093f2f8bc",
+      "data/privacyqa_processor.py": "0d2a7a2a24348df3f5efc00509ae468b165f8217b590c849cd1303e6b0755ae3"
+    },
+    "python": "3.12.14",
+    "configuration_sha256": {
+      "config.json": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+      "generation_config.json": "d1af74d8ba49428ab2faa65f7948165cc6bf52b740e57e840f8af772587c894c",
+      "tokenizer.json": "e134af98b985517b4f068e3755ae90d4e9cd2d45d328325dc503f1c6b2d06cc7",
+      "tokenizer_config.json": "da0e3a7cce6e4d787e85eb1c24d548420e0d7fe2c7a214e192795c46e40d75bb",
+      "model.safetensors.index.json": "146776fce3f6db1103aa6f249e65ee5544c5923ce6f971b092eee79aa6e5d37b"
+    },
+    "platform": "Darwin",
+    "architecture": "arm64",
+    "packages": {
+      "mlx-lm": "0.32.2",
+      "mlx": "0.32.4",
+      "transformers": "5.24.0",
+      "numpy": "2.3.5"
+    },
+    "datasets": {
+      "contractnli": {
+        "count": 6,
+        "sha256": "ba6aa63b66a354028703c3e3574a902f55cc751dc37cc1d9d2f2c11bd39bb116",
+        "selected_ids": [
+          "contractnli_test_4_nda-4",
+          "contractnli_test_41_nda-1",
+          "contractnli_test_53_nda-18",
+          "contractnli_test_59_nda-13",
+          "contractnli_test_493_nda-2",
+          "contractnli_test_523_nda-8"
+        ]
+      },
+      "cuad": {
+        "count": 4,
+        "sha256": "8b95cd181abd935c2a7d32238764c4a6d0a7818f161eea9dbc6f833e446f5104",
+        "selected_ids": [
+          "cuad_test_PACIRA PHARMACEUTICALS, INC. - A_R STRATEGIC LICENSING, DISTRIBUTION AND MARKETING AGREEMENT __Notice Period To Terminate Renewal",
+          "cuad_test_N2KINC_10_16_1997-EX-10.16-SPONSORSHIP AGREEMENT__Notice Period To Terminate Renewal",
+          "cuad_test_HPILHOLDING_01_07_2015-EX-99.1-COOPERATION AGREEMENT__Agreement Date",
+          "cuad_test_ACCELERATEDTECHNOLOGIESHOLDINGCORP_04_24_2003-EX-10.13-JOINT VENTURE AGREEMENT__Notice Period To Terminate Renewal"
+        ]
+      }
+    }
+  },
+  "groups": [
+    {
+      "status": "completed",
+      "dataset": "contractnli",
+      "variant": {
+        "name": "full",
+        "mode": "agentic_rag",
+        "retriever": "bm25",
+        "chunking": "fixed_length",
+        "top_k": null,
+        "chunker_kwargs": {
+          "chunk_size": 512,
+          "overlap": 128
+        },
+        "retriever_kwargs": {
+          "k1": 1.5,
+          "b": 0.75
+        },
+        "verification": true,
+        "revision": true
+      },
+      "planned": 6,
+      "completed": 6,
+      "format_pass": 6,
+      "label_correct": 6,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 1.0,
+      "macro_f1": 1.0,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 2
+        },
+        "entailment": {
+          "entailment": 2
+        },
+        "neutral": {
+          "neutral": 2
+        }
+      },
+      "mean_latency_seconds": 68.9266322851181,
+      "model_calls": 22,
+      "format_or_execution_errors": {},
+      "grounding_errors": 2,
+      "rows_with_out_of_range_citations": 2,
+      "revisions": 3,
+      "gold_evidence_rows": 4,
+      "fully_covered_gold_rows": 4,
+      "label_accuracy_when_gold_fully_covered": 1.0,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0,
+      "independent_hallucination_rate": null,
+      "answer_completeness": null,
+      "abstention_precision": null,
+      "total_generated_tokens": 2101,
+      "validation_status": "passed"
+    },
+    {
+      "status": "completed",
+      "dataset": "contractnli",
+      "variant": {
+        "name": "no_verification",
+        "mode": "agentic_rag",
+        "retriever": "bm25",
+        "chunking": "fixed_length",
+        "top_k": null,
+        "chunker_kwargs": {
+          "chunk_size": 512,
+          "overlap": 128
+        },
+        "retriever_kwargs": {
+          "k1": 1.5,
+          "b": 0.75
+        },
+        "verification": false,
+        "revision": false
+      },
+      "planned": 6,
+      "completed": 6,
+      "format_pass": 6,
+      "label_correct": 5,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.8333333333333334,
+      "macro_f1": 0.8222222222222223,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 2
+        },
+        "entailment": {
+          "contradiction": 1,
+          "entailment": 1
+        },
+        "neutral": {
+          "neutral": 2
+        }
+      },
+      "mean_latency_seconds": 29.643218835194904,
+      "model_calls": 12,
+      "format_or_execution_errors": {},
+      "grounding_errors": 1,
+      "rows_with_out_of_range_citations": 1,
+      "revisions": 0,
+      "gold_evidence_rows": 4,
+      "fully_covered_gold_rows": 4,
+      "label_accuracy_when_gold_fully_covered": 0.75,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0,
+      "independent_hallucination_rate": null,
+      "answer_completeness": null,
+      "abstention_precision": null,
+      "total_generated_tokens": 967,
+      "validation_status": "passed"
+    },
+    {
+      "status": "completed",
+      "dataset": "contractnli",
+      "variant": {
+        "name": "no_revision",
+        "mode": "agentic_rag",
+        "retriever": "bm25",
+        "chunking": "fixed_length",
+        "top_k": null,
+        "chunker_kwargs": {
+          "chunk_size": 512,
+          "overlap": 128
+        },
+        "retriever_kwargs": {
+          "k1": 1.5,
+          "b": 0.75
+        },
+        "verification": true,
+        "revision": false
+      },
+      "planned": 6,
+      "completed": 6,
+      "format_pass": 6,
+      "label_correct": 5,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.8333333333333334,
+      "macro_f1": 0.8222222222222223,
+      "confusion": {
+        "contradiction": {
+          "contradiction": 2
+        },
+        "entailment": {
+          "contradiction": 1,
+          "entailment": 1
+        },
+        "neutral": {
+          "neutral": 2
+        }
+      },
+      "mean_latency_seconds": 55.81117880344391,
+      "model_calls": 19,
+      "format_or_execution_errors": {},
+      "grounding_errors": 1,
+      "rows_with_out_of_range_citations": 1,
+      "revisions": 0,
+      "gold_evidence_rows": 4,
+      "fully_covered_gold_rows": 4,
+      "label_accuracy_when_gold_fully_covered": 0.75,
+      "gold_positive_count": 0,
+      "verbatim_positive_correct": 0,
+      "independent_hallucination_rate": null,
+      "answer_completeness": null,
+      "abstention_precision": null,
+      "total_generated_tokens": 1666,
+      "validation_status": "passed"
+    },
+    {
+      "status": "completed",
+      "dataset": "cuad",
+      "variant": {
+        "name": "full",
+        "mode": "agentic_rag",
+        "retriever": "bm25",
+        "chunking": "fixed_length",
+        "top_k": null,
+        "chunker_kwargs": {
+          "chunk_size": 512,
+          "overlap": 128
+        },
+        "retriever_kwargs": {
+          "k1": 1.5,
+          "b": 0.75
+        },
+        "verification": true,
+        "revision": true
+      },
+      "planned": 4,
+      "completed": 4,
+      "format_pass": 4,
+      "label_correct": 1,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.25,
+      "macro_f1": 0.2,
+      "confusion": {
+        "absent": {
+          "present": 2
+        },
+        "present": {
+          "absent": 1,
+          "present": 1
+        }
+      },
+      "mean_latency_seconds": 35.73507446050644,
+      "model_calls": 11,
+      "format_or_execution_errors": {},
+      "grounding_errors": 2,
+      "rows_with_out_of_range_citations": 2,
+      "revisions": 1,
+      "gold_evidence_rows": 2,
+      "fully_covered_gold_rows": 2,
+      "label_accuracy_when_gold_fully_covered": 0.5,
+      "gold_positive_count": 2,
+      "verbatim_positive_correct": 0,
+      "independent_hallucination_rate": null,
+      "answer_completeness": null,
+      "abstention_precision": null,
+      "total_generated_tokens": 631,
+      "validation_status": "passed"
+    },
+    {
+      "status": "completed",
+      "dataset": "cuad",
+      "variant": {
+        "name": "no_verification",
+        "mode": "agentic_rag",
+        "retriever": "bm25",
+        "chunking": "fixed_length",
+        "top_k": null,
+        "chunker_kwargs": {
+          "chunk_size": 512,
+          "overlap": 128
+        },
+        "retriever_kwargs": {
+          "k1": 1.5,
+          "b": 0.75
+        },
+        "verification": false,
+        "revision": false
+      },
+      "planned": 4,
+      "completed": 4,
+      "format_pass": 4,
+      "label_correct": 1,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.25,
+      "macro_f1": 0.2,
+      "confusion": {
+        "absent": {
+          "present": 2
+        },
+        "present": {
+          "absent": 1,
+          "present": 1
+        }
+      },
+      "mean_latency_seconds": 25.837007999420166,
+      "model_calls": 8,
+      "format_or_execution_errors": {},
+      "grounding_errors": 2,
+      "rows_with_out_of_range_citations": 2,
+      "revisions": 0,
+      "gold_evidence_rows": 2,
+      "fully_covered_gold_rows": 1,
+      "label_accuracy_when_gold_fully_covered": 1.0,
+      "gold_positive_count": 2,
+      "verbatim_positive_correct": 0,
+      "independent_hallucination_rate": null,
+      "answer_completeness": null,
+      "abstention_precision": null,
+      "total_generated_tokens": 490,
+      "validation_status": "passed"
+    },
+    {
+      "status": "completed",
+      "dataset": "cuad",
+      "variant": {
+        "name": "no_revision",
+        "mode": "agentic_rag",
+        "retriever": "bm25",
+        "chunking": "fixed_length",
+        "top_k": null,
+        "chunker_kwargs": {
+          "chunk_size": 512,
+          "overlap": 128
+        },
+        "retriever_kwargs": {
+          "k1": 1.5,
+          "b": 0.75
+        },
+        "verification": true,
+        "revision": false
+      },
+      "planned": 4,
+      "completed": 4,
+      "format_pass": 4,
+      "label_correct": 1,
+      "format_pass_rate": 1.0,
+      "label_accuracy": 0.25,
+      "macro_f1": 0.2,
+      "confusion": {
+        "absent": {
+          "present": 2
+        },
+        "present": {
+          "absent": 1,
+          "present": 1
+        }
+      },
+      "mean_latency_seconds": 33.832819163799286,
+      "model_calls": 10,
+      "format_or_execution_errors": {},
+      "grounding_errors": 2,
+      "rows_with_out_of_range_citations": 2,
+      "revisions": 0,
+      "gold_evidence_rows": 2,
+      "fully_covered_gold_rows": 1,
+      "label_accuracy_when_gold_fully_covered": 1.0,
+      "gold_positive_count": 2,
+      "verbatim_positive_correct": 0,
+      "independent_hallucination_rate": null,
+      "answer_completeness": null,
+      "abstention_precision": null,
+      "total_generated_tokens": 615,
+      "validation_status": "passed"
+    }
+  ],
+  "started_at": "2026-11-22T15:50:09.304527+00:00",
+  "planned": 30,
+  "completed": 30,
+  "updated_at": "2026-11-22T16:11:57.426165+00:00"
+}

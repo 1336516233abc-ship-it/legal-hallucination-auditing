@@ -1,0 +1,476 @@
+{
+  "groups": 36,
+  "metrics_equal_at_tolerance_1e_12": true,
+  "max_absolute_difference": 5.551115123125783e-16,
+  "comparisons": [
+    {
+      "dataset": "contractnli",
+      "retriever": "bm25",
+      "chunking": "fixed_length",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 2.220446049250313e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "bm25",
+      "chunking": "fixed_length",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "bm25",
+      "chunking": "fixed_length",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "bm25",
+      "chunking": "clause_level",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 4.440892098500626e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "bm25",
+      "chunking": "clause_level",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 2.220446049250313e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -3.3306690738754696e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "bm25",
+      "chunking": "clause_level",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "bm25",
+      "chunking": "fixed_length",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "bm25",
+      "chunking": "fixed_length",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "bm25",
+      "chunking": "fixed_length",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "bm25",
+      "chunking": "clause_level",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "bm25",
+      "chunking": "clause_level",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "bm25",
+      "chunking": "clause_level",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "dense",
+      "chunking": "fixed_length",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 5.551115123125783e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "dense",
+      "chunking": "fixed_length",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "dense",
+      "chunking": "fixed_length",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "hybrid",
+      "chunking": "fixed_length",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 2.220446049250313e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "hybrid",
+      "chunking": "fixed_length",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 2.220446049250313e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "hybrid",
+      "chunking": "fixed_length",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "dense",
+      "chunking": "clause_level",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "dense",
+      "chunking": "clause_level",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "dense",
+      "chunking": "clause_level",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "hybrid",
+      "chunking": "clause_level",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": -3.3306690738754696e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "hybrid",
+      "chunking": "clause_level",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "contractnli",
+      "retriever": "hybrid",
+      "chunking": "clause_level",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -2.220446049250313e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "dense",
+      "chunking": "fixed_length",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": -1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "dense",
+      "chunking": "fixed_length",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "dense",
+      "chunking": "fixed_length",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "hybrid",
+      "chunking": "fixed_length",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "hybrid",
+      "chunking": "fixed_length",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "hybrid",
+      "chunking": "fixed_length",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "dense",
+      "chunking": "clause_level",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 1.6653345369377348e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "dense",
+      "chunking": "clause_level",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "dense",
+      "chunking": "clause_level",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "hybrid",
+      "chunking": "clause_level",
+      "top_k": 3,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": -1.1102230246251565e-16,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": 0.0
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "hybrid",
+      "chunking": "clause_level",
+      "top_k": 5,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    },
+    {
+      "dataset": "cuad",
+      "retriever": "hybrid",
+      "chunking": "clause_level",
+      "top_k": 10,
+      "metric_deltas": {
+        "evaluated_examples": 0,
+        "excluded_no_evidence": 0,
+        "evidence_recall_at_k": 0.0,
+        "evidence_hit_rate": 0.0,
+        "evidence_character_recall": -1.1102230246251565e-16
+      }
+    }
+  ],
+  "note": "Same encoder identifier. Both evaluation records omit an explicit encoder revision. The sole offline cache used for the new run was separately verified in retrieval_environment.json. Dependency versions are in the run JSON."
+}

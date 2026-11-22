@@ -5,12 +5,17 @@ Generates initial answers from retrieved evidence.
 Author: Yin Fengling (3036807375)
 """
 
+from __future__ import annotations
+
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from typing import Dict, List
-from utils.llm_interface import LLMInterface
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from utils.llm_interface import LLMInterface
 from retrieval.common import fit_evidence, generate_task_response, parse_response, task_instruction, task_question
 import logging
 
