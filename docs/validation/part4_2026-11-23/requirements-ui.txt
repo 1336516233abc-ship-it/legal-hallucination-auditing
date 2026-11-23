@@ -1,0 +1,4 @@
+# Optional local UI candidate on Apple Silicon; install repository retrieval dependencies first.
+gradio==6.32.0
+mlx-lm==0.32.2
+transformers==5.24.0
