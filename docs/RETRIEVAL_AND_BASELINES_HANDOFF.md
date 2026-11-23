@@ -171,7 +171,7 @@ bash scripts/run_autodl_mistral.sh full llama3
 | --- | --- |
 | Yin Fengling | 补齐从官方原始数据生成当前 JSON 的可复现转换流程。共享评估器区分两个数据集的标签、空答案和 `parse_error`，按实际检索 k 统计证据命中。 |
 | Wang Zhengyao | 演示入口显式传 `dataset`，展示 `final_answer`、查证结果及拦截原因。修订后目前只有确定性格式和证据检查，若加二次模型查证需单独记录。 |
-| Li Xinru | 已接入通用 runner、核对归档汇总并提供新实验结果与盲评导出入口。后续需取回服务器逐条轨迹，完成独立答案支持性标注；新 Agent 消融是小样本，不等于全量组件消融。 |
+| Li Xinru | 已接入通用 runner、核对归档汇总并提供新实验结果与盲评导出入口。后续需与评估负责人确认独立答案支持性方法和人工标注分工，取得服务器逐条轨迹后补齐分析；新 Agent 消融是小样本，不等于全量组件消融。正式 UI 入口和验收见 [UI 交接](UI_HANDOFF.md)。 |
 | Qin Mengmeng | 协助提取逐条运行轨迹与分析漏判。若继续做 Dense 或 Hybrid 生成对照，保持模型、测试样本和输入预算固定，用开发集选参。 |
 
 ## GitHub 交付文件

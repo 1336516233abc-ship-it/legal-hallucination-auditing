@@ -4,6 +4,8 @@
 
 结果入口：[本次结果表](validation/part4_2026-11-22/RESULTS.md)。原始测试数据、既有全量结果和组员旧文件保留原样。
 
+正式 UI 已接入 `ui/app.py`，按最新确认纳入演示必做事项。运行方式见 [UI 交接](UI_HANDOFF.md)，实测记录见 [正式 UI 验收](validation/ui_2026-11-23/README.md)。演示使用 [当前指引](DEMO_RUNBOOK.md)，不沿用旧稿未经验证的“100% 修订成功率”。
+
 本文的“全量”指仓库已交付的处理后测试划分；CUAD 覆盖已交付的 10 个类别，并非官方 41 类完整任务集合。[划分与标签说明](../data/processed/README.md)
 
 ## 交付范围

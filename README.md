@@ -55,7 +55,7 @@ legal-hallucination-auditing/
 │   ├── llm_interface.py       # LLM API wrapper
 │   ├── logger.py
 │   └── helpers.py
-├── ui/                         # Optional UI prototype
+├── ui/                         # Interactive contract review UI
 │   └── app.py
 ├── outputs/                    # Results and analysis
 ├── requirements.txt
@@ -83,6 +83,20 @@ The new runs separate 36 full-test retrieval configurations from a paired
 10-example Agent component pilot on each formal model. Archived full-test
 generation results are audited separately; independent hallucination scores
 remain unmeasured.
+
+## Interactive contract review
+
+The formal entry point is `ui/app.py`. It supports proposition checking and clause
+extraction, creates an independent contract index for each request, and shows the
+final answer's numbered evidence, check status and complete model-call record.
+Inputs and examples are locked during inference; changing an input clears the old
+result. Failed task formats and invalid quotations/citations are withheld explicitly.
+
+See the Chinese [UI setup and acceptance handoff](docs/UI_HANDOFF.md) for local
+Apple Silicon and CUDA launch commands. The UI is required for the team's demo.
+The earlier `docs/validation/part4_2026-11-23/local_demo.py` remains an archived
+candidate; use `ui/app.py` for new runs. Model checks are not independent human
+hallucination measurements, and a revision is not automatically a successful fix.
 
 ## Installation
 

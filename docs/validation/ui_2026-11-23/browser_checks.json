@@ -1,0 +1,18 @@
+{
+  "scope": "Native Chrome UI interactions with the formal Llama 3 service; not independent human annotation",
+  "recorded_at": "2026-11-23T13:10:04.284701+00:00",
+  "checks": {
+    "page_rendered": true,
+    "sample_button_populated_contract_and_query": true,
+    "submit_disabled_inputs_and_buttons_during_inference": true,
+    "thirty_day_source_answer_entailment": true,
+    "sixty_day_example_cleared_previous_answer_and_evidence": true,
+    "sixty_day_source_answer_contradiction": true,
+    "sixty_day_final_evidence_from_current_contract": true
+  },
+  "observed_final_answer": "The evidence states that the Agreement may be terminated by either party upon sixty (60) days written notice [1], which contradicts the question's statement that either party may terminate the Agreement with thirty days written notice.",
+  "limitations": [
+    "Chrome connector failed; native app accessibility was used.",
+    "No independent hallucination judgment or cross-platform UI verification is claimed."
+  ]
+}
