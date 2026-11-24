@@ -1,0 +1,540 @@
+{
+  "exported_at_utc": "2026-11-23T15:32:53+00:00",
+  "rows": 18666,
+  "paired_dataset_method_example_keys": 9333,
+  "validation": [
+    "SQLite quick_check on both downloaded copies.",
+    "Full-run settings, group counts, format and label counts, model calls, grounding errors, citation range errors and revision counts matched against archived summaries.",
+    "JSONL gzip re-read validated at EOF and row count matched."
+  ],
+  "models": [
+    {
+      "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+      "revision": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2",
+      "rows": 9333,
+      "model_calls": 18050,
+      "groups": [
+        {
+          "dataset": "contractnli",
+          "method": "direct_prompting",
+          "planned": 2091,
+          "completed": 2091,
+          "format_pass": 2091,
+          "label_correct": 983,
+          "format_pass_rate": 1.0,
+          "label_accuracy": 0.4701099952175992,
+          "macro_f1": 0.44907655554387454,
+          "confusion": {
+            "contradiction": {
+              "contradiction": 191,
+              "entailment": 28,
+              "neutral": 1
+            },
+            "entailment": {
+              "contradiction": 377,
+              "entailment": 563,
+              "neutral": 28
+            },
+            "neutral": {
+              "contradiction": 540,
+              "entailment": 134,
+              "neutral": 229
+            }
+          },
+          "mean_latency_seconds": 1.4466439294403874,
+          "model_calls": 2091,
+          "format_or_execution_errors": {},
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 0,
+          "revisions": 0,
+          "gold_evidence_rows": 1188,
+          "fully_covered_gold_rows": 1179,
+          "label_accuracy_when_gold_fully_covered": 0.6344359626802375,
+          "gold_positive_count": 0,
+          "verbatim_positive_correct": 0
+        },
+        {
+          "dataset": "contractnli",
+          "method": "standard_rag",
+          "planned": 2091,
+          "completed": 2091,
+          "format_pass": 2087,
+          "label_correct": 889,
+          "format_pass_rate": 0.9980870396939263,
+          "label_accuracy": 0.4251554280248685,
+          "macro_f1": 0.42712824912470576,
+          "confusion": {
+            "contradiction": {
+              "contradiction": 203,
+              "entailment": 9,
+              "neutral": 8
+            },
+            "entailment": {
+              "contradiction": 527,
+              "entailment": 327,
+              "invalid": 4,
+              "neutral": 110
+            },
+            "neutral": {
+              "contradiction": 474,
+              "entailment": 70,
+              "neutral": 359
+            }
+          },
+          "mean_latency_seconds": 1.852582562418627,
+          "model_calls": 2091,
+          "format_or_execution_errors": {
+            "missing or invalid task label": 4
+          },
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 151,
+          "revisions": 0,
+          "gold_evidence_rows": 1188,
+          "fully_covered_gold_rows": 1148,
+          "label_accuracy_when_gold_fully_covered": 0.45557491289198604,
+          "gold_positive_count": 0,
+          "verbatim_positive_correct": 0
+        },
+        {
+          "dataset": "contractnli",
+          "method": "verified_agentic_rag",
+          "planned": 2091,
+          "completed": 2091,
+          "format_pass": 2051,
+          "label_correct": 1161,
+          "format_pass_rate": 0.9808703969392635,
+          "label_accuracy": 0.5552367288378766,
+          "macro_f1": 0.528308358466862,
+          "confusion": {
+            "contradiction": {
+              "contradiction": 155,
+              "entailment": 26,
+              "invalid": 1,
+              "neutral": 38
+            },
+            "entailment": {
+              "contradiction": 286,
+              "entailment": 476,
+              "invalid": 27,
+              "neutral": 179
+            },
+            "neutral": {
+              "contradiction": 233,
+              "entailment": 128,
+              "invalid": 12,
+              "neutral": 530
+            }
+          },
+          "mean_latency_seconds": 9.937164902744083,
+          "model_calls": 8611,
+          "format_or_execution_errors": {
+            "missing or invalid task label": 40
+          },
+          "grounding_errors": 211,
+          "rows_with_out_of_range_citations": 211,
+          "revisions": 1555,
+          "gold_evidence_rows": 1188,
+          "fully_covered_gold_rows": 1107,
+          "label_accuracy_when_gold_fully_covered": 0.5411020776874436,
+          "gold_positive_count": 0,
+          "verbatim_positive_correct": 0
+        },
+        {
+          "dataset": "cuad",
+          "method": "direct_prompting",
+          "planned": 1020,
+          "completed": 1020,
+          "format_pass": 966,
+          "label_correct": 791,
+          "format_pass_rate": 0.9470588235294117,
+          "label_accuracy": 0.7754901960784314,
+          "macro_f1": 0.7851155066210909,
+          "confusion": {
+            "absent": {
+              "absent": 267,
+              "invalid": 9,
+              "present": 145
+            },
+            "present": {
+              "absent": 30,
+              "invalid": 45,
+              "present": 524
+            }
+          },
+          "mean_latency_seconds": 1.2763733144968237,
+          "model_calls": 1020,
+          "format_or_execution_errors": {
+            "response must contain one complete JSON object": 50,
+            "answer must be a string": 4
+          },
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 0,
+          "revisions": 0,
+          "gold_evidence_rows": 599,
+          "fully_covered_gold_rows": 465,
+          "label_accuracy_when_gold_fully_covered": 0.9010752688172043,
+          "gold_positive_count": 599,
+          "verbatim_positive_correct": 396
+        },
+        {
+          "dataset": "cuad",
+          "method": "standard_rag",
+          "planned": 1020,
+          "completed": 1020,
+          "format_pass": 866,
+          "label_correct": 700,
+          "format_pass_rate": 0.8490196078431372,
+          "label_accuracy": 0.6862745098039216,
+          "macro_f1": 0.7345925127832708,
+          "confusion": {
+            "absent": {
+              "absent": 253,
+              "invalid": 49,
+              "present": 119
+            },
+            "present": {
+              "absent": 47,
+              "invalid": 105,
+              "present": 447
+            }
+          },
+          "mean_latency_seconds": 1.2940919989847814,
+          "model_calls": 1020,
+          "format_or_execution_errors": {
+            "citations must contain positive integer evidence numbers": 98,
+            "response must contain one complete JSON object": 54,
+            "answer must be a string": 2
+          },
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 143,
+          "revisions": 0,
+          "gold_evidence_rows": 599,
+          "fully_covered_gold_rows": 360,
+          "label_accuracy_when_gold_fully_covered": 0.7555555555555555,
+          "gold_positive_count": 599,
+          "verbatim_positive_correct": 264
+        },
+        {
+          "dataset": "cuad",
+          "method": "verified_agentic_rag",
+          "planned": 1020,
+          "completed": 1020,
+          "format_pass": 805,
+          "label_correct": 633,
+          "format_pass_rate": 0.7892156862745098,
+          "label_accuracy": 0.6205882352941177,
+          "macro_f1": 0.6834024050546912,
+          "confusion": {
+            "absent": {
+              "absent": 228,
+              "invalid": 90,
+              "present": 103
+            },
+            "present": {
+              "absent": 69,
+              "invalid": 125,
+              "present": 405
+            }
+          },
+          "mean_latency_seconds": 5.893797101693995,
+          "model_calls": 3217,
+          "format_or_execution_errors": {
+            "response must contain one complete JSON object": 116,
+            "citations must contain positive integer evidence numbers": 99
+          },
+          "grounding_errors": 271,
+          "rows_with_out_of_range_citations": 149,
+          "revisions": 498,
+          "gold_evidence_rows": 599,
+          "fully_covered_gold_rows": 350,
+          "label_accuracy_when_gold_fully_covered": 0.7228571428571429,
+          "gold_positive_count": 599,
+          "verbatim_positive_correct": 189
+        }
+      ],
+      "files": [
+        {
+          "name": "llama3-predictions.sqlite3",
+          "bytes": 670445568,
+          "sha256": "4c5b3469503c0c705f420afe6997a807cd7fe752de39de8a49f3b0d2a4037ec3"
+        },
+        {
+          "name": "llama3-predictions.jsonl.gz",
+          "bytes": 29659322,
+          "sha256": "515c66f9151621e91116e696b3ca813554da8a06387c786c021bfc9634b1e9ed"
+        }
+      ]
+    },
+    {
+      "model": "mistralai/Mistral-7B-Instruct-v0.2",
+      "revision": "63a8b081895390a26e140280378bc85ec8bce07a",
+      "rows": 9333,
+      "model_calls": 19784,
+      "groups": [
+        {
+          "dataset": "contractnli",
+          "method": "direct_prompting",
+          "planned": 2091,
+          "completed": 2091,
+          "format_pass": 1750,
+          "label_correct": 908,
+          "format_pass_rate": 0.8369201339072214,
+          "label_accuracy": 0.43424198947871834,
+          "macro_f1": 0.3253394843786747,
+          "confusion": {
+            "contradiction": {
+              "contradiction": 20,
+              "entailment": 5,
+              "invalid": 7,
+              "neutral": 188
+            },
+            "entailment": {
+              "contradiction": 42,
+              "entailment": 115,
+              "invalid": 266,
+              "neutral": 545
+            },
+            "neutral": {
+              "contradiction": 27,
+              "entailment": 35,
+              "invalid": 68,
+              "neutral": 773
+            }
+          },
+          "mean_latency_seconds": 1.9296051471809033,
+          "model_calls": 2091,
+          "format_or_execution_errors": {
+            "missing or invalid task label": 341
+          },
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 0,
+          "revisions": 0,
+          "gold_evidence_rows": 1188,
+          "fully_covered_gold_rows": 1177,
+          "label_accuracy_when_gold_fully_covered": 0.11384876805437553,
+          "gold_positive_count": 0,
+          "verbatim_positive_correct": 0
+        },
+        {
+          "dataset": "contractnli",
+          "method": "standard_rag",
+          "planned": 2091,
+          "completed": 2091,
+          "format_pass": 1718,
+          "label_correct": 876,
+          "format_pass_rate": 0.8216164514586323,
+          "label_accuracy": 0.41893830703012913,
+          "macro_f1": 0.2707187211391265,
+          "confusion": {
+            "contradiction": {
+              "contradiction": 4,
+              "entailment": 4,
+              "invalid": 8,
+              "neutral": 204
+            },
+            "entailment": {
+              "contradiction": 34,
+              "entailment": 73,
+              "invalid": 290,
+              "neutral": 571
+            },
+            "neutral": {
+              "contradiction": 7,
+              "entailment": 22,
+              "invalid": 75,
+              "neutral": 799
+            }
+          },
+          "mean_latency_seconds": 2.524731799276454,
+          "model_calls": 2091,
+          "format_or_execution_errors": {
+            "missing or invalid task label": 373
+          },
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 100,
+          "revisions": 0,
+          "gold_evidence_rows": 1188,
+          "fully_covered_gold_rows": 1148,
+          "label_accuracy_when_gold_fully_covered": 0.06707317073170732,
+          "gold_positive_count": 0,
+          "verbatim_positive_correct": 0
+        },
+        {
+          "dataset": "contractnli",
+          "method": "verified_agentic_rag",
+          "planned": 2091,
+          "completed": 2091,
+          "format_pass": 1577,
+          "label_correct": 775,
+          "format_pass_rate": 0.7541846006695361,
+          "label_accuracy": 0.3706360593017695,
+          "macro_f1": 0.23050640267031,
+          "confusion": {
+            "contradiction": {
+              "contradiction": 3,
+              "invalid": 18,
+              "neutral": 199
+            },
+            "entailment": {
+              "contradiction": 37,
+              "entailment": 21,
+              "invalid": 372,
+              "neutral": 538
+            },
+            "neutral": {
+              "contradiction": 27,
+              "entailment": 1,
+              "invalid": 124,
+              "neutral": 751
+            }
+          },
+          "mean_latency_seconds": 10.819633911010582,
+          "model_calls": 10089,
+          "format_or_execution_errors": {
+            "missing or invalid task label": 514
+          },
+          "grounding_errors": 112,
+          "rows_with_out_of_range_citations": 112,
+          "revisions": 1466,
+          "gold_evidence_rows": 1188,
+          "fully_covered_gold_rows": 1101,
+          "label_accuracy_when_gold_fully_covered": 0.021798365122615803,
+          "gold_positive_count": 0,
+          "verbatim_positive_correct": 0
+        },
+        {
+          "dataset": "cuad",
+          "method": "direct_prompting",
+          "planned": 1020,
+          "completed": 1020,
+          "format_pass": 877,
+          "label_correct": 684,
+          "format_pass_rate": 0.8598039215686275,
+          "label_accuracy": 0.6705882352941176,
+          "macro_f1": 0.7214130833639123,
+          "confusion": {
+            "absent": {
+              "absent": 342,
+              "invalid": 53,
+              "present": 26
+            },
+            "present": {
+              "absent": 167,
+              "invalid": 90,
+              "present": 342
+            }
+          },
+          "mean_latency_seconds": 1.5066765464358396,
+          "model_calls": 1020,
+          "format_or_execution_errors": {
+            "citations must contain positive integer evidence numbers": 92,
+            "extracted_spans must contain nonempty strings": 16,
+            "response must contain one complete JSON object": 33,
+            "present responses require an extracted answer": 2
+          },
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 0,
+          "revisions": 0,
+          "gold_evidence_rows": 599,
+          "fully_covered_gold_rows": 446,
+          "label_accuracy_when_gold_fully_covered": 0.6928251121076233,
+          "gold_positive_count": 599,
+          "verbatim_positive_correct": 226
+        },
+        {
+          "dataset": "cuad",
+          "method": "standard_rag",
+          "planned": 1020,
+          "completed": 1020,
+          "format_pass": 928,
+          "label_correct": 711,
+          "format_pass_rate": 0.9098039215686274,
+          "label_accuracy": 0.6970588235294117,
+          "macro_f1": 0.7284482258185383,
+          "confusion": {
+            "absent": {
+              "absent": 389,
+              "invalid": 14,
+              "present": 18
+            },
+            "present": {
+              "absent": 199,
+              "invalid": 78,
+              "present": 322
+            }
+          },
+          "mean_latency_seconds": 1.3878446088172496,
+          "model_calls": 1020,
+          "format_or_execution_errors": {
+            "response must contain one complete JSON object": 14,
+            "present responses require an extracted answer": 23,
+            "extracted_spans must contain nonempty strings": 23,
+            "citations must contain positive integer evidence numbers": 30,
+            "response has no JSON object or Answer/Label fields": 2
+          },
+          "grounding_errors": 0,
+          "rows_with_out_of_range_citations": 107,
+          "revisions": 0,
+          "gold_evidence_rows": 599,
+          "fully_covered_gold_rows": 356,
+          "label_accuracy_when_gold_fully_covered": 0.6292134831460674,
+          "gold_positive_count": 599,
+          "verbatim_positive_correct": 179
+        },
+        {
+          "dataset": "cuad",
+          "method": "verified_agentic_rag",
+          "planned": 1020,
+          "completed": 1020,
+          "format_pass": 828,
+          "label_correct": 645,
+          "format_pass_rate": 0.8117647058823529,
+          "label_accuracy": 0.6323529411764706,
+          "macro_f1": 0.6970591854312784,
+          "confusion": {
+            "absent": {
+              "absent": 350,
+              "invalid": 62,
+              "present": 9
+            },
+            "present": {
+              "absent": 174,
+              "invalid": 130,
+              "present": 295
+            }
+          },
+          "mean_latency_seconds": 6.316643156958562,
+          "model_calls": 3473,
+          "format_or_execution_errors": {
+            "response must contain one complete JSON object": 51,
+            "extracted_spans must contain nonempty strings": 37,
+            "present responses require an extracted answer": 52,
+            "response has no JSON object or Answer/Label fields": 14,
+            "citations must contain positive integer evidence numbers": 25,
+            "missing or invalid task label": 13
+          },
+          "grounding_errors": 223,
+          "rows_with_out_of_range_citations": 128,
+          "revisions": 662,
+          "gold_evidence_rows": 599,
+          "fully_covered_gold_rows": 346,
+          "label_accuracy_when_gold_fully_covered": 0.615606936416185,
+          "gold_positive_count": 599,
+          "verbatim_positive_correct": 132
+        }
+      ],
+      "files": [
+        {
+          "name": "mistral-predictions.sqlite3",
+          "bytes": 674484224,
+          "sha256": "58422f43f751c2edaa20ffd712f70363b3468dfdf7040ff3a81e112faa87ba0c"
+        },
+        {
+          "name": "mistral-predictions.jsonl.gz",
+          "bytes": 29865637,
+          "sha256": "f928605bc84b7f59101c4b2c7ce2cffe2c31d0085baecf8e7b0c69f60415d2f6"
+        }
+      ]
+    }
+  ]
+}
