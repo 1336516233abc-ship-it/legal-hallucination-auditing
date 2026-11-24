@@ -84,6 +84,11 @@ The new runs separate 36 full-test retrieval configurations from a paired
 generation results are audited separately; independent hallucination scores
 remain unmeasured.
 
+The [full-trace analysis delivered on 2026-11-24](docs/validation/part4_2026-11-24/README.md)
+now audits all 18,666 archived outputs and includes error counts, revision label
+transitions, 20 traceable cases, and verified task metrics. No new inference or
+human labels are claimed.
+
 ## Interactive contract review
 
 The formal entry point is `ui/app.py`. It supports proposition checking and clause
