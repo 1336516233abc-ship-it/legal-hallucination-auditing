@@ -1,0 +1,27 @@
+{
+  "base_remote_commit": "29b1d4643f7b40f654c3d525d0d9cceb3e2c67b3",
+  "original_local_commit": "382d6d9057c5018717cbb36c6f31d465d289f42a",
+  "model_revisions": {
+    "llama3": "8afb486c1db24fe5011ec46dfbe5b5dccdb575c2",
+    "mistral": "63a8b081895390a26e140280378bc85ec8bce07a"
+  },
+  "local_source_sha256": "59dfd71ae02b564d65ecdbe5582991bc9e4e4799227a1958a829b3fd73809a36",
+  "published_source_sha256": "ebcc31f114813ccb60fb7157971257b7f0896939bfbff146640cb28676d2e573",
+  "portability_changes": [
+    "Find repository relative to this folder",
+    "Accept a model snapshot directory as an explicit argument",
+    "Respect the caller cache path instead of a machine-specific directory"
+  ],
+  "behavioral_logic_changed_for_publication": false,
+  "source_test_counts": {
+    "passed": 12,
+    "failed": 0
+  },
+  "real_runs": {
+    "original_ui_mistral": 3,
+    "candidate_mistral": 2,
+    "candidate_llama3": 2
+  },
+  "human_reviewed": 0,
+  "private_model_identity_mapping_published": false
+}

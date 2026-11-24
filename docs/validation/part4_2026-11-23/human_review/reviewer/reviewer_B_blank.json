@@ -1,0 +1,602 @@
+[
+  {
+    "blind_id": "R001",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R002",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R003",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R004",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R005",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R006",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R007",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R008",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R009",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R010",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R011",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R012",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R013",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R014",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R015",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R016",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R017",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R018",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R019",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R020",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R021",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R022",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R023",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R024",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R025",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R026",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R027",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R028",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R029",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R030",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R031",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R032",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R033",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R034",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R035",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R036",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R037",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R038",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R039",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R040",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R041",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R042",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R043",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R044",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R045",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R046",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R047",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R048",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R049",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R050",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R051",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R052",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R053",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R054",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R055",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R056",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R057",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R058",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R059",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  },
+  {
+    "blind_id": "R060",
+    "annotator": null,
+    "completed": false,
+    "response_type": null,
+    "claims": [],
+    "all_claims_reviewed": false,
+    "needs_adjudication": null,
+    "notes": ""
+  }
+]

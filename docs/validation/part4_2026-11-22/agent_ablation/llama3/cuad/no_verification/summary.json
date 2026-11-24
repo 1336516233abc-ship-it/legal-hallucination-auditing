@@ -1,0 +1,53 @@
+{
+  "status": "completed",
+  "dataset": "cuad",
+  "variant": {
+    "name": "no_verification",
+    "mode": "agentic_rag",
+    "retriever": "bm25",
+    "chunking": "fixed_length",
+    "top_k": null,
+    "chunker_kwargs": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_kwargs": {
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "verification": false,
+    "revision": false
+  },
+  "planned": 4,
+  "completed": 4,
+  "format_pass": 4,
+  "label_correct": 1,
+  "format_pass_rate": 1.0,
+  "label_accuracy": 0.25,
+  "macro_f1": 0.2,
+  "confusion": {
+    "absent": {
+      "present": 2
+    },
+    "present": {
+      "absent": 1,
+      "present": 1
+    }
+  },
+  "mean_latency_seconds": 25.837007999420166,
+  "model_calls": 8,
+  "format_or_execution_errors": {},
+  "grounding_errors": 2,
+  "rows_with_out_of_range_citations": 2,
+  "revisions": 0,
+  "gold_evidence_rows": 2,
+  "fully_covered_gold_rows": 1,
+  "label_accuracy_when_gold_fully_covered": 1.0,
+  "gold_positive_count": 2,
+  "verbatim_positive_correct": 0,
+  "independent_hallucination_rate": null,
+  "answer_completeness": null,
+  "abstention_precision": null,
+  "total_generated_tokens": 490,
+  "validation_status": "passed"
+}

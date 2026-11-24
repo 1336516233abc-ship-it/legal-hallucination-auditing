@@ -1,0 +1,58 @@
+{
+  "status": "completed",
+  "dataset": "contractnli",
+  "variant": {
+    "name": "no_verification",
+    "mode": "agentic_rag",
+    "retriever": "bm25",
+    "chunking": "fixed_length",
+    "top_k": null,
+    "chunker_kwargs": {
+      "chunk_size": 512,
+      "overlap": 128
+    },
+    "retriever_kwargs": {
+      "k1": 1.5,
+      "b": 0.75
+    },
+    "verification": false,
+    "revision": false
+  },
+  "planned": 6,
+  "completed": 6,
+  "format_pass": 5,
+  "label_correct": 3,
+  "format_pass_rate": 0.8333333333333334,
+  "label_accuracy": 0.5,
+  "macro_f1": 0.4444444444444444,
+  "confusion": {
+    "contradiction": {
+      "neutral": 2
+    },
+    "entailment": {
+      "entailment": 1,
+      "invalid": 1
+    },
+    "neutral": {
+      "neutral": 2
+    }
+  },
+  "mean_latency_seconds": 22.24051829179128,
+  "model_calls": 12,
+  "format_or_execution_errors": {
+    "missing or invalid task label": 1
+  },
+  "grounding_errors": 0,
+  "rows_with_out_of_range_citations": 0,
+  "revisions": 0,
+  "gold_evidence_rows": 4,
+  "fully_covered_gold_rows": 4,
+  "label_accuracy_when_gold_fully_covered": 0.25,
+  "gold_positive_count": 0,
+  "verbatim_positive_correct": 0,
+  "independent_hallucination_rate": null,
+  "answer_completeness": null,
+  "abstention_precision": null,
+  "total_generated_tokens": 751,
+  "validation_status": "has_parse_errors"
+}

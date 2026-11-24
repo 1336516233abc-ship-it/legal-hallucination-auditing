@@ -55,7 +55,7 @@ legal-hallucination-auditing/
 │   ├── llm_interface.py       # LLM API wrapper
 │   ├── logger.py
 │   └── helpers.py
-├── ui/                         # Optional UI prototype
+├── ui/                         # Interactive contract review UI
 │   └── app.py
 ├── outputs/                    # Results and analysis
 ├── requirements.txt
@@ -67,8 +67,8 @@ legal-hallucination-auditing/
 The current retrieval and baseline interfaces, verified commands, test evidence,
 and remaining integration tasks are documented in
 [Retrieval and baselines handoff (Chinese)](docs/RETRIEVAL_AND_BASELINES_HANDOFF.md).
-Use the standalone baseline commands in that document while the legacy
-experiment runner is being integrated. Retrieval-only development and tests need
+The common experiment runner now supports task-aware scoring, frozen cohorts,
+component ablations, and checkpoint resume. Retrieval-only development and tests need
 only `requirements-retrieval.txt`; Dense retrieval and model generation need the
 full model dependencies.
 
@@ -76,6 +76,32 @@ See [Qin Mengmeng's full-test results](docs/RETRIEVAL_AND_BASELINES_HANDOFF.md#�
 for Mistral and Llama 3 on ContractNLI and CUAD, and the
 [retrieval ablation results](docs/validation/RETRIEVAL_RESULTS.md) for the
 retriever, chunking, and top-k comparisons.
+
+Li Xinru's [Part 4 experiment handoff](docs/PART4_EXPERIMENTS.md) contains
+reproduction commands and the [new run results](docs/validation/part4_2026-11-22/RESULTS.md).
+The new runs separate 36 full-test retrieval configurations from a paired
+10-example Agent component pilot on each formal model. Archived full-test
+generation results are audited separately; independent hallucination scores
+remain unmeasured.
+
+The [full-trace analysis delivered on 2026-11-24](docs/validation/part4_2026-11-24/README.md)
+now audits all 18,666 archived outputs and includes error counts, revision label
+transitions, 20 traceable cases, and verified task metrics. No new inference or
+human labels are claimed.
+
+## Interactive contract review
+
+The formal entry point is `ui/app.py`. It supports proposition checking and clause
+extraction, creates an independent contract index for each request, and shows the
+final answer's numbered evidence, check status and complete model-call record.
+Inputs and examples are locked during inference; changing an input clears the old
+result. Failed task formats and invalid quotations/citations are withheld explicitly.
+
+See the Chinese [UI setup and acceptance handoff](docs/UI_HANDOFF.md) for local
+Apple Silicon and CUDA launch commands. The UI is required for the team's demo.
+The earlier `docs/validation/part4_2026-11-23/local_demo.py` remains an archived
+candidate; use `ui/app.py` for new runs. Model checks are not independent human
+hallucination measurements, and a revision is not automatically a successful fix.
 
 ## Installation
 

@@ -1,0 +1,66 @@
+{
+  "total_predictions": 60,
+  "databases": [
+    {
+      "checkpoint": "agent_ablation/llama3/contractnli/full/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 6
+    },
+    {
+      "checkpoint": "agent_ablation/llama3/contractnli/no_revision/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 6
+    },
+    {
+      "checkpoint": "agent_ablation/llama3/contractnli/no_verification/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 6
+    },
+    {
+      "checkpoint": "agent_ablation/llama3/cuad/full/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 4
+    },
+    {
+      "checkpoint": "agent_ablation/llama3/cuad/no_revision/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 4
+    },
+    {
+      "checkpoint": "agent_ablation/llama3/cuad/no_verification/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 4
+    },
+    {
+      "checkpoint": "agent_ablation/mistral/contractnli/full/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 6
+    },
+    {
+      "checkpoint": "agent_ablation/mistral/contractnli/no_revision/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 6
+    },
+    {
+      "checkpoint": "agent_ablation/mistral/contractnli/no_verification/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 6
+    },
+    {
+      "checkpoint": "agent_ablation/mistral/cuad/full/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 4
+    },
+    {
+      "checkpoint": "agent_ablation/mistral/cuad/no_revision/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 4
+    },
+    {
+      "checkpoint": "agent_ablation/mistral/cuad/no_verification/predictions.sqlite3",
+      "integrity": "ok",
+      "count": 4
+    }
+  ],
+  "source_hashes_match_current_checkout": true
+}

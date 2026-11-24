@@ -1,0 +1,209 @@
+{
+  "scope": "Hand-constructed UI service acceptance, not benchmark or independent human evaluation",
+  "started_at": "2026-11-23T12:56:57.784549+00:00",
+  "cases": [
+    {
+      "name": "30 天通知",
+      "expected_label": "entailment",
+      "answer": "",
+      "evidence": "",
+      "status": "本次处理失败，未生成可用结论。请缩短输入或检查模型服务后重试；没有自动重试。",
+      "verification": "",
+      "metadata": {
+        "model": "llama3",
+        "backend": "mlx",
+        "temperature": 0,
+        "seed": 42,
+        "max_input_tokens": 4096,
+        "max_output_tokens": 512,
+        "checkpoint": "local snapshot",
+        "device": "metal",
+        "dataset": "contractnli",
+        "contract_sha256": "95183fc2d94427644719f3568a036cf8c05b2ecd24a02f5078b1a28733d06f1e",
+        "elapsed_seconds": 0.26,
+        "model_calls": 1,
+        "generated_tokens_all_calls": 0,
+        "verification_enabled": true,
+        "revision_enabled": true,
+        "revision_limit": 1,
+        "final_semantic_reverification": false
+      },
+      "record": {
+        "recorded_at": "2026-11-23T12:56:57.830419+00:00",
+        "dataset": "contractnli",
+        "query": "Either party may terminate this Agreement with thirty days written notice.",
+        "contract": "This Agreement may be terminated by either party upon thirty (30) days written notice.",
+        "contract_sha256": "95183fc2d94427644719f3568a036cf8c05b2ecd24a02f5078b1a28733d06f1e",
+        "verification_enabled": true,
+        "revision_enabled": true,
+        "model": {
+          "model": "llama3",
+          "backend": "mlx",
+          "temperature": 0,
+          "seed": 42,
+          "max_input_tokens": 4096,
+          "max_output_tokens": 512,
+          "checkpoint": "local snapshot",
+          "device": "metal"
+        },
+        "trace": null,
+        "error": "RuntimeError: There is no Stream(cpu, 0) in current thread.",
+        "elapsed_seconds": 0.2600452919723466,
+        "model_calls": [
+          {
+            "method": "generate",
+            "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: termination\nOriginal Query: Either party may terminate this Agreement with thirty days written notice.\n\nRefined Query:",
+            "error": "RuntimeError: There is no Stream(cpu, 0) in current thread."
+          }
+        ]
+      },
+      "observed_label": null,
+      "source_is_current": null,
+      "model_case_pass": null,
+      "empty_input_rejected": null
+    },
+    {
+      "name": "改为 60 天通知",
+      "expected_label": "contradiction",
+      "answer": "",
+      "evidence": "",
+      "status": "本次处理失败，未生成可用结论。请缩短输入或检查模型服务后重试；没有自动重试。",
+      "verification": "",
+      "metadata": {
+        "model": "llama3",
+        "backend": "mlx",
+        "temperature": 0,
+        "seed": 42,
+        "max_input_tokens": 4096,
+        "max_output_tokens": 512,
+        "checkpoint": "local snapshot",
+        "device": "metal",
+        "dataset": "contractnli",
+        "contract_sha256": "d8574c454d4683c3b711d2cd3c85e53b6b6c570c82c64260e74ccb5d4f06f414",
+        "elapsed_seconds": 0.137,
+        "model_calls": 1,
+        "generated_tokens_all_calls": 0,
+        "verification_enabled": true,
+        "revision_enabled": true,
+        "revision_limit": 1,
+        "final_semantic_reverification": false
+      },
+      "record": {
+        "recorded_at": "2026-11-23T12:56:58.147392+00:00",
+        "dataset": "contractnli",
+        "query": "Either party may terminate this Agreement with thirty days written notice.",
+        "contract": "This Agreement may be terminated by either party upon sixty (60) days written notice.",
+        "contract_sha256": "d8574c454d4683c3b711d2cd3c85e53b6b6c570c82c64260e74ccb5d4f06f414",
+        "verification_enabled": true,
+        "revision_enabled": true,
+        "model": {
+          "model": "llama3",
+          "backend": "mlx",
+          "temperature": 0,
+          "seed": 42,
+          "max_input_tokens": 4096,
+          "max_output_tokens": 512,
+          "checkpoint": "local snapshot",
+          "device": "metal"
+        },
+        "trace": null,
+        "error": "RuntimeError: There is no Stream(cpu, 0) in current thread.",
+        "elapsed_seconds": 0.13673258398193866,
+        "model_calls": [
+          {
+            "method": "generate",
+            "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: termination\nOriginal Query: Either party may terminate this Agreement with thirty days written notice.\n\nRefined Query:",
+            "error": "RuntimeError: There is no Stream(cpu, 0) in current thread."
+          }
+        ]
+      },
+      "observed_label": null,
+      "source_is_current": null,
+      "model_case_pass": null,
+      "empty_input_rejected": null
+    },
+    {
+      "name": "查找责任上限",
+      "expected_label": "present",
+      "answer": "",
+      "evidence": "",
+      "status": "本次处理失败，未生成可用结论。请缩短输入或检查模型服务后重试；没有自动重试。",
+      "verification": "",
+      "metadata": {
+        "model": "llama3",
+        "backend": "mlx",
+        "temperature": 0,
+        "seed": 42,
+        "max_input_tokens": 4096,
+        "max_output_tokens": 512,
+        "checkpoint": "local snapshot",
+        "device": "metal",
+        "dataset": "cuad",
+        "contract_sha256": "45ca8c21dcc1d09c5b14ce1766dd092b17b8f74b9885ff7fd3897f0ef6938591",
+        "elapsed_seconds": 0.142,
+        "model_calls": 1,
+        "generated_tokens_all_calls": 0,
+        "verification_enabled": true,
+        "revision_enabled": true,
+        "revision_limit": 1,
+        "final_semantic_reverification": false
+      },
+      "record": {
+        "recorded_at": "2026-11-23T12:56:58.316575+00:00",
+        "dataset": "cuad",
+        "query": "What is the liability cap in this contract?",
+        "contract": "The Contractor's total liability shall not exceed $100,000.",
+        "contract_sha256": "45ca8c21dcc1d09c5b14ce1766dd092b17b8f74b9885ff7fd3897f0ef6938591",
+        "verification_enabled": true,
+        "revision_enabled": true,
+        "model": {
+          "model": "llama3",
+          "backend": "mlx",
+          "temperature": 0,
+          "seed": 42,
+          "max_input_tokens": 4096,
+          "max_output_tokens": 512,
+          "checkpoint": "local snapshot",
+          "device": "metal"
+        },
+        "trace": null,
+        "error": "RuntimeError: There is no Stream(cpu, 0) in current thread.",
+        "elapsed_seconds": 0.1424202920170501,
+        "model_calls": [
+          {
+            "method": "generate",
+            "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: liability\nOriginal Query: What is the liability cap in this contract?\n\nRefined Query:",
+            "error": "RuntimeError: There is no Stream(cpu, 0) in current thread."
+          }
+        ]
+      },
+      "observed_label": null,
+      "source_is_current": null,
+      "model_case_pass": null,
+      "empty_input_rejected": null
+    },
+    {
+      "name": "empty_input",
+      "expected_label": null,
+      "answer": "",
+      "evidence": "",
+      "status": "请同时填写合同原文和问题。",
+      "verification": "",
+      "metadata": null,
+      "record": null,
+      "observed_label": null,
+      "source_is_current": null,
+      "model_case_pass": null,
+      "empty_input_rejected": true
+    }
+  ],
+  "source_sha256": {
+    "ui/app.py": "52fba7f603d7e3fe774579dd8932c077334bce5224bec02b50151a92283702da",
+    "ui/service.py": "e8a95e29c6019928e46255ad40c0957b99411c34548f2da9eb88deb2a38c8b5b",
+    "ui/backends.py": "e7fb7dce21418b9384c394938dde0adb779b83e3ca9e07a37b64b7805e136159"
+  },
+  "finished_at": "2026-11-23T12:56:58.528413+00:00",
+  "model_cases_passed": 0,
+  "model_cases_total": 3,
+  "transport_errors": 0
+}

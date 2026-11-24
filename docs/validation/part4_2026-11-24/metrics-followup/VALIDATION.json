@@ -1,0 +1,35 @@
+{
+  "independent_sql_claim_counts": [
+    {
+      "model": "llama3",
+      "dataset": "contractnli",
+      "claims": 2874,
+      "unsupported_recorded": 2046,
+      "parse_failed_claims": 1486
+    },
+    {
+      "model": "llama3",
+      "dataset": "cuad",
+      "claims": 679,
+      "unsupported_recorded": 539,
+      "parse_failed_claims": 99
+    },
+    {
+      "model": "mistral",
+      "dataset": "contractnli",
+      "claims": 4441,
+      "unsupported_recorded": 2891,
+      "parse_failed_claims": 1085
+    },
+    {
+      "model": "mistral",
+      "dataset": "cuad",
+      "claims": 771,
+      "unsupported_recorded": 688,
+      "parse_failed_claims": 179
+    }
+  ],
+  "all_na_and_denominator_checks_passed": true,
+  "html_tables_valid": true,
+  "human_labels_created": 0
+}

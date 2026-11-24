@@ -1,0 +1,13 @@
+{
+  "hardware": {
+    "hw.model": "Mac17,3",
+    "hw.memsize": "25769803776",
+    "machdep.cpu.brand_string": "Apple M5"
+  },
+  "os": "26.6.2",
+  "machine": "arm64",
+  "python": "3.12.14",
+  "generation_backend": "MLX / Metal GPU",
+  "model_execution": "Sequential, one original unquantized model loaded at a time",
+  "retrieval_execution": "CPU, HF_HUB_OFFLINE=1, sole cached encoder snapshot verified separately"
+}

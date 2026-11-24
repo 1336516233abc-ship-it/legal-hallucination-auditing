@@ -1,0 +1,441 @@
+{
+  "kind": "scripted_fault_injection",
+  "recorded_at": "2026-11-23T10:44:37.134819+00:00",
+  "source_commit": "382d6d9057c5018717cbb36c6f31d465d289f42a",
+  "ui_sha256": "dca3e685512a100aa240ac0b72fb7a36c36f0cc47c8c423fd0ac033de0b0cca5",
+  "initialization": "Unmodified UI callback and Agent; constructor bypassed for injected backend",
+  "model": "scripted fixture, not model inference",
+  "production_gradio_launch_passed": false,
+  "cases": [
+    {
+      "case_id": "S01_ordinary",
+      "input_contract": "This Agreement may be terminated by either party upon thirty (30) days written notice.",
+      "question": "How many days of written notice are required to terminate this agreement?",
+      "verify": true,
+      "revise": true,
+      "elapsed_seconds": 0.001078959001461044,
+      "outputs": {
+        "answer": "30 days of written notice are required [1].",
+        "evidence": "**Evidence 1:**\nThis Agreement may be terminated by either party upon thirty (30) days written notice.",
+        "verification": "**Overall Status:** supported\n\n**Hallucination Detected:** False\n\n**Claims Verification:**\n\n1. 30 days of written notice are required [1].\n   Status: supported\n",
+        "metadata": "{\n  \"query_type\": \"termination\",\n  \"initial_answer\": \"30 days of written notice are required [1].\",\n  \"revision_made\": false,\n  \"latency\": \"0.00s\",\n  \"tokens\": 7\n}"
+      },
+      "trace": {
+        "query": "How many days of written notice are required to terminate this agreement?",
+        "query_analysis": {
+          "original_query": "How many days of written notice are required to terminate this agreement?",
+          "query_type": "termination",
+          "refined_query": "notice terminate agreement",
+          "retrieval_params": {
+            "top_k": 5,
+            "chunking_strategy": "fixed_length",
+            "min_score_threshold": 0.0
+          }
+        },
+        "retrieved_evidence": [
+          "This Agreement may be terminated by either party upon thirty (30) days written notice."
+        ],
+        "evidence_scores": [
+          -0.5493061443340547
+        ],
+        "initial_answer": "30 days of written notice are required [1].",
+        "initial_claims": [
+          "30 days of written notice are required [1]."
+        ],
+        "initial_label": "entailment",
+        "verification": {
+          "overall_status": "supported",
+          "claims": [
+            {
+              "claim": "30 days of written notice are required [1].",
+              "status": "supported",
+              "reasoning": "Test fixture only.",
+              "supporting_evidence": [
+                1
+              ],
+              "parse_error": null,
+              "claim_id": 0
+            }
+          ],
+          "hallucination_detected": false
+        },
+        "revision": null,
+        "final_answer": "30 days of written notice are required [1].",
+        "label": "entailment",
+        "hallucination_detected": false,
+        "abstained": null,
+        "latency": 0.0009860992431640625,
+        "tokens": 7
+      },
+      "model_calls": [
+        {
+          "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: termination\nOriginal Query: How many days of written notice are required to terminate this agreement?\n\nRefined Query:",
+          "text": "notice terminate agreement",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a legal contract analysis assistant. Answer the following question based ONLY on the provided evidence. Each claim in your answer should be directly supported by the evidence.\n\nEvidence from contract:\n[1] This Agreement may be terminated by either party upon thirty (30) days written notice.\n\nQuestion: How many days of written notice are required to terminate this agreement?\nQuestion Type: termination\n\nInstructions:\n1. Provide a clear, factual answer based on the evidence\n2. Cite evidence using [number] notation\n3. Break your answer into separate claims\n4. Classify the answer as Entailment, Contradiction, or Neutral\n5. If the evidence is insufficient, state that clearly\n\nFormat your response as:\nAnswer: [Your complete answer with [number] citations]\n\nClaims:\n- [Claim 1 with [number] citation]\n- [Claim 2 with [number] citation]\n\nLabel: [Entailment/Contradiction/Neutral]\n",
+          "text": "Answer: 30 days of written notice are required [1].\nClaims:\n- 30 days of written notice are required [1].\nLabel: Entailment",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a fact-checking assistant. Verify if the following claim is supported by the evidence.\n\nEvidence:\n[1] This Agreement may be terminated by either party upon thirty (30) days written notice.\n\nClaim: 30 days of written notice are required [1].\n\nDetermine if the claim is:\n- SUPPORTED: The evidence clearly supports this claim\n- CONTRADICTED: The evidence contradicts this claim\n- NOT_ENOUGH_INFO: The evidence does not provide enough information\n\nFormat your response as:\nStatus: [SUPPORTED/CONTRADICTED/NOT_ENOUGH_INFO]\nReasoning: [Brief explanation]\nEvidence: [List evidence numbers that are relevant]\n",
+          "text": "Status: SUPPORTED\nReasoning: Test fixture only.\nEvidence: [1]",
+          "tokens": 7
+        }
+      ],
+      "checks": {
+        "retrieved_evidence_matches_current_contract": true
+      }
+    },
+    {
+      "case_id": "S02_changed_contract",
+      "input_contract": "This Agreement may be terminated by either party upon sixty (60) days written notice.",
+      "question": "How many days of written notice are required to terminate this agreement?",
+      "verify": true,
+      "revise": true,
+      "elapsed_seconds": 0.0004824170027859509,
+      "outputs": {
+        "answer": "30 days of written notice are required [1].",
+        "evidence": "**Evidence 1:**\nThis Agreement may be terminated by either party upon thirty (30) days written notice.",
+        "verification": "**Overall Status:** supported\n\n**Hallucination Detected:** False\n\n**Claims Verification:**\n\n1. 30 days of written notice are required [1].\n   Status: supported\n",
+        "metadata": "{\n  \"query_type\": \"termination\",\n  \"initial_answer\": \"30 days of written notice are required [1].\",\n  \"revision_made\": false,\n  \"latency\": \"0.00s\",\n  \"tokens\": 7\n}"
+      },
+      "trace": {
+        "query": "How many days of written notice are required to terminate this agreement?",
+        "query_analysis": {
+          "original_query": "How many days of written notice are required to terminate this agreement?",
+          "query_type": "termination",
+          "refined_query": "notice terminate agreement",
+          "retrieval_params": {
+            "top_k": 5,
+            "chunking_strategy": "fixed_length",
+            "min_score_threshold": 0.0
+          }
+        },
+        "retrieved_evidence": [
+          "This Agreement may be terminated by either party upon thirty (30) days written notice."
+        ],
+        "evidence_scores": [
+          -0.5493061443340547
+        ],
+        "initial_answer": "30 days of written notice are required [1].",
+        "initial_claims": [
+          "30 days of written notice are required [1]."
+        ],
+        "initial_label": "entailment",
+        "verification": {
+          "overall_status": "supported",
+          "claims": [
+            {
+              "claim": "30 days of written notice are required [1].",
+              "status": "supported",
+              "reasoning": "Test fixture only.",
+              "supporting_evidence": [
+                1
+              ],
+              "parse_error": null,
+              "claim_id": 0
+            }
+          ],
+          "hallucination_detected": false
+        },
+        "revision": null,
+        "final_answer": "30 days of written notice are required [1].",
+        "label": "entailment",
+        "hallucination_detected": false,
+        "abstained": null,
+        "latency": 0.0003960132598876953,
+        "tokens": 7
+      },
+      "model_calls": [
+        {
+          "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: termination\nOriginal Query: How many days of written notice are required to terminate this agreement?\n\nRefined Query:",
+          "text": "notice terminate agreement",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a legal contract analysis assistant. Answer the following question based ONLY on the provided evidence. Each claim in your answer should be directly supported by the evidence.\n\nEvidence from contract:\n[1] This Agreement may be terminated by either party upon thirty (30) days written notice.\n\nQuestion: How many days of written notice are required to terminate this agreement?\nQuestion Type: termination\n\nInstructions:\n1. Provide a clear, factual answer based on the evidence\n2. Cite evidence using [number] notation\n3. Break your answer into separate claims\n4. Classify the answer as Entailment, Contradiction, or Neutral\n5. If the evidence is insufficient, state that clearly\n\nFormat your response as:\nAnswer: [Your complete answer with [number] citations]\n\nClaims:\n- [Claim 1 with [number] citation]\n- [Claim 2 with [number] citation]\n\nLabel: [Entailment/Contradiction/Neutral]\n",
+          "text": "Answer: 30 days of written notice are required [1].\nClaims:\n- 30 days of written notice are required [1].\nLabel: Entailment",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a fact-checking assistant. Verify if the following claim is supported by the evidence.\n\nEvidence:\n[1] This Agreement may be terminated by either party upon thirty (30) days written notice.\n\nClaim: 30 days of written notice are required [1].\n\nDetermine if the claim is:\n- SUPPORTED: The evidence clearly supports this claim\n- CONTRADICTED: The evidence contradicts this claim\n- NOT_ENOUGH_INFO: The evidence does not provide enough information\n\nFormat your response as:\nStatus: [SUPPORTED/CONTRADICTED/NOT_ENOUGH_INFO]\nReasoning: [Brief explanation]\nEvidence: [List evidence numbers that are relevant]\n",
+          "text": "Status: SUPPORTED\nReasoning: Test fixture only.\nEvidence: [1]",
+          "tokens": 7
+        }
+      ],
+      "checks": {
+        "retrieved_evidence_matches_current_contract": false
+      }
+    },
+    {
+      "case_id": "S03_fresh_instance_control",
+      "input_contract": "This Agreement may be terminated by either party upon sixty (60) days written notice.",
+      "question": "How many days of written notice are required to terminate this agreement?",
+      "verify": true,
+      "revise": true,
+      "elapsed_seconds": 0.000614999997196719,
+      "outputs": {
+        "answer": "60 days of written notice are required [1].",
+        "evidence": "**Evidence 1:**\nThis Agreement may be terminated by either party upon sixty (60) days written notice.",
+        "verification": "**Overall Status:** supported\n\n**Hallucination Detected:** False\n\n**Claims Verification:**\n\n1. 60 days of written notice are required [1].\n   Status: supported\n",
+        "metadata": "{\n  \"query_type\": \"termination\",\n  \"initial_answer\": \"60 days of written notice are required [1].\",\n  \"revision_made\": false,\n  \"latency\": \"0.00s\",\n  \"tokens\": 7\n}"
+      },
+      "trace": {
+        "query": "How many days of written notice are required to terminate this agreement?",
+        "query_analysis": {
+          "original_query": "How many days of written notice are required to terminate this agreement?",
+          "query_type": "termination",
+          "refined_query": "notice terminate agreement",
+          "retrieval_params": {
+            "top_k": 5,
+            "chunking_strategy": "fixed_length",
+            "min_score_threshold": 0.0
+          }
+        },
+        "retrieved_evidence": [
+          "This Agreement may be terminated by either party upon sixty (60) days written notice."
+        ],
+        "evidence_scores": [
+          -0.5493061443340547
+        ],
+        "initial_answer": "60 days of written notice are required [1].",
+        "initial_claims": [
+          "60 days of written notice are required [1]."
+        ],
+        "initial_label": "entailment",
+        "verification": {
+          "overall_status": "supported",
+          "claims": [
+            {
+              "claim": "60 days of written notice are required [1].",
+              "status": "supported",
+              "reasoning": "Test fixture only.",
+              "supporting_evidence": [
+                1
+              ],
+              "parse_error": null,
+              "claim_id": 0
+            }
+          ],
+          "hallucination_detected": false
+        },
+        "revision": null,
+        "final_answer": "60 days of written notice are required [1].",
+        "label": "entailment",
+        "hallucination_detected": false,
+        "abstained": null,
+        "latency": 0.0005359649658203125,
+        "tokens": 7
+      },
+      "model_calls": [
+        {
+          "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: termination\nOriginal Query: How many days of written notice are required to terminate this agreement?\n\nRefined Query:",
+          "text": "notice terminate agreement",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a legal contract analysis assistant. Answer the following question based ONLY on the provided evidence. Each claim in your answer should be directly supported by the evidence.\n\nEvidence from contract:\n[1] This Agreement may be terminated by either party upon sixty (60) days written notice.\n\nQuestion: How many days of written notice are required to terminate this agreement?\nQuestion Type: termination\n\nInstructions:\n1. Provide a clear, factual answer based on the evidence\n2. Cite evidence using [number] notation\n3. Break your answer into separate claims\n4. Classify the answer as Entailment, Contradiction, or Neutral\n5. If the evidence is insufficient, state that clearly\n\nFormat your response as:\nAnswer: [Your complete answer with [number] citations]\n\nClaims:\n- [Claim 1 with [number] citation]\n- [Claim 2 with [number] citation]\n\nLabel: [Entailment/Contradiction/Neutral]\n",
+          "text": "Answer: 60 days of written notice are required [1].\nClaims:\n- 60 days of written notice are required [1].\nLabel: Entailment",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a fact-checking assistant. Verify if the following claim is supported by the evidence.\n\nEvidence:\n[1] This Agreement may be terminated by either party upon sixty (60) days written notice.\n\nClaim: 60 days of written notice are required [1].\n\nDetermine if the claim is:\n- SUPPORTED: The evidence clearly supports this claim\n- CONTRADICTED: The evidence contradicts this claim\n- NOT_ENOUGH_INFO: The evidence does not provide enough information\n\nFormat your response as:\nStatus: [SUPPORTED/CONTRADICTED/NOT_ENOUGH_INFO]\nReasoning: [Brief explanation]\nEvidence: [List evidence numbers that are relevant]\n",
+          "text": "Status: SUPPORTED\nReasoning: Test fixture only.\nEvidence: [1]",
+          "tokens": 7
+        }
+      ],
+      "checks": {
+        "retrieved_evidence_matches_current_contract": true
+      }
+    },
+    {
+      "case_id": "F01_empty_input",
+      "input_contract": "",
+      "question": "How many days of written notice are required to terminate this agreement?",
+      "verify": true,
+      "revise": true,
+      "elapsed_seconds": 3.3300602808594704e-07,
+      "outputs": {
+        "answer": "Please provide both contract text and a question.",
+        "evidence": "",
+        "verification": "",
+        "metadata": ""
+      },
+      "trace": null,
+      "model_calls": [],
+      "checks": {
+        "input_rejected_without_model_call": true
+      }
+    },
+    {
+      "case_id": "F02_model_unavailable",
+      "input_contract": "This Agreement may be terminated by either party upon thirty (30) days written notice.",
+      "question": "How many days of written notice are required to terminate this agreement?",
+      "verify": true,
+      "revise": true,
+      "elapsed_seconds": 7.545898552052677e-05,
+      "outputs": {
+        "answer": "Error: Injected model service unavailable",
+        "evidence": "",
+        "verification": "",
+        "metadata": ""
+      },
+      "trace": null,
+      "model_calls": [],
+      "checks": {
+        "exception_caught_with_visible_error": true
+      }
+    },
+    {
+      "case_id": "F03_malformed_output",
+      "input_contract": "This Agreement may be terminated by either party upon thirty (30) days written notice.",
+      "question": "How many days of written notice are required to terminate this agreement?",
+      "verify": false,
+      "revise": false,
+      "elapsed_seconds": 0.0006057079881429672,
+      "outputs": {
+        "answer": "UNPARSEABLE FIXTURE OUTPUT",
+        "evidence": "**Evidence 1:**\nThis Agreement may be terminated by either party upon thirty (30) days written notice.",
+        "verification": "",
+        "metadata": "{\n  \"query_type\": \"termination\",\n  \"initial_answer\": \"UNPARSEABLE FIXTURE OUTPUT\",\n  \"revision_made\": false,\n  \"latency\": \"0.00s\",\n  \"tokens\": 7\n}"
+      },
+      "trace": {
+        "query": "How many days of written notice are required to terminate this agreement?",
+        "query_analysis": {
+          "original_query": "How many days of written notice are required to terminate this agreement?",
+          "query_type": "termination",
+          "refined_query": "notice terminate agreement",
+          "retrieval_params": {
+            "top_k": 5,
+            "chunking_strategy": "fixed_length",
+            "min_score_threshold": 0.0
+          }
+        },
+        "retrieved_evidence": [
+          "This Agreement may be terminated by either party upon thirty (30) days written notice."
+        ],
+        "evidence_scores": [
+          -0.5493061443340547
+        ],
+        "initial_answer": "UNPARSEABLE FIXTURE OUTPUT",
+        "initial_claims": [
+          "UNPARSEABLE FIXTURE OUTPUT"
+        ],
+        "initial_label": "neutral",
+        "verification": null,
+        "revision": null,
+        "final_answer": "UNPARSEABLE FIXTURE OUTPUT",
+        "label": "neutral",
+        "hallucination_detected": false,
+        "abstained": null,
+        "latency": 0.0005290508270263672,
+        "tokens": 7
+      },
+      "model_calls": [
+        {
+          "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: termination\nOriginal Query: How many days of written notice are required to terminate this agreement?\n\nRefined Query:",
+          "text": "notice terminate agreement",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a legal contract analysis assistant. Answer the following question based ONLY on the provided evidence. Each claim in your answer should be directly supported by the evidence.\n\nEvidence from contract:\n[1] This Agreement may be terminated by either party upon thirty (30) days written notice.\n\nQuestion: How many days of written notice are required to terminate this agreement?\nQuestion Type: termination\n\nInstructions:\n1. Provide a clear, factual answer based on the evidence\n2. Cite evidence using [number] notation\n3. Break your answer into separate claims\n4. Classify the answer as Entailment, Contradiction, or Neutral\n5. If the evidence is insufficient, state that clearly\n\nFormat your response as:\nAnswer: [Your complete answer with [number] citations]\n\nClaims:\n- [Claim 1 with [number] citation]\n- [Claim 2 with [number] citation]\n\nLabel: [Entailment/Contradiction/Neutral]\n",
+          "text": "UNPARSEABLE FIXTURE OUTPUT",
+          "tokens": 7
+        }
+      ],
+      "checks": {
+        "malformed_output_withheld": false
+      }
+    },
+    {
+      "case_id": "F04_out_of_range_citation",
+      "input_contract": "This Agreement may be terminated by either party upon thirty (30) days written notice.",
+      "question": "How many days of written notice are required to terminate this agreement?",
+      "verify": true,
+      "revise": true,
+      "elapsed_seconds": 0.0005976660177111626,
+      "outputs": {
+        "answer": "30 days of written notice are required [99].",
+        "evidence": "**Evidence 1:**\nThis Agreement may be terminated by either party upon thirty (30) days written notice.",
+        "verification": "**Overall Status:** supported\n\n**Hallucination Detected:** False\n\n**Claims Verification:**\n\n1. 30 days of written notice are required [99].\n   Status: supported\n",
+        "metadata": "{\n  \"query_type\": \"termination\",\n  \"initial_answer\": \"30 days of written notice are required [99].\",\n  \"revision_made\": false,\n  \"latency\": \"0.00s\",\n  \"tokens\": 7\n}"
+      },
+      "trace": {
+        "query": "How many days of written notice are required to terminate this agreement?",
+        "query_analysis": {
+          "original_query": "How many days of written notice are required to terminate this agreement?",
+          "query_type": "termination",
+          "refined_query": "notice terminate agreement",
+          "retrieval_params": {
+            "top_k": 5,
+            "chunking_strategy": "fixed_length",
+            "min_score_threshold": 0.0
+          }
+        },
+        "retrieved_evidence": [
+          "This Agreement may be terminated by either party upon thirty (30) days written notice."
+        ],
+        "evidence_scores": [
+          -0.5493061443340547
+        ],
+        "initial_answer": "30 days of written notice are required [99].",
+        "initial_claims": [
+          "30 days of written notice are required [99]."
+        ],
+        "initial_label": "entailment",
+        "verification": {
+          "overall_status": "supported",
+          "claims": [
+            {
+              "claim": "30 days of written notice are required [99].",
+              "status": "supported",
+              "reasoning": "Test fixture only.",
+              "supporting_evidence": [
+                1
+              ],
+              "parse_error": null,
+              "claim_id": 0
+            }
+          ],
+          "hallucination_detected": false
+        },
+        "revision": null,
+        "final_answer": "30 days of written notice are required [99].",
+        "label": "entailment",
+        "hallucination_detected": false,
+        "abstained": null,
+        "latency": 0.0005202293395996094,
+        "tokens": 7
+      },
+      "model_calls": [
+        {
+          "prompt": "Given the following legal contract query, generate a refined version that would be better for retrieving relevant information.\n\nQuery Type: termination\nOriginal Query: How many days of written notice are required to terminate this agreement?\n\nRefined Query:",
+          "text": "notice terminate agreement",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a legal contract analysis assistant. Answer the following question based ONLY on the provided evidence. Each claim in your answer should be directly supported by the evidence.\n\nEvidence from contract:\n[1] This Agreement may be terminated by either party upon thirty (30) days written notice.\n\nQuestion: How many days of written notice are required to terminate this agreement?\nQuestion Type: termination\n\nInstructions:\n1. Provide a clear, factual answer based on the evidence\n2. Cite evidence using [number] notation\n3. Break your answer into separate claims\n4. Classify the answer as Entailment, Contradiction, or Neutral\n5. If the evidence is insufficient, state that clearly\n\nFormat your response as:\nAnswer: [Your complete answer with [number] citations]\n\nClaims:\n- [Claim 1 with [number] citation]\n- [Claim 2 with [number] citation]\n\nLabel: [Entailment/Contradiction/Neutral]\n",
+          "text": "Answer: 30 days of written notice are required [99].\nClaims:\n- 30 days of written notice are required [99].\nLabel: Entailment",
+          "tokens": 7
+        },
+        {
+          "prompt": "You are a fact-checking assistant. Verify if the following claim is supported by the evidence.\n\nEvidence:\n[1] This Agreement may be terminated by either party upon thirty (30) days written notice.\n\nClaim: 30 days of written notice are required [99].\n\nDetermine if the claim is:\n- SUPPORTED: The evidence clearly supports this claim\n- CONTRADICTED: The evidence contradicts this claim\n- NOT_ENOUGH_INFO: The evidence does not provide enough information\n\nFormat your response as:\nStatus: [SUPPORTED/CONTRADICTED/NOT_ENOUGH_INFO]\nReasoning: [Brief explanation]\nEvidence: [List evidence numbers that are relevant]\n",
+          "text": "Status: SUPPORTED\nReasoning: Test fixture only.\nEvidence: [1]",
+          "tokens": 7
+        }
+      ],
+      "checks": {
+        "invalid_citation_withheld": false
+      }
+    }
+  ],
+  "packages": {
+    "gradio": "6.32.0",
+    "torch": "2.15.0",
+    "transformers": "5.24.0",
+    "mlx-lm": "0.32.2"
+  },
+  "http_smoke_error": "OSError: Cannot find empty port in range: 7861-7861. You can specify a different port by setting the GRADIO_SERVER_PORT environment variable or passing the `server_port` parameter to `launch()`."
+}

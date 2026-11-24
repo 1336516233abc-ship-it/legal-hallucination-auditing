@@ -1,0 +1,20 @@
+{
+  "scope": "60 outputs of an existing 10-question paired Agent pilot; not full-test evaluation",
+  "review_target": "user-visible final answer plus task label; suppressed outputs counted separately",
+  "status": "unreviewed",
+  "outputs": 60,
+  "complete_without_pending_adjudication": 0,
+  "pending_adjudication": 0,
+  "remaining": 60,
+  "review_coverage": 0.0,
+  "response_types": {},
+  "claim_verdicts": {},
+  "claim_denominator": 0,
+  "substantive_answer_denominator": 0,
+  "claim_level_unsupported_rate": null,
+  "answer_level_unsupported_rate": null,
+  "answer_completeness": null,
+  "abstention_precision": null,
+  "independent_revision_success_rate": null,
+  "notes": "No model/method decoding or cross-reviewer agreement is inferred; incomplete and withheld responses are not supported claims."
+}

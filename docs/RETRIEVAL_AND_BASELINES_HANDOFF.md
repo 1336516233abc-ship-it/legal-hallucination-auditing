@@ -1,6 +1,8 @@
 # 检索与基线开发交接
 
-负责人为 Qin Mengmeng。更新于 2026 年 11 月 20 日。本文供组员复现检索与基线实验、接入 Agent 和汇总报告使用。
+基线负责人为 Qin Mengmeng，基线交付于 2026 年 11 月 20 日；本文在 2026 年 11 月 22 日追加 Li Xinru 的 Part 4 交接。本文供组员复现检索与基线实验、接入 Agent 和汇总报告使用。
+
+**2026-11-22，Li Xinru 的 Part 4 接续：** 通用 runner 已接入任务接口、实际消融、逐条检查点和严格恢复；`retrieval` 基线导出及 Agent 类型导入做了最小集成修复。新跑 36 组全量检索与双模型固定小样本 Agent 消融，归档主实验单独核对。运行方式、适用范围与后续缺口见 [Part 4 实验交接](PART4_EXPERIMENTS.md)，实际数值和原始文件见 [本次结果](validation/part4_2026-11-22/RESULTS.md)。本次不续写课程报告。
 
 - [检索与基线全量结果](#检索与基线全量结果)
 - [已交付实现与接口](#已交付实现与接口)
@@ -8,6 +10,8 @@
 - [开发验证与失败案例](#开发验证与失败案例)
 - [组员接续事项](#组员接续事项)
 - [GitHub 交付文件](#github-交付文件)
+
+**2026-11-24，Part 4 分析接续：** 已取得服务器完整逐条输出，核验 18,666 条预测与 37,834 次调用，完成全量错误统计、修订前后标签对比、20 个可回查案例及可计算指标。见[全量分析与口径核对](validation/part4_2026-11-24/README.md)。本次仅追加分析交付；独立最终答案幻觉评估和人工标注尚未完成。
 
 ## 检索与基线全量结果
 
@@ -43,7 +47,7 @@ Mistral 和 Llama 3 的 AutoDL 全量均已完成。每个模型在同一份 Con
 - **Agent 对照。** 在 Llama 3 的 ContractNLI 上，Verified Agentic RAG 达到 55.52%，较 Standard RAG 提高 13.01 个百分点，单条平均耗时从 1.85 秒升至 9.94 秒。其余三个模型与数据集组合中，Agent 的准确率均低于 Standard RAG。
 - **格式与证据。** ContractNLI 的格式失败均为缺失或非法任务标签，Mistral 有 1,228 条，Llama 3 有 44 条。Llama 3 在 CUAD 上有 220 条未返回完整的单一 JSON 对象，197 条的引用数组未满足正整数编号要求。CUAD 的 599 条金标正例中，同时满足标签正确、逐字抽取且未触发引用越界或证据错误的预测，在 Mistral Standard RAG 下有 179 条，在 Llama 3 Direct Prompting 下有 396 条。
 
-全量 JSON 还包含混淆矩阵、格式失败原因、引用越界及实际提示中的金标证据覆盖。跨方法的幻觉率仍需统一的答案支持性评估。逐条输出和生成轨迹保存在两台已关机的 AutoDL 实例磁盘上，各自运行目录中的 `predictions.sqlite3`。报告引用数值可直接使用仓库中的 JSON。需要逐条轨迹时，由负责人从实例磁盘取回。
+全量 JSON 还包含混淆矩阵、格式失败原因、引用越界及实际提示中的金标证据覆盖。跨方法的幻觉率仍需统一的答案支持性评估。逐条输出和生成轨迹已于 2026-11-24 从 AutoDL 导出并完成一致性核对；团队保管原始 ZIP，本次提交提供[分析结果、逐条统计及案例](validation/part4_2026-11-24/README.md)。报告引用数值可使用已核对的任务指标，独立幻觉率保持未测。
 
 ## 已交付实现与接口
 
@@ -53,7 +57,7 @@ Mistral 和 Llama 3 的 AutoDL 全量均已完成。每个模型在同一份 Con
 | Direct Prompting | 在 token 预算内将当前合同前缀给模型。按数据集生成、解析并记录截断。 |
 | Standard RAG | 注册多份合同后通过 `doc_id` 定位，查询只检索该合同。批处理按合同复用索引，返回顺序与输入一致。 |
 | Verified Agentic RAG | 评估使用传入 `dataset` 的路径。初答格式错误或证据检查失败时保留轨迹，跳过模型查证。证据不足时可在同合同重检索，最多修订一次，按最终显式标签评分。 |
-| 独立评估入口 | 检索消融和正式全量分别使用独立 runner。旧版 `experiments/run_experiments.py` 尚待接入。 |
+| 独立评估入口 | 检索消融和正式全量保留独立 runner；通用 `experiments/run_experiments.py` 已支持任务评分、样本选择、实际消融及严格检查点恢复。独立幻觉率仍待人工评审。 |
 
 `chunk(text, metadata=None)` 返回带 `text`、`start`、`end`、`chunk_id` 的分块。`start` 和 `end` 是原文半开字符区间，满足 `source[start:end] == chunk["text"]`。`chunk_id` 与 `doc_id` 一起标识分块。检索器接口为 `index(chunks)` 与 `retrieve(query, top_k=5, doc_id=None)`，返回 `(chunk, score)` 列表。分块预算按词统计，4,096 的输入预算按生成模型 tokenizer 统计。
 
@@ -144,6 +148,7 @@ bash scripts/run_autodl_mistral.sh full llama3
 
 ## 开发验证与失败案例
 
+- **Part 4 集成验证（2026-11-22）。** 本轮完整测试 `151 passed`，包含真实依赖环境下的既有检索测试和新增编排检查点、样本选择、消融开关、错误分母、token 记账及盲评导出测试。[本轮 JUnit](validation/part4_2026-11-22/tests.xml)。这些自动化测试与真实模型输出分别记录；真实检索复跑及 Agent 试跑详见 Part 4 结果表。
 - **自动化验收。** 整理交接时重跑完整环境，144 项通过。最小环境 123 项通过、4 项跳过。两条基线的 dry run 均成功选出 10 条。仓库中的记录对应此前的格式修复阶段。[JUnit 汇总](validation/test_summary.json) · [环境记录](validation/environment.json)
 - **Qwen 格式排查。** 首轮只通过 1/8。用新解析器重读原响应后通过 7/8，采用修复后的提示词重跑通过 8/8。旧结果中的 4 条 CUAD 在完整 JSON 前附有说明，2 条 ContractNLI Standard RAG 用对象表示引用，1 条 ContractNLI Direct Prompting 在 JSON 内生成了未转义引号。这 7 条均未用尽生成预算。引号案例通过带示例的两行提示改善，前两类由兼容解析与引用归一化处理。[复测记录](validation/qwen_format_retest)
 - **正式模型首次试跑。** Mistral 在本机用 MLX 完成 20 条基线预测，其中 11 条格式通过、6 条标签正确。Llama 3 当时的 Hugging Face 权重请求受限，未产出预测。双模型的有效对照后来在 AutoDL 完成。[Mistral 首轮结果](validation/official_baseline_pilot/mistral.json) · [Llama 3 首轮记录](validation/official_baseline_pilot/llama3.json)
@@ -168,7 +173,7 @@ bash scripts/run_autodl_mistral.sh full llama3
 | --- | --- |
 | Yin Fengling | 补齐从官方原始数据生成当前 JSON 的可复现转换流程。共享评估器区分两个数据集的标签、空答案和 `parse_error`，按实际检索 k 统计证据命中。 |
 | Wang Zhengyao | 演示入口显式传 `dataset`，展示 `final_answer`、查证结果及拦截原因。修订后目前只有确定性格式和证据检查，若加二次模型查证需单独记录。 |
-| Li Xinru | 从正式全量 JSON 取数，按模型、方法和数据集汇总。需要样本级比较时用 `example_id` 对齐。把通用 runner 接到本次已验证的接口，并给三种方法使用同一套外部答案支持性标准。 |
+| Li Xinru | 已接入通用 runner、核对归档汇总并提供新实验结果与盲评导出入口。服务器逐条轨迹已取得，全量分析已补齐；后续需与评估负责人确认独立答案支持性方法和人工标注分工；新 Agent 消融是小样本，不等于全量组件消融。正式 UI 入口和验收见 [UI 交接](UI_HANDOFF.md)。 |
 | Qin Mengmeng | 协助提取逐条运行轨迹与分析漏判。若继续做 Dense 或 Hybrid 生成对照，保持模型、测试样本和输入预算固定，用开发集选参。 |
 
 ## GitHub 交付文件

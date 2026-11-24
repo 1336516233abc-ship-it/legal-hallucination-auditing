@@ -3,8 +3,6 @@
 import pytest
 from conftest import CharacterTokenizer
 
-pytest.importorskip("torch")
-pytest.importorskip("transformers")
 from agent.agentic_rag import AgenticRAG
 from agent.verifier.verifier import EvidenceVerifier
 
