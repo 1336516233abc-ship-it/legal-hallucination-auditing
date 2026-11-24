@@ -63,10 +63,10 @@ python -m pytest -q tests docs/validation/part4_2026-11-23/test_local_delivery.p
 
 验收脚本逐条保存输出，拒绝覆盖旧文件。模型案例成功数、运行错误、空输入拒绝与浏览器操作应分别说明；脚本调用成功不等于模型结论正确。
 
-本次记录放在 [ui_2026-11-23](validation/ui_2026-11-23/)。首次真实服务调用发现 MLX 工作线程错误，失败记录仍保留；最终结果见该目录的验收说明。CUDA/CPU/MPS 实机推理与全新环境安装未在本机验收，不能称已跨平台验证完成。
+本次记录放在 [ui_2026-11-23](validation/ui_2026-11-23/)。首次真实服务调用发现 MLX 工作线程错误，失败记录仍保留；最终结果见该目录的验收说明。后续 [提交包验收](validation/final_submission_acceptance.json) 已在同一台 Mac 的全新 Python 3.11 环境完成解压安装和 Mistral 服务验收，记录 188 项测试通过。原试点和后续环境版本分别保留。CUDA/CPU/MPS 实机推理及另一台机器尚未验收，不能称跨平台验证完成。
 
 ## 集成边界与剩余事项
 
 正式 UI 复用已有 Agent 和任务协议，没有修改 `agent/`、`retrieval/` 或原始数据。入口保留 `ContractReviewUI.analyze_contract` 的原四项返回值；新增逻辑在 `ui/service.py` 和 `ui/backends.py`。Gradio 页面接口为 `/review`。
 
-实验编排、主结果和错误案例已在同一分支，UI 可一起审查集成。服务器逐条输出已取得，[全量分析与可计算指标](validation/part4_2026-11-24/README.md)已补齐；独立幻觉率仍需 Yin Fengling 与团队确认评估方法并完成标注；这里的 UI 验收不是人工盲评。人工评分保持未完成，报告按当前约定暂缓。
+实验编排、主结果、错误案例和正式 UI 已合入 main；课程提交包与 PDF 入口见 [最终提交说明](FINAL_SUBMISSION.md)。服务器逐条输出已取得，[全量分析与可计算指标](validation/part4_2026-11-24/README.md)已补齐；独立幻觉率仍需 Yin Fengling 与团队确认评估方法并完成标注；这里的 UI 验收不是人工盲评。人工评分保持未完成；报告与 UI 说明已按现有验收记录修正，见 [FINAL_REPORT.md](../FINAL_REPORT.md)。

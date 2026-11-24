@@ -8,6 +8,12 @@ Project: Legal Hallucination Auditing with Agentic Retrieval for Contract Review
 - The team draft also records Claude and GitHub Copilot for code debugging, documentation, report drafting and boilerplate completion. Detailed interaction records from the other members are not available in this release.
 - The released code, run logs and data audits identify the work carried out. The independent answer-support review and external user study remain incomplete.
 
+## Part 4 and UI assistance
+
+Codex also assisted with experiment-runner and checkpoint integration, the paired component pilot, full-trace analysis and metric checks, UI code and acceptance, and the Part 4 report and demo documentation. This was substantive coding and analytical assistance. The 20 selected cases and automated consistency checks are separate from independent human support annotation.
+
+Representative Part 4 requests included completing the available experiments and summarizing their results, organizing error cases, including UI as a required deliverable, reviewing the author's work on main, and correcting and uploading that work. These are summaries of actual requests, not verbatim prompt quotations or a complete prompt count.
+
 ## Available project prompts
 
 The following excerpts come from the project conversation. They omit unrelated text and any private details.

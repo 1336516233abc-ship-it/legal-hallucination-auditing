@@ -1,6 +1,6 @@
 # Part 4 实验交接
 
-负责人：Li Xinru。交付范围为实验编排、真实实验与结果汇总；课程报告暂未撰写。
+负责人：Li Xinru。交付范围为实验编排、真实实验、结果分析与 UI。报告现已整理并按可回查记录修正，见 [FINAL_REPORT.md](../FINAL_REPORT.md)；未完成的独立评估与全量组件消融已在报告中明确保留。
 
 结果入口：[检索与消融结果表](validation/part4_2026-11-22/RESULTS.md)；[2026-11-24 全量记录分析与指标核对](validation/part4_2026-11-24/README.md)。原始测试数据、既有全量结果和组员旧文件保留原样。
 
@@ -90,4 +90,6 @@ python -m experiments.run_experiments --model llama3 mistral --dataset all \
 2. 团队确认独立答案支持性方案并完成标注，再计算跨三方法的幻觉率。当前无该结果，也无可靠的“100% 修订成功率”。
 3. 若需要全量 Agent 组件消融，在可用 GPU/服务器上扩大样本，保留三个变体的同一数据与模型版本。本次小样本不替代该项。
 
-发布包含源码、汇总、逐条 JSONL 和验证记录，不包含模型权重、虚拟环境、数据库临时文件或报告 PDF。SQLite 检查点保留在运行机器；JSONL 提供完整可移植的预测与调用轨迹。
+本次历史 Part 4 分析包包含源码、汇总、逐条 JSONL 和验证记录，不包含模型权重、虚拟环境、数据库临时文件或报告 PDF。后续课程提交包和正式报告 PDF 已另行发布，见 [最终提交说明](FINAL_SUBMISSION.md)；不要将历史分析包当作最终提交包。SQLite 检查点保留在运行机器；JSONL 提供完整可移植的预测与调用轨迹。
+
+共享评估器已在后续 main 提交 `5e84091` 修复，见 [最终评估修复](FINAL_EVALUATION_FIXES.md)。历史分析中的旧评估器诊断保留原时间点含义；新复算见 [最终轨迹审计](validation/final_submission_trace_audit.json)。
