@@ -1,0 +1,28 @@
+[
+  {
+    "model": "llama3",
+    "calls": 18050,
+    "stages": {
+      "generation": 6222,
+      "query_refinement": 3111,
+      "initial_generation": 3111,
+      "claim_verification": 3553,
+      "revision": 2053
+    },
+    "all_stage_sequences_match": true,
+    "all_call_prompts_and_outputs_present": true
+  },
+  {
+    "model": "mistral",
+    "calls": 19784,
+    "stages": {
+      "generation": 6222,
+      "query_refinement": 3111,
+      "initial_generation": 3111,
+      "claim_verification": 5212,
+      "revision": 2128
+    },
+    "all_stage_sequences_match": true,
+    "all_call_prompts_and_outputs_present": true
+  }
+]

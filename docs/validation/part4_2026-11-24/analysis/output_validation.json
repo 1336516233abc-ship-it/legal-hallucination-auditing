@@ -1,0 +1,36 @@
+{
+  "source_rows": 18666,
+  "summary_tables_valid": true,
+  "unreviewed_forms": 600,
+  "review_labels_generated": false,
+  "independent_sql_blocking_checks": [
+    {
+      "model": "llama3",
+      "dataset": "contractnli",
+      "blocked": 251,
+      "correct_but_blocked": 110,
+      "valid_absent_empty": 0
+    },
+    {
+      "model": "llama3",
+      "dataset": "cuad",
+      "blocked": 486,
+      "correct_but_blocked": 216,
+      "valid_absent_empty": 297
+    },
+    {
+      "model": "mistral",
+      "dataset": "contractnli",
+      "blocked": 626,
+      "correct_but_blocked": 61,
+      "valid_absent_empty": 0
+    },
+    {
+      "model": "mistral",
+      "dataset": "cuad",
+      "blocked": 415,
+      "correct_but_blocked": 198,
+      "valid_absent_empty": 469
+    }
+  ]
+}
