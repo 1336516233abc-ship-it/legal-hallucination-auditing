@@ -1,34 +1,22 @@
-"""
-Evaluation metrics for legal hallucination auditing.
-Implements all metrics from the proposal.
-
-Metrics:
-- Label accuracy
-- Macro-F1
-- Evidence recall@k
-- Hallucination rate
-- Answer completeness
-- Abstention precision
-- Latency
-- Token cost
+"""Task-aware metrics for ContractNLI and CUAD.
 
 Author: Li Xinru (3036807959)
 """
 
-import time
-from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
-from collections import defaultdict
-import numpy as np
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-import logging
+from statistics import mean
+from typing import Dict, Optional
 
-logger = logging.getLogger(__name__)
+from sklearn.metrics import accuracy_score, f1_score, precision_recall_fscore_support
+
+from retrieval.common import LABELS
+from retrieval.evidence import aggregate_evidence, score_evidence
 
 
 @dataclass
 class EvaluationResult:
     """Container for evaluation results."""
+
     label_accuracy: Optional[float] = None
     macro_f1: Optional[float] = None
     micro_f1: Optional[float] = None
@@ -42,306 +30,161 @@ class EvaluationResult:
     avg_latency: Optional[float] = None
     total_tokens: Optional[int] = None
     per_class_metrics: Optional[Dict] = None
+    answer_word_set_recall: Optional[float] = None
+    initial_verifier_unsupported_rate: Optional[float] = None
+    initial_verifier_claims: int = 0
+    initial_verifier_failed_claims: int = 0
+
+
+def _label(value):
+    return value.strip().lower() if isinstance(value, str) else None
+
+
+def _label_inputs(predictions, ground_truth, dataset):
+    pairs = list(zip(predictions, ground_truth, strict=True))
+    if not pairs:
+        return [], [], []
+    true = [_label(gold.get("label")) for _, gold in pairs]
+    if dataset is None:
+        datasets = [task for task, labels in LABELS.items() if set(true) <= labels]
+        if len(datasets) != 1:
+            raise ValueError("Ground truth must use labels from one supported dataset")
+        dataset = datasets[0]
+    if dataset not in LABELS or not set(true) <= LABELS[dataset]:
+        raise ValueError("Ground truth labels do not match the selected dataset")
+    labels = sorted(LABELS[dataset])
+    predicted = []
+    for row, _ in pairs:
+        label = _label(row.get("label"))
+        if label not in labels or row.get("parse_error") or row.get("format_pass") is False:
+            label = "invalid"
+        predicted.append(label)
+    return true, predicted, labels
+
+
+def _evidence_metrics(retrieved_evidence, ground_truth, k):
+    if type(k) is not int or k < 0:
+        raise ValueError("k must be a nonnegative integer")
+    if len(retrieved_evidence) != len(ground_truth):
+        raise ValueError("Evidence and references must be aligned")
+    pairs = zip(retrieved_evidence, ground_truth, strict=True)
+    scores = []
+    for chunks, gold in pairs:
+        if not gold.get("evidence_spans"):
+            continue
+        if (not isinstance(gold.get("context"), str) or chunks is None
+                or any(not isinstance(chunk, dict) or chunk.get("start") is None or chunk.get("end") is None
+                       or not chunk.get("doc_id", (chunk.get("metadata") or {}).get("doc_id"))
+                       for chunk in chunks[:k])):
+            # A partial corpus must not be reported with the full-corpus denominator.
+            return aggregate_evidence([])
+        scores.append(score_evidence(chunks, gold, k=k))
+    return aggregate_evidence(scores)
 
 
 class MetricsCalculator:
-    """Calculate evaluation metrics for legal QA systems."""
+    """Calculate task metrics and separately scoped verifier diagnostics."""
 
-    def __init__(self):
-        self.label_map = {
-            "entailment": 0,
-            "contradiction": 1,
-            "neutral": 2,
-            "present": 0,
-            "absent": 1,
-        }
-
-    def compute_all_metrics(
-        self,
-        predictions: List[Dict],
-        ground_truth: List[Dict],
-        retrieved_evidence: Optional[List[List[str]]] = None,
-        latencies: Optional[List[float]] = None,
-        token_counts: Optional[List[int]] = None,
-    ) -> EvaluationResult:
-        """
-        Compute all evaluation metrics.
-
-        Args:
-            predictions: List of prediction dicts with 'label', 'answer', 'evidence', etc.
-            ground_truth: List of ground truth dicts with 'label', 'answer', 'evidence_spans', etc.
-            retrieved_evidence: List of retrieved evidence for each example
-            latencies: List of response latencies
-            token_counts: List of token counts for each example
-
-        Returns:
-            EvaluationResult object
-        """
+    def compute_all_metrics(self, predictions, ground_truth, retrieved_evidence=None,
+                            latencies=None, token_counts=None, *, dataset=None, k=5):
+        """Evaluate aligned predictions and references from one task."""
+        if len(predictions) != len(ground_truth):
+            raise ValueError("Predictions and references must be aligned")
         result = EvaluationResult()
-
-        # Label-based metrics (for ContractNLI)
-        if self._has_labels(ground_truth):
-            result.label_accuracy = self.compute_label_accuracy(predictions, ground_truth)
-            result.macro_f1 = self.compute_macro_f1(predictions, ground_truth)
-            result.micro_f1 = self.compute_micro_f1(predictions, ground_truth)
-            result.per_class_metrics = self.compute_per_class_metrics(predictions, ground_truth)
-
-        # Evidence-based metrics
-        if retrieved_evidence and self._has_evidence(ground_truth):
-            result.evidence_recall_at_k = self.compute_evidence_recall(
-                retrieved_evidence, ground_truth
-            )
-            result.evidence_hit_rate = self.compute_evidence_hit_rate(
-                retrieved_evidence, ground_truth
-            )
-
-        # Hallucination metrics
-        if self._has_verification_info(predictions):
-            result.hallucination_rate = self.compute_hallucination_rate(predictions)
-            result.abstention_precision = self.compute_abstention_precision(predictions, ground_truth)
-
-        # Answer completeness
-        if self._has_answers(predictions) and self._has_answers(ground_truth):
-            result.answer_completeness = self.compute_answer_completeness(predictions, ground_truth)
-
-        # Performance metrics
-        if latencies:
-            result.avg_latency = np.mean(latencies)
-
-        if token_counts:
-            result.total_tokens = sum(token_counts)
-
+        if any("label" in row for row in ground_truth):
+            true, predicted, labels = _label_inputs(predictions, ground_truth, dataset)
+            result.label_accuracy = float(accuracy_score(true, predicted))
+            result.macro_f1 = float(f1_score(true, predicted, labels=labels, average="macro", zero_division=0))
+            result.micro_f1 = result.label_accuracy
+            result.per_class_metrics = self.compute_per_class_metrics(predictions, ground_truth, dataset=dataset)
+        if retrieved_evidence is not None:
+            scores = _evidence_metrics(retrieved_evidence, ground_truth, k)
+            result.evidence_recall_at_k = scores["evidence_recall_at_k"]
+            result.evidence_hit_rate = scores["evidence_hit_rate"]
+        (result.initial_verifier_unsupported_rate, result.initial_verifier_claims,
+         result.initial_verifier_failed_claims) = self.compute_initial_verifier_metrics(predictions)
+        result.answer_word_set_recall = self.compute_answer_word_set_recall(predictions, ground_truth)
+        result.abstention_precision = self.compute_abstention_precision(predictions, ground_truth)
+        if latencies is not None and len(latencies):
+            result.avg_latency = float(mean(latencies))
+        if token_counts is not None and len(token_counts):
+            result.total_tokens = int(sum(token_counts))
         return result
 
-    def compute_label_accuracy(
-        self, predictions: List[Dict], ground_truth: List[Dict]
-    ) -> float:
-        """Compute label classification accuracy."""
-        pred_labels = [self._normalize_label(p.get("label", "neutral")) for p in predictions]
-        true_labels = [self._normalize_label(g.get("label", "neutral")) for g in ground_truth]
+    def compute_label_accuracy(self, predictions, ground_truth, *, dataset=None):
+        true, predicted, _ = _label_inputs(predictions, ground_truth, dataset)
+        return float(accuracy_score(true, predicted)) if true else None
 
-        return accuracy_score(true_labels, pred_labels)
+    def compute_macro_f1(self, predictions, ground_truth, *, dataset=None):
+        true, predicted, labels = _label_inputs(predictions, ground_truth, dataset)
+        return float(f1_score(true, predicted, labels=labels, average="macro", zero_division=0)) if true else None
 
-    def compute_macro_f1(
-        self, predictions: List[Dict], ground_truth: List[Dict]
-    ) -> float:
-        """Compute macro-averaged F1 score."""
-        pred_labels = [self._normalize_label(p.get("label", "neutral")) for p in predictions]
-        true_labels = [self._normalize_label(g.get("label", "neutral")) for g in ground_truth]
+    def compute_micro_f1(self, predictions, ground_truth, *, dataset=None):
+        """Micro-F1 equals accuracy for single-label rows including invalid predictions."""
+        return self.compute_label_accuracy(predictions, ground_truth, dataset=dataset)
 
-        return f1_score(true_labels, pred_labels, average="macro")
+    def compute_per_class_metrics(self, predictions, ground_truth, *, dataset=None):
+        true, predicted, labels = _label_inputs(predictions, ground_truth, dataset)
+        if not true:
+            return {}
+        precision, recall, f1, _ = precision_recall_fscore_support(
+            true, predicted, labels=labels, zero_division=0)
+        return {label: {"precision": float(p), "recall": float(r), "f1": float(f)}
+                for label, p, r, f in zip(labels, precision, recall, f1, strict=True)}
 
-    def compute_micro_f1(
-        self, predictions: List[Dict], ground_truth: List[Dict]
-    ) -> float:
-        """Compute micro-averaged F1 score."""
-        pred_labels = [self._normalize_label(p.get("label", "neutral")) for p in predictions]
-        true_labels = [self._normalize_label(g.get("label", "neutral")) for g in ground_truth]
+    def compute_evidence_recall(self, retrieved_evidence, ground_truth, k=5):
+        return _evidence_metrics(retrieved_evidence, ground_truth, k)["evidence_recall_at_k"]
 
-        return f1_score(true_labels, pred_labels, average="micro")
+    def compute_evidence_hit_rate(self, retrieved_evidence, ground_truth, k=5):
+        return _evidence_metrics(retrieved_evidence, ground_truth, k)["evidence_hit_rate"]
 
-    def compute_per_class_metrics(
-        self, predictions: List[Dict], ground_truth: List[Dict]
-    ) -> Dict:
-        """Compute precision, recall, F1 for each class."""
-        pred_labels = [self._normalize_label(p.get("label", "neutral")) for p in predictions]
-        true_labels = [self._normalize_label(g.get("label", "neutral")) for g in ground_truth]
+    def compute_hallucination_rate(self, predictions):
+        """Compatibility entry point. Independent final-answer labels are scored by the review pipeline."""
+        return None
 
-        labels = sorted(set(true_labels + pred_labels))
-        metrics = {}
+    def compute_initial_verifier_metrics(self, predictions):
+        """Return unsupported rate among valid checks, claims attempted, and claims failed."""
+        total = failed = unsupported = 0
+        unsupported_statuses = {"contradicted", "not_enough_info"}
+        known_statuses = unsupported_statuses | {"supported"}
+        for row in predictions:
+            for claim in (row.get("verification") or {}).get("claims") or ():
+                total += 1
+                status = claim.get("status")
+                if claim.get("parse_error") or status not in known_statuses:
+                    failed += 1
+                else:
+                    unsupported += status in unsupported_statuses
+        valid = total - failed
+        return (unsupported / valid if valid else None), total, failed
 
-        for label in labels:
-            label_name = self._denormalize_label(label)
-            metrics[label_name] = {
-                "precision": precision_score(true_labels, pred_labels, labels=[label], average="macro", zero_division=0),
-                "recall": recall_score(true_labels, pred_labels, labels=[label], average="macro", zero_division=0),
-                "f1": f1_score(true_labels, pred_labels, labels=[label], average="macro", zero_division=0),
-            }
-
-        return metrics
-
-    def compute_evidence_recall(
-        self, retrieved_evidence: List[List[str]], ground_truth: List[Dict], k: int = 5
-    ) -> float:
-        """
-        Compute evidence recall@k: proportion of gold evidence spans retrieved.
-
-        Args:
-            retrieved_evidence: List of lists of retrieved evidence strings
-            ground_truth: Ground truth with evidence_spans
-            k: Top-k retrieved documents to consider
-
-        Returns:
-            Average recall across examples
-        """
-        recalls = []
-
-        for retrieved, gt in zip(retrieved_evidence, ground_truth):
-            gold_spans = gt.get("evidence_spans", [])
-            if not gold_spans:
+    def compute_answer_word_set_recall(self, predictions, ground_truth):
+        """Mean exact word-set overlap with nonempty human reference answers."""
+        scores = []
+        for prediction, gold in zip(predictions, ground_truth, strict=True):
+            reference = gold.get("answer")
+            reference_words = set(reference.lower().split()) if isinstance(reference, str) else set()
+            if not reference_words:
                 continue
+            answer = prediction.get("final_answer", prediction.get("answer"))
+            if prediction.get("parse_error") or prediction.get("format_pass") is False:
+                answer = None
+            words = set(answer.lower().split()) if isinstance(answer, str) else set()
+            scores.append(len(words & reference_words) / len(reference_words))
+        return mean(scores) if scores else None
 
-            # Get top-k retrieved evidence
-            retrieved_k = retrieved[:k]
+    def compute_answer_completeness(self, predictions, ground_truth):
+        """Compatibility alias for the lexical proxy, not a semantic assessment."""
+        return self.compute_answer_word_set_recall(predictions, ground_truth)
 
-            # Check overlap with gold spans
-            # This is simplified - in practice, need fuzzy matching
-            hits = 0
-            for gold_start, gold_end in gold_spans:
-                gold_text = gt.get("context", "")[gold_start:gold_end]
-                for ret_text in retrieved_k:
-                    if gold_text in ret_text or ret_text in gold_text:
-                        hits += 1
-                        break
-
-            recall = hits / len(gold_spans) if gold_spans else 0
-            recalls.append(recall)
-
-        return np.mean(recalls) if recalls else 0.0
-
-    def compute_evidence_hit_rate(
-        self, retrieved_evidence: List[List[str]], ground_truth: List[Dict]
-    ) -> float:
-        """
-        Compute hit rate: proportion of queries with at least one relevant evidence.
-
-        Args:
-            retrieved_evidence: List of lists of retrieved evidence
-            ground_truth: Ground truth with evidence_spans
-
-        Returns:
-            Hit rate
-        """
-        hits = 0
-        total = 0
-
-        for retrieved, gt in zip(retrieved_evidence, ground_truth):
-            gold_spans = gt.get("evidence_spans", [])
-            if not gold_spans:
-                continue
-
-            total += 1
-
-            # Check if any retrieved evidence matches gold
-            for gold_start, gold_end in gold_spans:
-                gold_text = gt.get("context", "")[gold_start:gold_end]
-                for ret_text in retrieved:
-                    if gold_text in ret_text or ret_text in gold_text:
-                        hits += 1
-                        break
-                if hits > 0:
-                    break
-
-        return hits / total if total > 0 else 0.0
-
-    def compute_hallucination_rate(self, predictions: List[Dict]) -> float:
-        """
-        Compute hallucination rate: proportion of claims that are unsupported or contradicted.
-
-        Args:
-            predictions: Predictions with verification_results
-
-        Returns:
-            Hallucination rate
-        """
-        total_claims = 0
-        hallucinated_claims = 0
-
-        for pred in predictions:
-            verification = pred.get("verification_results", [])
-
-            for claim_verification in verification:
-                total_claims += 1
-                status = claim_verification.get("status", "supported")
-
-                if status in ["contradicted", "not_enough_info"]:
-                    hallucinated_claims += 1
-
-        return hallucinated_claims / total_claims if total_claims > 0 else 0.0
-
-    def compute_answer_completeness(
-        self, predictions: List[Dict], ground_truth: List[Dict]
-    ) -> float:
-        """
-        Compute answer completeness: how much of the ground truth answer is covered.
-
-        Args:
-            predictions: Predictions with answers
-            ground_truth: Ground truth with answers
-
-        Returns:
-            Average completeness score
-        """
-        completeness_scores = []
-
-        for pred, gt in zip(predictions, ground_truth):
-            pred_answer = pred.get("answer", "").lower()
-            gt_answer = gt.get("answer", "").lower()
-
-            if not gt_answer:
-                continue
-
-            # Simple token overlap
-            pred_tokens = set(pred_answer.split())
-            gt_tokens = set(gt_answer.split())
-
-            if gt_tokens:
-                overlap = len(pred_tokens & gt_tokens) / len(gt_tokens)
-                completeness_scores.append(overlap)
-
-        return np.mean(completeness_scores) if completeness_scores else 0.0
-
-    def compute_abstention_precision(
-        self, predictions: List[Dict], ground_truth: List[Dict]
-    ) -> float:
-        """
-        Compute abstention precision: when model abstains, is it correct to do so?
-
-        Args:
-            predictions: Predictions with abstention flags
-            ground_truth: Ground truth
-
-        Returns:
-            Abstention precision
-        """
-        abstained = []
-        should_abstain = []
-
-        for pred, gt in zip(predictions, ground_truth):
-            did_abstain = pred.get("abstained", False) or pred.get("label") == "not_enough_info"
-
-            # Should abstain if ground truth is neutral or no evidence
-            should = gt.get("label") == "neutral" or not gt.get("evidence_spans")
-
-            if did_abstain:
-                abstained.append(1 if should else 0)
-
-        return np.mean(abstained) if abstained else 0.0
-
-    def _normalize_label(self, label: str) -> int:
-        """Convert label string to numeric."""
-        return self.label_map.get(label.lower(), 2)  # Default to neutral/2
-
-    def _denormalize_label(self, label_id: int) -> str:
-        """Convert numeric label back to string."""
-        reverse_map = {v: k for k, v in self.label_map.items()}
-        return reverse_map.get(label_id, "neutral")
-
-    def _has_labels(self, data: List[Dict]) -> bool:
-        """Check if data has labels."""
-        return any("label" in item for item in data)
-
-    def _has_evidence(self, data: List[Dict]) -> bool:
-        """Check if data has evidence spans."""
-        return any("evidence_spans" in item and item["evidence_spans"] for item in data)
-
-    def _has_verification_info(self, data: List[Dict]) -> bool:
-        """Check if predictions have verification results."""
-        return any("verification_results" in item for item in data)
-
-    def _has_answers(self, data: List[Dict]) -> bool:
-        """Check if data has answers."""
-        return any("answer" in item and item["answer"] for item in data)
+    def compute_abstention_precision(self, predictions, ground_truth):
+        """Score abstention only for explicit predictions with complete reference judgments."""
+        judgments = [gold.get("should_abstain") for prediction, gold in zip(predictions, ground_truth, strict=True)
+                     if prediction.get("abstained") is True and not prediction.get("parse_error")
+                     and prediction.get("format_pass") is not False]
+        if not judgments or any(type(value) is not bool for value in judgments):
+            return None
+        return mean(judgments)
 
     def format_results(self, result: EvaluationResult) -> str:
         """Format evaluation results as a readable string."""
@@ -365,6 +208,13 @@ class MetricsCalculator:
 
         if result.hallucination_rate is not None:
             lines.append(f"Hallucination Rate:    {result.hallucination_rate:.4f}")
+        if result.initial_verifier_claims:
+            lines.append(f"Initial Verifier Claims: {result.initial_verifier_claims:,}")
+            lines.append(f"Initial Verifier Failed Claims: {result.initial_verifier_failed_claims:,}")
+        if result.initial_verifier_unsupported_rate is not None:
+            lines.append(f"Initial Verifier Unsupported Rate: {result.initial_verifier_unsupported_rate:.4f}")
+        if result.answer_word_set_recall is not None:
+            lines.append(f"Answer Word-Set Recall: {result.answer_word_set_recall:.4f}")
         if result.answer_completeness is not None:
             lines.append(f"Answer Completeness:   {result.answer_completeness:.4f}")
         if result.abstention_precision is not None:

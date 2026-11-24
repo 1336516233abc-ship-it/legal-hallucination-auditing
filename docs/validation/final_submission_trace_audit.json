@@ -1,0 +1,238 @@
+{
+  "verified_groups": 12,
+  "paired_keys": 9333,
+  "methods": {
+    "direct_prompting": {
+      "model_calls": 6222,
+      "input_tokens": 16726643,
+      "generated_tokens": 347613,
+      "total_tokens": 17074256,
+      "predictions": 6222
+    },
+    "standard_rag": {
+      "model_calls": 6222,
+      "input_tokens": 17561928,
+      "generated_tokens": 409452,
+      "total_tokens": 17971380,
+      "predictions": 6222
+    },
+    "verified_agentic_rag": {
+      "model_calls": 25390,
+      "input_tokens": 50416305,
+      "generated_tokens": 2050494,
+      "total_tokens": 52466799,
+      "predictions": 6222
+    }
+  },
+  "totals": {
+    "model_calls": 37834,
+    "input_tokens": 84704876,
+    "generated_tokens": 2807559,
+    "total_tokens": 87512435,
+    "predictions": 18666
+  },
+  "models": {
+    "llama3": {
+      "archive_sha256": "515c66f9151621e91116e696b3ca813554da8a06387c786c021bfc9634b1e9ed",
+      "groups": [
+        {
+          "dataset": "contractnli",
+          "method": "direct_prompting",
+          "accuracy": 0.4701099952175992,
+          "macro_f1": 0.44907655554387454,
+          "format_pass": 2091,
+          "model_calls": 2091,
+          "input_tokens": 4532952,
+          "generated_tokens": 113640,
+          "total_tokens": 4646592,
+          "predictions": 2091,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "contractnli",
+          "method": "standard_rag",
+          "accuracy": 0.4251554280248685,
+          "macro_f1": 0.42712824912470576,
+          "format_pass": 2087,
+          "model_calls": 2091,
+          "input_tokens": 4928207,
+          "generated_tokens": 139817,
+          "total_tokens": 5068024,
+          "predictions": 2091,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "contractnli",
+          "method": "verified_agentic_rag",
+          "accuracy": 0.5552367288378766,
+          "macro_f1": 0.528308358466862,
+          "format_pass": 2051,
+          "model_calls": 8611,
+          "input_tokens": 15671006,
+          "generated_tokens": 771470,
+          "total_tokens": 16442476,
+          "predictions": 2091,
+          "initial_verifier_unsupported_rate": 0.4034582132564842,
+          "initial_verifier_claims": 2874,
+          "initial_verifier_failed_claims": 1486,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "cuad",
+          "method": "direct_prompting",
+          "accuracy": 0.7754901960784314,
+          "macro_f1": 0.7851155066210909,
+          "format_pass": 966,
+          "model_calls": 1020,
+          "input_tokens": 3536319,
+          "generated_tokens": 34917,
+          "total_tokens": 3571236,
+          "predictions": 1020,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "cuad",
+          "method": "standard_rag",
+          "accuracy": 0.6862745098039216,
+          "macro_f1": 0.7345925127832708,
+          "format_pass": 866,
+          "model_calls": 1020,
+          "input_tokens": 3316393,
+          "generated_tokens": 34993,
+          "total_tokens": 3351386,
+          "predictions": 1020,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "cuad",
+          "method": "verified_agentic_rag",
+          "accuracy": 0.6205882352941177,
+          "macro_f1": 0.6834024050546912,
+          "format_pass": 805,
+          "model_calls": 3217,
+          "input_tokens": 6021810,
+          "generated_tokens": 204345,
+          "total_tokens": 6226155,
+          "predictions": 1020,
+          "initial_verifier_unsupported_rate": 0.7586206896551724,
+          "initial_verifier_claims": 679,
+          "initial_verifier_failed_claims": 99,
+          "independent_hallucination_rate": null
+        }
+      ]
+    },
+    "mistral": {
+      "archive_sha256": "f928605bc84b7f59101c4b2c7ce2cffe2c31d0085baecf8e7b0c69f60415d2f6",
+      "groups": [
+        {
+          "dataset": "contractnli",
+          "method": "direct_prompting",
+          "accuracy": 0.43424198947871834,
+          "macro_f1": 0.3253394843786747,
+          "format_pass": 1750,
+          "model_calls": 2091,
+          "input_tokens": 5015467,
+          "generated_tokens": 156050,
+          "total_tokens": 5171517,
+          "predictions": 2091,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "contractnli",
+          "method": "standard_rag",
+          "accuracy": 0.41893830703012913,
+          "macro_f1": 0.2707187211391265,
+          "format_pass": 1718,
+          "model_calls": 2091,
+          "input_tokens": 5615446,
+          "generated_tokens": 198847,
+          "total_tokens": 5814293,
+          "predictions": 2091,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "contractnli",
+          "method": "verified_agentic_rag",
+          "accuracy": 0.3706360593017695,
+          "macro_f1": 0.23050640267031,
+          "format_pass": 1577,
+          "model_calls": 10089,
+          "input_tokens": 21165308,
+          "generated_tokens": 858641,
+          "total_tokens": 22023949,
+          "predictions": 2091,
+          "initial_verifier_unsupported_rate": 0.5381406436233611,
+          "initial_verifier_claims": 4441,
+          "initial_verifier_failed_claims": 1085,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "cuad",
+          "method": "direct_prompting",
+          "accuracy": 0.6705882352941176,
+          "macro_f1": 0.7214130833639123,
+          "format_pass": 877,
+          "model_calls": 1020,
+          "input_tokens": 3641905,
+          "generated_tokens": 43006,
+          "total_tokens": 3684911,
+          "predictions": 1020,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "cuad",
+          "method": "standard_rag",
+          "accuracy": 0.6970588235294117,
+          "macro_f1": 0.7284482258185383,
+          "format_pass": 928,
+          "model_calls": 1020,
+          "input_tokens": 3701882,
+          "generated_tokens": 35795,
+          "total_tokens": 3737677,
+          "predictions": 1020,
+          "initial_verifier_unsupported_rate": null,
+          "initial_verifier_claims": 0,
+          "initial_verifier_failed_claims": 0,
+          "independent_hallucination_rate": null
+        },
+        {
+          "dataset": "cuad",
+          "method": "verified_agentic_rag",
+          "accuracy": 0.6323529411764706,
+          "macro_f1": 0.6970591854312784,
+          "format_pass": 828,
+          "model_calls": 3473,
+          "input_tokens": 7558181,
+          "generated_tokens": 216038,
+          "total_tokens": 7774219,
+          "predictions": 1020,
+          "initial_verifier_unsupported_rate": 0.8597972972972973,
+          "initial_verifier_claims": 771,
+          "initial_verifier_failed_claims": 179,
+          "independent_hallucination_rate": null
+        }
+      ]
+    }
+  }
+}

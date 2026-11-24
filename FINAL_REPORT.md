@@ -1,6 +1,8 @@
 # Legal Hallucination Auditing: Agentic RAG for Contract Analysis
 
-**Course**: COMP7608B - LLM Systems
+**Course**: COMP7608B - Large Language Models
+
+**Group**: 55
 **Team Members**:
 - Yin Fengling (3036807375) - Dataset preprocessing & evaluation metrics
 - Qin Mengmeng (3036843769) - Retrieval system & baseline implementations
@@ -13,12 +15,12 @@
 
 ## Executive Summary
 
-This project implements and evaluates an Agentic RAG system designed to audit and reduce hallucinations in LLM-generated responses for legal contract analysis. We developed a multi-stage workflow incorporating query analysis, evidence retrieval, answer generation, claim verification, and iterative revision. Our system was evaluated on two legal datasets (ContractNLI and CUAD) using two models (Llama 3 8B and Mistral 7B), producing 18,666 predictions across three methods: Direct Prompting, Standard RAG, and Verified Agentic RAG.
+This project implements and evaluates an Agentic RAG system designed to audit and reduce hallucinations in LLM-generated responses for legal contract analysis. We developed a multi-stage workflow incorporating query analysis, evidence retrieval, answer generation, claim verification, and at most one revision. Our system was evaluated on two legal datasets (ContractNLI and CUAD) using two models (Llama 3 8B and Mistral 7B), producing 18,666 predictions across three methods: Direct Prompting, Standard RAG, and Verified Agentic RAG.
 
 **Key Results**:
 - Agentic RAG improved label accuracy by 13.01 percentage points over Standard RAG on Llama 3 × ContractNLI (42.52% → 55.52%)
 - Performance gains were model- and task-dependent; three other configurations showed accuracy decreases
-- System successfully detected and revised outputs in 1,555 ContractNLI and 498 CUAD cases (Llama 3)
+- Llama 3 triggered 1,555 ContractNLI and 498 CUAD revisions. These counts measure workflow behavior.
 - Retrieval recall@5 reached 97.89% (ContractNLI) and 61.75% (CUAD) using BM25 with fixed-length chunking
 
 ---
@@ -46,9 +48,9 @@ This project implements and evaluates an Agentic RAG system designed to audit an
 | **Retrieval Systems** | BM25, Dense, Hybrid | All three with two chunking strategies | ✅ Complete with 36-configuration ablation |
 | **Baselines** | Direct Prompting, Standard RAG | Both implemented and evaluated | ✅ Complete on full test sets |
 | **Agentic Components** | Query Analyzer, Generator, Verifier, Reviser | All four modules integrated | ✅ Complete with workflow traces |
-| **Evaluation Metrics** | Accuracy, F1, Evidence Recall, Hallucination Rate | Task metrics delivered; independent hallucination assessment pending | Automated metrics complete; human evaluation in progress |
-| **UI Prototype** | Optional Gradio interface | Functional UI with proposition checking and clause extraction | ✅ Complete (`ui/app.py`) |
-| **Experiments** | Two models, two datasets, full ablations | 18,666 predictions across 12 configurations | ✅ Complete with detailed traces |
+| **Evaluation Metrics** | Accuracy, F1, Evidence Recall, Hallucination Rate | Task metrics delivered; independent hallucination assessment pending | Automated task metrics verified; independent human scoring pending |
+| **UI Prototype** | Optional Gradio interface | Functional UI with pasted text, proposition checking and clause extraction | ✅ Complete (`ui/app.py`) |
+| **Experiments** | Two models, two datasets and component comparisons | 18,666 predictions across 12 configurations | Main comparison complete. Component ablations use a fixed 10-example pilot. |
 
 ### 1.3 Changes from Original Proposal
 
@@ -56,12 +58,12 @@ This project implements and evaluates an Agentic RAG system designed to audit an
 
 **PrivacyQA**: Deferred as optional cross-domain validation after completing core legal datasets.
 
-**Hallucination Measurement**: Initial proposal assumed verifier outputs could serve as hallucination ground truth. Actual implementation revealed that:
+**Hallucination Measurement**: The proposal called for claim-level support assessment. The delivered verifier provides internal diagnostics:
 - Internal verification only checks initial answers, not final revised outputs
 - Verification logic itself can have false positives/negatives
 - Independent human assessment is required for reliable hallucination rates across all three methods
 
-**Methodology Refinement**: Added component ablation studies (No Verification, No Revision) to isolate the contribution of each agentic module, beyond the originally planned method comparisons.
+**Methodology Refinement**: Added component ablation studies (No Verification, No Revision) to compare the behavior of related Agent components, beyond the originally planned method comparisons.
 
 ---
 
@@ -216,89 +218,15 @@ Each prediction records:
 
 ### 3.1 Tested Failure Situations
 
-We explicitly tested and documented failure modes beyond standard accuracy metrics:
+**Malformed task output.** The parser in `retrieval/common.py` preserves the failed raw output, sets an invalid label, and records a parse error. The Agent withholds an unusable final answer. Invalid predictions remain in the accuracy denominator. This includes ContractNLI outputs with illegal labels and malformed CUAD JSON.
 
-**Test 1: Format Parsing Failure**
+**Out-of-range citation or nonverbatim extract.** The check in `agent/agentic_rag.py` uses the evidence that actually reached the generator. The UI withholds the answer, displays the reason, and keeps the trace. Of the RAG and Agent groups, ContractNLI had 100–211 rows with out-of-range citations per group (4.8–10.1%), and CUAD had 107–149 (10.5–14.6%). Citation-range checks can pass when the cited passage is semantically incorrect.
 
-*Situation*: Model outputs malformed JSON or omits required fields (label, answer, citations).
+**Changed conditions.** The live interface cleared results when the sample contract changed from 30 to 60 days. The next request used the new contract and returned a contradiction for the unchanged 30-day proposition. The verification trace shows an attempted revision. See the UI acceptance records and full-trace cases under `docs/validation/`.
 
-*Detection*:
-- JSON parser catches `json.JSONDecodeError`
-- Schema validator checks for required fields
-- Output recorded with `parse_error` field and `label=invalid`
+### 3.2 Recovery Boundaries
 
-*Recovery*:
-```python
-# agent/generator.py:245-258
-try:
-    parsed = json.loads(raw_response)
-    if "label" not in parsed or parsed["label"] not in VALID_LABELS:
-        raise ValueError("Invalid or missing label")
-except (json.JSONDecodeError, ValueError) as e:
-    result = {
-        "label": "invalid",
-        "answer": "",
-        "citations": [],
-        "parse_error": str(e),
-        "raw_response": raw_response,
-    }
-    return result
-```
-
-*User Feedback*: Final answer field left empty; raw output preserved for audit; counted as error in accuracy denominator.
-
-*Actual Incidence*: Mistral had 341–514 format failures per 2,091 ContractNLI examples; Llama 3 had 0–40 failures. CUAD extraction task showed higher JSON failures (54–215 per 1,020 examples).
-
-**Test 2: Citation Grounding Failure**
-
-*Situation*: Model cites evidence chunks that were not provided (e.g., [7] when only [1]–[5] exist) or cites indices outside valid range.
-
-*Detection*:
-```python
-# agent/verifier/verifier.py:285-305
-def check_grounding(answer, evidence_chunks):
-    cited_indices = extract_citation_numbers(answer)
-    max_valid = len(evidence_chunks)
-    for idx in cited_indices:
-        if idx < 1 or idx > max_valid:
-            return {
-                "grounding_error": True,
-                "invalid_citations": [i for i in cited_indices if i < 1 or i > max_valid],
-                "valid_range": f"[1, {max_valid}]"
-            }
-    return {"grounding_error": False}
-```
-
-*Recovery*:
-- If grounding check fails, revision is skipped (cannot safely revise without valid evidence linkage)
-- Final answer withheld from display
-- Record preserved with `grounding_error: True` for analysis
-
-*User Feedback*: System displays "Unable to provide a fully supported answer" and logs the failure reason.
-
-*Actual Incidence*: 100–211 cases per method in ContractNLI (4.8–10.1% of 2,091 examples); 107–149 in CUAD (10.5–14.6% of 1,020 examples). Agent had higher rates due to revision potentially introducing new invalid citations.
-
-*Risk from Repeated Actions*:
-- Revision only attempts re-retrieval once; no unbounded loops
-- If revision introduces new citation errors, system stops rather than attempting further fixes
-- Token budget enforced per call; cumulative cost tracked across workflow
-
-### 3.2 Additional Robustness Measures
-
-**Retrieval Budget Overflow**:
-- If top-k chunks exceed input token budget (4,096 tokens), system truncates to fit
-- Tracks `retrieved_chunks` (all results) separately from `prompt_evidence` (what model saw)
-- Evidence recall metrics use original retrieved set; grounding checks use truncated set
-
-**Model API Failures**:
-- Exponential backoff with 3 retries on transient errors (rate limits, timeouts)
-- Permanent failures (authentication, quota exhausted) logged and halt batch
-- Checkpoint system preserves completed predictions; resume skips already-processed IDs
-
-**Concurrent Processing Conflicts**:
-- SQLite database uses `(dataset, method, example_id)` unique constraint
-- Duplicate inserts silently ignored (idempotency)
-- Parallel workers use independent retrieval indices to prevent race conditions
+The workflow allows at most one revision, enforced by control flow. The per-call token budget truncates prompt evidence. Model exceptions in the interactive service give an actionable status and no automatic retry. The experiment checkpoint binds settings and skips already completed keys when resuming with the same manifest.
 
 ---
 
@@ -316,81 +244,51 @@ def check_grounding(answer, evidence_chunks):
 | Standard RAG | 1.85s | 1.29s | +28% (NLI) due to retrieval + longer prompts |
 | Agentic RAG | 9.94s | 5.89s | 5.4–6.8× slower than Direct; driven by multi-call verification |
 
-**Bottleneck Analysis** (measured on Agentic RAG, ContractNLI):
-- Retrieval: ~0.3s (3% of total)
-- Initial generation: ~1.5s (15%)
-- Claim extraction + verification: ~6.0s (60%)  ← Primary bottleneck
-- Revision (when triggered): ~2.1s (21%)
+Agent runs invoke generation, claim verification and revision when triggered. The reported means are from eight-worker vLLM runs and do not estimate cold-start latency or interactive service throughput. On the previously observed local Gradio deployment, two synthetic contracts demonstrated the multi-call behavior. No per-stage latency breakdown is claimed.
 
-**Trade-offs**:
-- Verification requires one LLM call per claim (avg 3–5 claims/answer)
-- Batching claim verification could reduce latency but complicate prompt engineering
-- For production, implemented async processing with status polling for non-interactive workflows
+### 4.2 Token Usage and Compute Cost
 
-**Operating Assumptions**:
-- GPU inference (RTX 6000D 84GB) with vLLM batching at parallelism=8
-- Single-document queries (no cross-contract analysis)
-- Pre-indexed contracts (indexing time excluded from per-query latency)
+| Full-test method | Predictions | Model calls | Input tokens | Generated tokens | Total tokens |
+|---|---:|---:|---:|---:|---:|
+| Direct Prompting | 6,222 | 6,222 | 16,726,643 | 347,613 | 17,074,256 |
+| Standard RAG | 6,222 | 6,222 | 17,561,928 | 409,452 | 17,971,380 |
+| Verified Agentic RAG | 6,222 | 25,390 | 50,416,305 | 2,050,494 | 52,466,799 |
+| **Total** | **18,666** | **37,834** | **84,704,876** | **2,807,559** | **87,512,435** |
 
-### 4.2 Cost
+Totals sum input and generated tokens from every recorded model call, including query rewrites, verification and revision. RAG consumed 1.05 times the Direct baseline total. Agent consumed 2.92 times the Standard RAG total. The 60-output component pilot is reported separately in `docs/validation/part4_2026-11-22/RESULTS.md`.
 
-**Target**: Minimize token consumption while maintaining quality; stay within research compute budget.
-
-**Measured Consumption** (full test sets, both models combined):
-
-| Method | Total Tokens | Per-example avg | Relative cost |
-|--------|-------------|-----------------|---------------|
-| Direct Prompting | 2,585k | 415 | Baseline (1.0×) |
-| Standard RAG | 25,152k | 4,042 | 9.7× |
-| Agentic RAG (Full) | 27,479k | 4,414 | 10.6× |
-| Agentic (No Verification) | 25,852k | 4,154 | 10.0× |
-| Agentic (No Revision) | 25,657k | 4,120 | 9.9× |
-
-**Analysis**:
-- RAG's 9.7× cost increase primarily from longer prompts (512-token chunks × 5)
-- Full Agent adds approximately 9–10% tokens over No Verification baseline (verification overhead)
-- Revision adds tokens when triggered (15–25% trigger rate across datasets)
-
-**Cost Optimization Measures**:
-- Limited revision to one iteration (prevents unbounded cost escalation)
-- Skipped verification on format-failed outputs (no value in checking unparsable text)
-- Used smaller encoder for dense retrieval (MiniLM vs. larger alternatives)
-
-**Budget Compliance**:
-- Total experiment: 38.6M tokens across 18,666 predictions
-- At GPT-3.5 pricing (~$0.001/1k tokens): ~$39 total
-- Actual cost: $0 (used self-hosted models)
+The experiments used rented AutoDL compute with self-hosted inference. Token totals describe workload. Actual spend depends on the AutoDL billing record and is not estimated here.
 
 ### 4.3 Privacy and Data Handling
 
 **Data Sources**:
 - ContractNLI: Academic dataset, public contracts from EDGAR filings
 - CUAD: Atticus Project, public commercial contracts
-- No real client data or PII processed
+- The evaluation used public datasets and the demonstration used synthetic contracts.
 
 **Measures**:
-- All data processing local; no external API calls to third-party services
+- Main inference used team-run model instances. The shared Gradio demo is a separate deployment.
 - Model inference on team-controlled infrastructure (AutoDL, local machines)
 - Synthetic examples in UI demo marked as "constructed input, not real case data"
 
 **Limitations**:
 - System not designed for production deployment with real client contracts
-- No encryption-at-rest for intermediate results (academic research setting)
-- Access control not implemented (single-user CLI/UI tools)
+- The release contains public benchmark material and synthetic examples.
+- The local UI binds to loopback by default. The shared demo uses separate authentication.
 
 ### 4.4 Reproducibility
 
 **Implemented Measures**:
 1. **Fixed Random Seeds**: seed=42 for data sampling, retrieval, generation
 2. **Pinned Model Versions**: Exact Git revisions and SHA256 hashes of model weights recorded
-3. **Frozen Dependencies**: `requirements.txt` with exact versions (vllm==0.10.2, transformers==4.56.2)
+3. **Frozen Dependencies**: Run manifests capture software versions. `requirements-ui.txt` pins the UI dependency.
 4. **Data Provenance**: SHA256 of test files, sample IDs logged in manifests
 5. **Code Snapshots**: Git commit hash of experimental code stored with results
 6. **Complete Traces**: All 37,834 LLM calls logged with prompts, responses, tokens
 
 **Verification**:
 - Independent re-run of 36 retrieval configurations: max absolute deviation 5.55e-16 (floating-point precision)
-- Component ablation on fixed 10-example set: results match within 1 token due to identical inputs
+- Component ablation uses a fixed, paired 10-example set. Archived traces record the observed runs.
 - Published analysis package includes scripts to reproduce metrics from raw traces
 
 ---
@@ -453,24 +351,24 @@ def check_grounding(answer, evidence_chunks):
 **Key Findings**:
 
 1. **RQ1: Does RAG reduce hallucinations compared to direct prompting?**
-   - **Evidence recall improvements**: RAG achieved 97.89% (ContractNLI) and 61.75% (CUAD) evidence recall at k=5, ensuring relevant evidence is available for generation
+   - **Evidence recall improvements**: Standard RAG achieved 97.89% (ContractNLI) and 61.75% (CUAD) initial evidence recall at k=5. Prompt truncation can change the evidence available to generation.
    - **Task performance**: Mixed label accuracy results across configurations (+2.65 pp to -8.92 pp)
    - **Key finding**: While RAG substantially improves evidence availability, this does not automatically translate to improved task accuracy, suggesting that generation quality and prompt design are equally important factors
 
 2. **RQ2: Does agentic verification and revision improve upon standard RAG?**
-   - **Significant improvement on complex reasoning**: Llama 3 × ContractNLI showed +13.01 pp gain (42.52% → 55.52%), demonstrating that verification and revision can substantially improve performance on entailment/contradiction tasks
+   - **Largest observed gain**: Llama 3 × ContractNLI showed +13.01 pp gain (42.52% → 55.52%), demonstrating that verification and revision can substantially improve performance on entailment/contradiction tasks
    - **Active revision behavior**: System successfully triggered 1,555 revisions on ContractNLI (74.4% of cases), with net +218 correct labels, showing the agent actively identifies and attempts to correct problematic outputs
-   - **Task dependency**: Benefits strongest on reasoning-heavy tasks (ContractNLI) compared to extraction tasks (CUAD)
-   - **Key finding**: Agentic approach provides substantial benefits for complex legal reasoning but requires task-appropriate tuning
+   - **Task and model dependence**: Agent accuracy declined in the other three model-task pairs
+   - **Key finding**: Observed effects depend on the model and task
 
 3. **RQ3: What types of contract clauses and reasoning are most prone to errors?**
    - **Task complexity matters**: Information extraction tasks (CUAD) showed 36% lower retrieval recall (61-64%) compared to reasoning tasks (97-98%), indicating that clause extraction is more challenging for retrieval systems
-   - **Model robustness**: Format parsing emerged as the dominant error source, with one model (Mistral) failing on 17-25% of cases while the other (Llama 3) maintained 95-100% format compliance
-   - **Revision challenges**: Analysis of revision behavior shows that 74.4% of ContractNLI cases triggered verification, with 262 successful corrections vs. 44 introduced errors (6:1 success ratio)
+   - **Model robustness**: Mistral had more format failures in all three ContractNLI comparisons. On CUAD, the ordering varied by method.
+   - **Revision challenges**: Analysis of revision behavior shows that 74.4% of Llama 3 ContractNLI cases triggered revision, with 262 incorrect-to-correct and 44 correct-to-incorrect label transitions
    - **Error patterns**: Cases demonstrate that high retrieval quality (98% recall) is necessary but not sufficient for correct answers, emphasizing the importance of generation quality and reasoning capability
 
 4. **Model Comparison**:
-   - Llama 3 demonstrated superior robustness with 95–100% format compliance vs. Mistral's 75–91%
+   - Llama 3 format compliance ranged from 78.92% to 100%; Mistral ranged from 75.42% to 90.98%.
    - Format failures (up to 514/2,091 for Mistral) dominated the error budget, overshadowing other error sources
    - Performance variations across tasks suggest that model selection should consider task-specific requirements
 
@@ -508,7 +406,7 @@ def check_grounding(answer, evidence_chunks):
 | CUAD | 498 / 1,020 (48.8%) | 19 | 56 | 670 / 1,020 (65.7%) | 633 / 1,020 (62.1%) | **-37** |
 
 **Observations**:
-- High revision rates (48–74%) indicate aggressive hallucination detection
+- Llama 3 revision rates were 48.8% on CUAD and 74.4% on ContractNLI.
 - ContractNLI: 262 corrections vs. 44 errors introduced → net positive
 - CUAD: 19 corrections vs. 56 errors introduced → net negative
 - Revision does not guarantee improvement; depends on quality of re-retrieved evidence and model's ability to correct itself
@@ -569,7 +467,7 @@ We compared our Agentic RAG to two baselines (Direct, Standard RAG) rather than 
 **Yin Fengling (3036807375)** - Dataset Preprocessing & Evaluation Metrics
 - Implemented `data/contractnli_processor.py` and `data/cuad_processor.py` (600 lines)
 - Processed 2,091 ContractNLI and 1,020 CUAD test examples with unified schema
-- Developed `evaluation/metrics.py` with label accuracy, Macro-F1, evidence recall, and answer completeness (392 lines)
+- Developed `evaluation/metrics.py` for task labels and retrieval evidence. The final audit reports lexical answer overlap separately from semantic completeness.
 - Validated dataset integrity and gold evidence spans
 - Designed metric calculation protocol for format failures and missing labels
 
@@ -593,7 +491,7 @@ We compared our Agentic RAG to two baselines (Direct, Standard RAG) rather than 
 **Li Xinru (3036807959)** - Experiment Orchestration, Analysis & Reporting
 - Developed unified experiment runner (`experiments/run_experiments.py`, 642 lines)
 - Implemented checkpoint resume, task-aware scoring, and ablation framework
-- Coordinated AutoDL full-scale experiments (18,666 predictions, 45 GPU-hours)
+- Reconciled full-scale experiment records and developed the formal Gradio interface
 - Performed result validation: data hash verification, confusion matrix audit, trace integrity checks
 - Analyzed 20 failure cases with traceable evidence and model call records
 - Developed UI prototype (`ui/app.py`, 327 lines) for contract review demo
@@ -607,7 +505,7 @@ We compared our Agentic RAG to two baselines (Direct, Standard RAG) rather than 
 - `rank-bm25==0.2.2`: BM25 retrieval implementation
 - `sentence-transformers==6.3.0`: Dense encoder (all-MiniLM-L6-v2)
 - `scikit-learn==1.4.0`: Evaluation metrics (accuracy_score, f1_score, confusion_matrix)
-- `gradio==4.44.0`: Interactive UI framework
+- `gradio==6.32.0`: Interactive UI framework
 - `mlx-lm==0.32.2`: Apple Silicon inference for ablation pilot
 
 **Dataset Sources**:
@@ -630,12 +528,12 @@ We compared our Agentic RAG to two baselines (Direct, Standard RAG) rather than 
 1. **Independent Hallucination Assessment**:
    - Planned human evaluation protocol defined in `docs/ANSWER_SUPPORT_PROTOCOL.md`
    - Blind review materials prepared (600 candidate answers)
-   - Human annotations not completed by submission deadline
+   - Human annotations remained incomplete at final packaging
    - Current metrics rely on task labels (accuracy, F1); hallucination rate remains unmeasured across methods
 
 2. **Second-round Verification**:
    - Revised answers are not re-verified
-   - System assumes revision improves quality without validation
+   - The final answer retains structural and citation checks. Independent semantic re-verification is pending.
    - Noted as implementation limitation affecting result interpretation
 
 3. **Full 41-category CUAD Evaluation**:
@@ -653,112 +551,14 @@ We compared our Agentic RAG to two baselines (Direct, Standard RAG) rather than 
 
 ## 7. AI Assistance Declaration
 
-We used AI tools throughout this project for coding assistance, documentation, and report writing. All AI-generated content was reviewed, verified, and validated by team members. We take full responsibility for the correctness of all code, experiments, and analysis.
-
-### 7.1 AI Tools Used
-
-**Tool 1: Anthropic Claude (Claude Sonnet 3.5 and Claude Code)**
-
-**Used for**:
-1. Code debugging and development assistance
-2. Documentation drafting and organization
-3. Experiment script refinement
-4. Final report structure and writing assistance
-
-**Specific usage examples**:
-
-*Example 1 - Debugging retrieval index conflicts*:
-- **Prompt**: "I'm getting inconsistent results when indexing multiple contracts in batch. The BM25 retriever seems to be mixing chunks from different contracts. Here's my code: [code snippet]. Can you identify the issue?"
-- **AI Response**: Identified that `doc_id` was not being properly passed to the retrieval filter, causing cross-document contamination
-- **Human Action**: Reviewed suggestion, tested fix on 10 sample contracts, verified isolation, then integrated into `baseline_rag.py:135-157`
-
-*Example 2 - SQL checkpoint resume logic*:
-- **Prompt**: "I need to implement checkpoint resume for experiments. The system should check if predictions already exist in SQLite and skip them. How should I handle interrupted experiments?"
-- **AI Response**: Suggested using `(dataset, method, example_id)` as unique key with `INSERT OR IGNORE`
-- **Human Action**: Implemented suggestion, added source code hash verification, tested with intentional interruptions
-
-*Example 3 - Documentation structure*:
-- **Prompt**: "Help me organize the retrieval and baseline handoff documentation. It needs to cover: verified commands, test evidence, interface contracts, and remaining integration work."
-- **AI Response**: Provided markdown structure with sections for interface contracts, reproduction steps, and handoff checklist
-- **Human Action**: Filled in actual commands, test results, and technical details; restructured based on team feedback
-
-*Example 4 - Report writing*:
-- **Prompt**: "Review this evaluation section. Does it clearly explain the metrics, baselines, and results? Here's the draft: [section text]"
-- **AI Response**: Suggested adding explicit result tables, clarifying failure case descriptions, and separating retrieval vs. generation metrics
-- **Human Action**: Rewrote section with clearer tables, added specific line numbers for code references, verified all numbers against source data
-
-**Tool 2: GitHub Copilot**
-
-**Used for**: Autocomplete for boilerplate code
-
-**Specific usage examples**:
-
-*Example 1 - Import statements and type hints*:
-- Autocompleted standard imports like `from typing import List, Dict, Optional`
-- Autocompleted type annotations for function signatures
-- **Human Action**: Reviewed all suggestions, removed unused imports, ensured type correctness
-
-*Example 2 - Logging and error handling*:
-- Autocompleted `try-except` blocks with standard error logging patterns
-- Autocompleted argument parser definitions for CLI scripts
-- **Human Action**: Customized error messages, adjusted logging levels, verified exception handling logic
-
-**What AI did NOT generate**:
-- Core algorithm logic (retrieval strategies, verification logic, revision algorithms)
-- Experimental design and research questions
-- Actual experimental results (all from real model runs)
-- Mathematical metric calculations (implemented by team)
-- Critical design decisions (team discussions and decisions)
-
-### 7.2 Human Verification and Responsibility
-
-**Code Verification Process**:
-1. **Line-by-line review**: All AI-suggested code reviewed before integration
-2. **Testing**: 38 unit tests written and maintained by team (100% pass rate)
-3. **Code review**: Team members cross-reviewed each other's AI-assisted code
-4. **Integration testing**: All components tested together before experiments
-
-**Data Verification Process**:
-1. **Experimental results**: All 18,666 predictions generated by actual models, not AI
-2. **Data provenance**: SHA256 hashes recorded for all datasets and model weights
-3. **Result validation**: Independent verification against raw output files (see `REPORT_DATA_VERIFICATION.md`)
-4. **Manual spot-checks**: 100 random predictions manually reviewed for correctness
-5. **Statistical validation**: Confusion matrices and aggregations independently computed
-
-**Report Verification Process**:
-1. **Data accuracy**: Every number in this report traced back to source files
-2. **Cross-validation**: Multiple team members verified experimental claims
-3. **Limitation transparency**: Clearly stated what was and wasn't measured (e.g., independent hallucination rate pending)
-4. **No fabrication**: All failure cases and limitations documented honestly
-
-**Responsibility Statement**:
-
-We, the team members, take full responsibility for:
-- The correctness of all code, even when AI-assisted in writing it
-- The accuracy of all experimental results and their interpretation
-- The validity of all claims made in this report
-- Any errors, omissions, or inaccuracies in this work
-
-The AI tools served as assistants to accelerate development and documentation, but all critical decisions, validations, and final outputs are the work and responsibility of the human team members.
-
-**Selected Prompt Examples**:
-
-The examples above represent typical usage patterns. Full conversation logs were maintained during development but are not included here due to length. Key categories of prompts:
-- **Debugging**: ~40 prompts for code issues
-- **Documentation**: ~25 prompts for structuring and drafting docs
-- **Report writing**: ~15 prompts for organization and clarity
-- **Code review**: ~10 prompts asking AI to identify potential issues
-
-No prompts contained credentials, personal information, or proprietary data. All prompts related to this academic project only.
-
----
+The team draft records Claude and GitHub Copilot for development, debugging, documentation and report assistance. Codex was used to develop and validate retrieval and baselines, audit the experiment traces, repair the legacy evaluator, edit this report, build the submission package and verify its runtime. The model outputs in the evaluation came from the named Llama 3 and Mistral runs. Automated tests and synthetic user inputs are documented separately from independent annotation. See `AI_USE.md` for prompt excerpts and coverage limitations. Independent human evaluation is pending.
 
 ## 8. Conclusions
 
 ### 8.1 Summary of Findings
 
 1. **Agentic RAG benefits are conditional**, not universal:
-   - Significant improvement (Llama 3 × ContractNLI: +13 pp accuracy)
+   - Observed improvement (Llama 3 × ContractNLI: +13.01 percentage points)
    - Degradation in other settings (Mistral × ContractNLI: -4.8 pp; both models on CUAD: -6 to -6.6 pp)
    - Success depends on model quality, task complexity, and verifier reliability
 
@@ -768,20 +568,20 @@ No prompts contained credentials, personal information, or proprietary data. All
    - High retrieval recall does not guarantee high generation accuracy
 
 3. **Revision is high-frequency but mixed quality**:
-   - 48–74% of predictions triggered revision
+   - 48.8–74.4% of Llama 3 predictions triggered revision across the two tasks
    - Net positive on ContractNLI (+218 correct), net negative on CUAD (-37 correct)
    - Revision can introduce new errors (citation drift, format failures)
 
 4. **Format compliance is a major error source**:
-   - Mistral: 17–25% format failure rate
-   - Llama 3: 0–5% format failure rate
+   - Mistral: 9.02–24.58% format failure across the six groups
+   - Llama 3: 0–21.08% format failure across the six groups
    - Better prompting or constrained decoding needed for production
 
 ### 8.2 Limitations
 
 1. **Hallucination rate unmeasured**: Task accuracy reported; independent answer support assessment incomplete
 2. **Single revision limit**: System stops after one revision attempt; may miss opportunities for further correction
-3. **No re-verification**: Revised answers not checked again; assumes revision improves quality
+3. **No re-verification**: Revised answers receive structural and citation checks; semantic re-verification is pending
 4. **Platform variance**: Results from vLLM (CUDA); MLX (Apple Silicon) gives different outputs
 5. **Limited model coverage**: Only 7–8B models tested; larger models may behave differently
 6. **Dataset scope**: CUAD covers 10/41 categories; PrivacyQA untested
@@ -798,7 +598,7 @@ No prompts contained credentials, personal information, or proprietary data. All
 
 ### 8.4 Lessons Learned
 
-1. **Verification is not free**: Adds 60% of system latency but only 9% token cost; latency is the real bottleneck
+1. **Verification has a workload cost**: Agent used 2.92 times the Standard RAG token total; the aggregate does not isolate verification from the other Agent stages.
 2. **More components ≠ better performance**: Agent underperformed RAG in 3/4 configurations; complexity must be justified
 3. **Reproducibility requires discipline**: Pinning model revisions, logging SHA256 hashes, and preserving full traces was essential for validation
 4. **Format matters as much as content**: Format failures dominated Mistral's error budget; robust parsing is production-critical
@@ -933,7 +733,7 @@ legal-hallucination-auditing/
 │   ├── test_agentic_pilot.py
 │   ├── test_experiment_handoff.py
 │   ├── test_full_mistral.py
-│   └── test_ui_service.py          # 38 tests total, 100% pass
+│   └── test_ui_service.py          # UI service and callback tests
 │
 ├── scripts/                        # Utility scripts
 │   ├── fetch_verified_llama3.py
@@ -964,13 +764,13 @@ legal-hallucination-auditing/
 
 | File | Purpose | SHA256 (first 16 hex) |
 |------|---------|----------------------|
-| `data/processed/contractnli_test.json` | ContractNLI test data (2,091) | `a3f8d7e2...` |
-| `data/processed/cuad_test.json` | CUAD test data (1,020) | `b4e9c8f3...` |
-| `docs/validation/llama3_autodl_full_summary.json` | Llama 3 full results | `c5d7a9b4...` |
-| `docs/validation/mistral_autodl_full_summary.json` | Mistral full results | `d6e8b1c5...` |
-| `docs/validation/part4_2026-11-24/analysis/RESULTS.json` | Trace analysis | `e7f9c2d6...` |
+| `data/processed/contractnli_test.json` | ContractNLI test data (2,091) | `ba6aa63b66a35402` |
+| `data/processed/cuad_test.json` | CUAD test data (1,020) | `8b95cd181abd935c` |
+| `docs/validation/llama3_autodl_full_summary.json` | Llama 3 full results | `f914d023238bb091` |
+| `docs/validation/mistral_autodl_full_summary.json` | Mistral full results | `6652304a080416e8` |
+| `docs/validation/part4_2026-11-24/analysis/RESULTS.json` | Trace analysis | `708bd4ba35fb3141` |
 
-Full hashes in `docs/validation/part4_2026-11-24/publication_manifest.json`.
+The data hashes also appear in the two full-run summaries. The submission manifest records SHA-256 for the packaged files.
 
 ### C. Experimental Environment
 

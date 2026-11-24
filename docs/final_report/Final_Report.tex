@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage[preprint]{neurips_2026}
+\usepackage[T1]{fontenc}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\makeatletter
+\renewcommand{\@noticestring}{HKU COMP7608B course project. Group 55.}
+\makeatother
+
+\title{Legal Hallucination Auditing with Agentic Retrieval for Contract Review}
+\author{Li Xinru \quad Qin Mengmeng \quad Yin Fengling \quad Wang Zhengyao\\
+The University of Hong Kong\\
+COMP7608B Large Language Models, Group 55}
+\date{25 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We built a contract review tool for analysts who need to check a proposition or locate an exact clause in one English contract. Our agent rewrites queries, retrieves evidence, answers, checks claims, and may retrieve again and revise once. It withholds outputs that fail format or evidence checks. Across 18,666 predictions on the delivered ContractNLI and CUAD test sets, verified Agentic RAG improved Llama~3's ContractNLI accuracy from 42.52\% to 55.52\% compared with standard RAG. Accuracy fell in the other three model-task combinations. Retrieval ablations, paired output comparisons and runnable failure examples explain where the workflow helps and where it fails. Independent semantic support and revision success remain unmeasured.
+\end{abstract}
+
+\section{Users and proposal continuity}
+Contract reviewers need to trace a conclusion to the agreement they actually received. A plausible answer can still be wrong about a notice period, exception or party. Our interface accepts pasted English contract text and either a proposition or a clause question. It returns a task label, an answer when usable, and numbered excerpts. The page also shows the initial verifier's findings, whether revision ran, and the run record. Users supply the current contract and question for each request. File uploads and persistent conversational context are future work.
+
+The proposal compared Direct Prompting, Standard RAG and a verified agent, with ContractNLI \citep{koreeda2021} as the primary benchmark and CUAD \citep{hendrycks2021} as the extraction task. The released evaluation contains 2,091 ContractNLI and 1,020 CUAD examples. The CUAD test set covers ten clause categories. We deferred optional PrivacyQA and the planned non-team user study. The proposal's independent support evaluation has a prepared rubric and blinded inputs, with no completed independent scores in the reviewed artifacts.
+
+\section{Design and implementation}
+\paragraph{Workflow.} The query analyzer chooses retrieval parameters and may rewrite the question. The retriever uses a fresh index of the current contract. The generator receives only the evidence that fits the prompt budget. ContractNLI uses three task labels and an explanation; CUAD uses present/absent and verbatim extraction. The verifier examines claims in the initial answer. An unsupported verdict can trigger a single revision, with re-retrieval when indicated. An invalid initial answer skips verification. A malformed or ungrounded final result is withheld. The final structure and citations are checked, with no second semantic verification after revision.
+
+\paragraph{Tools and state.} BM25 ranks chunks with character offsets and source IDs. The retrieval ablation also covers dense and hybrid retrieval and a clause-based chunker. The released UI uses BM25 with fixed 512-word chunks and 128-word overlap. It shares model weights but creates a new Agent and index per request. Input edits clear previous results. The page distinguishes initial verification, revision, and the final answer and exposes raw stage records for debugging.
+
+\paragraph{Reproducibility.} We used original Meta-Llama-3-8B-Instruct \citep{llama3} at revision \texttt{8afb486c} and Mistral-7B-Instruct-v0.2 \citep{mistral} at \texttt{63a8b081}. The full runs used BF16 vLLM on AutoDL RTX 6000D, eight workers, greedy generation, seed 42, a 4,096-token input budget and a 512-token generation budget. Exact revisions, software versions, data hashes, and configuration accompany the archived summaries. Candidate UI acceptance used a local MLX backend. Hardware and backend changes can change latency and model output.
+
+\section{Reliability and recovery}
+\paragraph{Malformed output.} In a controlled injection, the model returned a label outside the ContractNLI class set. The task parser preserved the raw response and recorded the parse failure. The Agent stopped before claim verification and the UI withheld the answer. A second, correctly formatted request can run independently.
+
+\paragraph{Invalid citations and extracts.} A controlled response cited an evidence ID beyond its available range. The UI withheld the answer and retained the failure cause. CUAD also rejects paraphrases as extracts. These checks examine structure and source text matching. A citation within range can still point at irrelevant text. One revision bounds repeat work, and model exceptions end the current UI request with an error message.
+
+\paragraph{Changed contract.} In the working Llama~3 Gradio demo, an example supported a 30-day termination proposition. Replacing the contract with a 60-day clause cleared the earlier answer and evidence. The new run contradicted the proposition, used the 60-day source, and reported one revision attempt. The liability-cap example returned the exact \$100,000 clause. These synthetic usability cases complement the controlled failure tests and are not included in benchmark counts.
+
+\section{Evaluation}
+\paragraph{Protocol.} The main comparison uses identical examples in each mode (Table~\ref{tab:main}). We count invalid outputs as incorrect and compute macro-F1 over the legal labels of each task. Recall@\(k\) requires full coverage of a gold span by the union of retrieved source spans. Only questions with gold evidence contribute to this metric (1,188 ContractNLI and 599 CUAD). Initial retrieval and the final evidence that actually reached the model are tracked separately. Automated correctness labels and verifier states are distinct from independent answer support.
+
+\begin{table}[!htbp]
+\centering\small
+\begin{tabular}{lllrrr}
+\toprule
+Model & Dataset & Method & Accuracy & Macro-F1 & Format pass \\
+\midrule
+Llama 3 & ContractNLI & Direct & 47.01\% & .4491 & 100.00\% \\
+ & & RAG & 42.52\% & .4271 & 99.81\% \\
+ & & Agent & 55.52\% & .5283 & 98.09\% \\
+ & CUAD & Direct & 77.55\% & .7851 & 94.71\% \\
+ & & RAG & 68.63\% & .7346 & 84.90\% \\
+ & & Agent & 62.06\% & .6834 & 78.92\% \\
+\midrule
+Mistral & ContractNLI & Direct & 43.42\% & .3253 & 83.69\% \\
+ & & RAG & 41.89\% & .2707 & 82.16\% \\
+ & & Agent & 37.06\% & .2305 & 75.42\% \\
+ & CUAD & Direct & 67.06\% & .7214 & 85.98\% \\
+ & & RAG & 69.71\% & .7284 & 90.98\% \\
+ & & Agent & 63.24\% & .6971 & 81.18\% \\
+\bottomrule
+\end{tabular}
+\caption{Full-test results by model and task. Each method uses 2,091 ContractNLI and 1,020 CUAD examples per model. Direct denotes Direct Prompting and Agent denotes Verified Agentic RAG.}
+\label{tab:main}
+\end{table}
+
+\paragraph{RQ1, retrieval.} Standard RAG improved accuracy over Direct in only one of four pairs, Mistral on CUAD (+2.65 percentage points). BM25 with fixed chunks achieved initial Recall@5 of 97.89\% on ContractNLI and 61.75\% on CUAD. In the 36-configuration pure retrieval study, clause-based BM25 obtained 98.62\% and 64.24\% at the same cutoff. These observations describe retrieval and task performance. Independent hallucination reduction across systems remains unmeasured.
+
+\paragraph{RQ2, verification and revision.} Agent accuracy increased by 13.01 percentage points over RAG on Llama~3 ContractNLI and fell by approximately 4.83, 6.47 and 6.57 points in the remaining pairs. In the Llama~3 full Agent run, 1,555 ContractNLI answers were revised, including 262 incorrect-to-correct labels and 44 correct-to-incorrect labels. CUAD recorded 498 revisions, including 19 incorrect-to-correct and 56 correct-to-incorrect labels. Changes refer to task labels. The same rubric has not yet been applied to semantic correctness before and after revision. The separate paired pilot uses ten examples, two models and three configurations, producing 60 outputs. The \emph{No verification} condition also disables dependent revision; \emph{No revision} preserves verification.
+
+\paragraph{RQ3, failure mechanisms.} The archived case set links twenty selected examples to raw outputs and evidence. It illustrates missing evidence, incorrect task conclusions despite evidence coverage, malformed outputs, and citation errors. These selected examples support qualitative analysis. A population-level ranking of semantic error causes would require representative independent annotations. Across all four Agent groups, the internal verifier recorded 8,765 attempted claims, including 2,849 parse failures. That internal measurement concerns initial answers and cannot quantify final-answer hallucinations.
+
+\section{Non-functional requirements}
+\paragraph{Latency and workload.} In the Llama~3 batch run, Agent averaged 9.94~s per ContractNLI example and 5.89~s per CUAD example, compared with 1.85~s and 1.29~s for RAG. These are timed under eight-worker vLLM execution. Interactive response times depend on backend, model and input. Table~\ref{tab:tokens} adds input and generated tokens across all calls. Agent used 2.92 times the Standard RAG total. Billing is from rented AutoDL infrastructure and depends on the billing statement; tokens are workload measurements.
+
+\begin{table}[!htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Method & Calls & Input tokens & Generated tokens & Total \\
+\midrule
+Direct & 6,222 & 16,726,643 & 347,613 & 17,074,256 \\
+RAG & 6,222 & 17,561,928 & 409,452 & 17,971,380 \\
+Agent & 25,390 & 50,416,305 & 2,050,494 & 52,466,799 \\
+\midrule
+Total & 37,834 & 84,704,876 & 2,807,559 & 87,512,435 \\
+\bottomrule
+\end{tabular}
+\caption{Full-run workload from all model calls. The separate component pilot is excluded.}
+\label{tab:tokens}
+\end{table}
+
+\paragraph{Privacy and limitations.} The evaluation used public benchmark contracts and the live checks used synthetic examples. The local UI binds to loopback, while a shared deployment requires separate configuration. The request trace can include contract text and should be handled with the same access controls as the input contract. The application is a research prototype.
+
+\section{Contributions and attribution}
+Yin Fengling prepared the benchmark datasets and evaluation definitions. Qin Mengmeng developed retrieval and the two baselines, ran the full-scale comparisons, and reconciled the final evaluator and delivery. Wang Zhengyao developed and tested the Agent components and initial integration. Li Xinru developed experiment orchestration and trace analysis, prepared blinded-review materials, integrated the Gradio UI, and drafted the report. The team used the public datasets and open-weight models cited below, rank-bm25, sentence-transformers, Transformers, vLLM, MLX and Gradio. The shipped evaluation separates benchmark predictions, synthetic smoke tests and independent review.
+
+\paragraph{AI assistance.} Claude and GitHub Copilot are recorded in the team draft for development and writing assistance. Codex helped implement and validate retrieval, evaluate traces, repair the evaluator, and prepare this report and release. See the included AI-use declaration for available prompt excerpts and record limitations.
+
+\section{Conclusion}
+The delivered system makes contract evidence and verification decisions visible. Evaluation shows a gain for Llama~3 on ContractNLI alongside regressions elsewhere and a substantial workload increase. Claim-level support, semantic revision success and user experience require independent evaluation before stronger conclusions can be drawn.
+
+\begin{thebibliography}{9}
+\bibitem[Koreeda and Manning(2021)]{koreeda2021}
+Yuta Koreeda and Christopher D. Manning. ContractNLI: A Dataset for Document-level Natural Language Inference for Contracts. \emph{Findings of EMNLP}, 2021. \url{https://aclanthology.org/2021.findings-emnlp.164/}.
+\bibitem[Hendrycks et~al.(2021)]{hendrycks2021}
+Dan Hendrycks, Collin Burns, Anya Chen, and Spencer Ball. CUAD: An Expert-Annotated NLP Dataset for Legal Contract Review. \emph{NeurIPS Datasets and Benchmarks}, 2021. \url{https://arxiv.org/abs/2103.06268}.
+\bibitem[Grattafiori et~al.(2024)]{llama3}
+Aaron Grattafiori et al. The Llama 3 Herd of Models. 2024. \url{https://arxiv.org/abs/2407.21783}.
+\bibitem[Jiang et~al.(2023)]{mistral}
+Albert Q. Jiang et al. Mistral 7B. 2023. \url{https://arxiv.org/abs/2310.06825}. The exact v0.2 instruction model is recorded in the run summary.
+\end{thebibliography}
+\end{document}

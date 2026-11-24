@@ -188,3 +188,9 @@ bash scripts/run_autodl_mistral.sh full llama3
 | 工作范围与历史核查 | [原始职责与验收清单](QIN_MENGMENG_TASKS.md) · [修复前项目核查](PROJECT_REVIEW_2026-11-20.md) |
 
 两个原始测试 JSON 已在仓库跟踪，本轮保持原样。随代码交付上述测试和经过汇总的实验产物。模型权重、虚拟环境、凭证和 `experiments/results/` 下的逐条运行产物留在工作环境。后续如修改接口、数据说明或实验结果，同步更新本文和对应验证文件。
+
+## 期末交付复核
+
+旧评估入口按 ContractNLI 和 CUAD 分开计分。非法标签及格式失败计错，检索召回与命中使用原文区间及统一的 k。初答 verifier 诊断单列，语义指标无独立标注时保持未测。用两份压缩逐条导出验证 12 组准确率、Macro-F1 和格式数，并复算全部 37,834 次调用的 87,512,435 个 token。[实验复核及启动说明](FINAL_SUBMISSION.md)
+
+[最终评估修复记录](FINAL_EVALUATION_FIXES.md) 汇总四个已修复反例、报告更正、188 项回归和真实问答验收。

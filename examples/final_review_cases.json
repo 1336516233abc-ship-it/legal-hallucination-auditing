@@ -1,0 +1,48 @@
+{
+  "scope": "Synthetic acceptance inputs. The controlled failures are automated test fixtures.",
+  "cases": [
+    {
+      "id": "ordinary_30_day_notice",
+      "dataset": "contractnli",
+      "contract": "This Agreement may be terminated by either party upon thirty (30) days written notice.",
+      "question": "Either party may terminate this Agreement with thirty days written notice.",
+      "expected_label": "entailment",
+      "expected_evidence": "thirty (30) days written notice"
+    },
+    {
+      "id": "changed_60_day_notice",
+      "dataset": "contractnli",
+      "contract": "This Agreement may be terminated by either party upon sixty (60) days written notice.",
+      "question": "Either party may terminate this Agreement with thirty days written notice.",
+      "expected_label": "contradiction",
+      "expected_evidence": "sixty (60) days written notice"
+    },
+    {
+      "id": "clause_extraction",
+      "dataset": "cuad",
+      "contract": "The Contractor's total liability shall not exceed $100,000.",
+      "question": "What is the liability cap in this contract?",
+      "expected_label": "present",
+      "expected_evidence": "$100,000"
+    },
+    {
+      "id": "empty_contract",
+      "dataset": "contractnli",
+      "contract": "",
+      "question": "Written notice is required.",
+      "expected": "Ask for both inputs and make no model calls."
+    },
+    {
+      "id": "malformed_answer",
+      "automated_test": "tests/test_ui_service.py::test_invalid_output_is_withheld_but_retained_in_request_trace",
+      "injected_response": "Label: invalid\nAnswer: Written notice is required.",
+      "expected": "Withhold the answer and retain the parse error and original response."
+    },
+    {
+      "id": "out_of_range_citation",
+      "automated_test": "tests/test_ui_service.py::test_invalid_output_is_withheld_but_retained_in_request_trace",
+      "injected_response": "Label: entailment\nAnswer: Written notice is required [9].",
+      "expected": "Withhold the answer and preserve the grounding error."
+    }
+  ]
+}

@@ -11,6 +11,13 @@ This project implements an agentic workflow that:
 4. Verifies claims against retrieved evidence
 5. Re-retrieves and revises answers when hallucinations are detected
 
+## Group 55 final delivery
+
+Project title: **Legal Hallucination Auditing with Agentic Retrieval for Contract Review**.
+
+The repository snapshot, report and full-trace results are described in the [final submission guide](docs/FINAL_SUBMISSION.md).
+See the [final evaluation repair record (Chinese)](docs/FINAL_EVALUATION_FIXES.md) and the [final report PDF](docs/final_report/COMP7608B-Group55-Final-Report.pdf).
+
 ## Team Members
 
 - **Yin Fengling (3036807375)**: Dataset preprocessing & evaluation metrics
