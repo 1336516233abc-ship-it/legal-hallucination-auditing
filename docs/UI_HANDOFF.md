@@ -69,4 +69,4 @@ python -m pytest -q tests docs/validation/part4_2026-11-23/test_local_delivery.p
 
 正式 UI 复用已有 Agent 和任务协议，没有修改 `agent/`、`retrieval/` 或原始数据。入口保留 `ContractReviewUI.analyze_contract` 的原四项返回值；新增逻辑在 `ui/service.py` 和 `ui/backends.py`。Gradio 页面接口为 `/review`。
 
-实验编排、主结果和错误案例已在同一分支，UI 可一起审查集成。独立幻觉率等指标仍需 Yin Fengling 与团队确认评估方法、取得服务器逐条输出后补齐；这里的 UI 验收不是人工盲评。人工评分保持未完成，报告按当前约定暂缓。
+实验编排、主结果和错误案例已在同一分支，UI 可一起审查集成。服务器逐条输出已取得，[全量分析与可计算指标](validation/part4_2026-11-24/README.md)已补齐；独立幻觉率仍需 Yin Fengling 与团队确认评估方法并完成标注；这里的 UI 验收不是人工盲评。人工评分保持未完成，报告按当前约定暂缓。

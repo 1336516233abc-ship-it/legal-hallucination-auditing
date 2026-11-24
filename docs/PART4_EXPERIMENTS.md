@@ -2,7 +2,7 @@
 
 负责人：Li Xinru。交付范围为实验编排、真实实验与结果汇总；课程报告暂未撰写。
 
-结果入口：[本次结果表](validation/part4_2026-11-22/RESULTS.md)。原始测试数据、既有全量结果和组员旧文件保留原样。
+结果入口：[检索与消融结果表](validation/part4_2026-11-22/RESULTS.md)；[2026-11-24 全量记录分析与指标核对](validation/part4_2026-11-24/README.md)。原始测试数据、既有全量结果和组员旧文件保留原样。
 
 正式 UI 已接入 `ui/app.py`，按最新确认纳入演示必做事项。运行方式见 [UI 交接](UI_HANDOFF.md)，实测记录见 [正式 UI 验收](validation/ui_2026-11-23/README.md)。演示使用 [当前指引](DEMO_RUNBOOK.md)，不沿用旧稿未经验证的“100% 修订成功率”。
 
@@ -86,7 +86,7 @@ python -m experiments.run_experiments --model llama3 mistral --dataset all \
 
 ## 尚待接续
 
-1. 组员取回 AutoDL 的全量 `predictions.sqlite3` 后，可按同一批 example_id 做全量案例分析与盲评导出：`python -m experiments.prepare_support_review --checkpoint FILE --model mistral --output REVIEW`。
+1. AutoDL 全量逐条记录已于 2026-11-24 取得并核验；全量错误统计、修订前后标签变化与 20 个可回查案例已完成，见[分析交付](validation/part4_2026-11-24/README.md)。本地盲评材料仍为未标注草案，样本量与分工待团队确认。
 2. 团队确认独立答案支持性方案并完成标注，再计算跨三方法的幻觉率。当前无该结果，也无可靠的“100% 修订成功率”。
 3. 若需要全量 Agent 组件消融，在可用 GPU/服务器上扩大样本，保留三个变体的同一数据与模型版本。本次小样本不替代该项。
 
