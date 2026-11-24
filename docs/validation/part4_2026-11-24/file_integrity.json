@@ -1,0 +1,29 @@
+{
+  "archive_sha256": "ff0c0904dbcc55eef1f19d9874d85c3c5ec99ea0f7995beb32d7c4b4ada8e46c",
+  "checks": [
+    {
+      "file": "llama3-predictions.sqlite3",
+      "size": 670445568,
+      "sha256": "4c5b3469503c0c705f420afe6997a807cd7fe752de39de8a49f3b0d2a4037ec3",
+      "matches_manifest": true
+    },
+    {
+      "file": "llama3-predictions.jsonl.gz",
+      "size": 29659322,
+      "sha256": "515c66f9151621e91116e696b3ca813554da8a06387c786c021bfc9634b1e9ed",
+      "matches_manifest": true
+    },
+    {
+      "file": "mistral-predictions.sqlite3",
+      "size": 674484224,
+      "sha256": "58422f43f751c2edaa20ffd712f70363b3468dfdf7040ff3a81e112faa87ba0c",
+      "matches_manifest": true
+    },
+    {
+      "file": "mistral-predictions.jsonl.gz",
+      "size": 29865637,
+      "sha256": "f928605bc84b7f59101c4b2c7ce2cffe2c31d0085baecf8e7b0c69f60415d2f6",
+      "matches_manifest": true
+    }
+  ]
+}
