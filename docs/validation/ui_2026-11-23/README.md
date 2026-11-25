@@ -1,38 +1,38 @@
-# 正式 UI 验收记录
+# Official UI Acceptance Record
 
-验收对象为 `ui/app.py`，不是历史本地候选。验收分开记录代码回归、真实模型请求和浏览器操作；不将它们当作人工盲评或正式数据集实验。
+Acceptance target is `ui/app.py`, not historical local candidates. Acceptance separately records code regression, real model requests, and browser operations; does not treat them as manual blind review or formal dataset experiments.
 
-## 自动化回归
+## Automated Regression
 
-最终代码：**182 passed**。包含换合同隔离、并发请求、格式/引用失败、CUAD 原句约束、空输入、异常恢复、完整 token 统计、MLX 同线程加载/推理，以及排队请求恢复提交时输入后再显示结果。已有 60 条人工评审材料仍为空，没有用测试生成评分。
+Final code: **182 passed**. Includes contract-switching isolation, concurrent requests, format/citation failures, CUAD original sentence constraints, empty input, exception recovery, complete token statistics, MLX same-thread loading/inference, and queued request recovery of submitted input before displaying results. Existing 60 manual review materials remain empty; did not use tests to generate scores.
 
-[JUnit](tests.xml) 记录测试数和逐项结果。hostname 已去除本机标识。
+[JUnit](tests.xml) records test count and item-by-item results. Hostname has removed local identifiers.
 
-## 真实服务调用
+## Real Service Invocation
 
-同一正式 Gradio 服务分别加载两个已有原版模型；Apple Silicon / MLX，温度 0、seed 42。通过 Gradio 客户端调用页面同一个 `/review` 处理函数，每个模型按顺序处理 30 天、改成 60 天、责任上限三个手工构造输入，再检查空输入。没有更改原实验汇总。
+Same official Gradio service separately loads two existing original models; Apple Silicon / MLX, temperature 0, seed 42. Calls same `/review` handler function via Gradio client; each model processes three manually constructed inputs (30-day, changed to 60-day, liability cap) in sequence, then checks empty input. Did not modify original experiment summary.
 
-|模型|30 天命题|合同改为 60 天|责任上限抽取|空输入|
+|Model|30-day claim|Contract changed to 60-day|Liability cap extraction|Empty input|
 |---|---|---|---|---|
-|Llama 3|entailment，符合预期|contradiction，符合预期|present，原句与合同一致|拒绝，未调用模型|
-|Mistral|entailment，符合预期|非法标签，答案停止展示|present，原句与合同一致|拒绝，未调用模型|
+|Llama 3|entailment, as expected|contradiction, as expected|present, sentence matches contract|rejected, model not called|
+|Mistral|entailment, as expected|invalid label, answer display stopped|present, sentence matches contract|rejected, model not called|
 
-- [Llama 3 真实结果](llama3_service_fixed.json)：三个模型案例通过；每条证据均与当前合同字符区间一致。
-- [Mistral 真实结果](mistral_service.json)：两个案例通过，一个格式失败被拦截。被拦截不等于回答正确。
-- [初次运行失败记录](llama3_service.json)：最初三个请求均遇到 MLX 跨线程 stream 错误。正式代码改为在专用线程加载并执行模型后，另存新文件重测，没有覆盖失败记录。
+- [Llama 3 Real Results](llama3_service_fixed.json): Three model cases passed; every piece of evidence consistent with current contract character intervals.
+- [Mistral Real Results](mistral_service.json): Two cases passed, one format failure intercepted. Interception does not equal correct answer.
+- [Initial Run Failure Record](llama3_service.json): Initially all three requests encountered MLX cross-thread stream error. After official code changed to load and execute model in dedicated thread, retested and saved to new file without overwriting failure record.
 
-最终增加了“排队开始时恢复提交输入”的页面保护；Agent 和模型调用逻辑不变。上述两组完整验收记录含当时源码哈希。最终文件哈希与一次 60 天定向验收另见 [final_smoke.json](final_smoke.json)。
+Finally added “restore submitted input when queue starts” page protection; Agent and model invocation logic unchanged. Above two groups' complete acceptance records contain source code hash at that time. Final file hashes and one-time 60-day targeted acceptance also see [final_smoke.json](final_smoke.json).
 
-模型权重来源沿用已有 Part 4：Llama 3 revision `8afb486c1db24fe5011ec46dfbe5b5dccdb575c2`；Mistral revision `63a8b081895390a26e140280378bc85ec8bce07a`。权重和环境信息见此前已交付 manifest，不重新将本次 UI 演示计为模型基准实验。
+Model weight sources reuse existing Part 4: Llama 3 revision `8afb486c1db24fe5011ec46dfbe5b5dccdb575c2`; Mistral revision `63a8b081895390a26e140280378bc85ec8bce07a`. Weight and environment information see previously delivered manifest; do not re-count this UI demo as model baseline experiment.
 
-## 浏览器操作
+## Browser Operations
 
-通过 Chrome 原生界面检查：页面渲染、示例填入、按钮提交、推理时禁用输入、30 天结论、换成 60 天后清空旧结果，以及新结果和新证据。记录见 [browser_checks.json](browser_checks.json)。Chrome 连接器不可用时使用原生应用操作；没有用接口调用冒充全部浏览器点击检查。
+Checked via Chrome native interface: page rendering, example population, button submission, input disabled during inference, 30-day conclusion, clearing old results after changing to 60-day, and new results with new evidence. Record see [browser_checks.json](browser_checks.json). When Chrome connector unavailable, used native application operations; did not use interface calls to fake all browser click checks.
 
-## 尚未覆盖
+## Not Yet Covered
 
-- CUDA/CPU/MPS 实机模型推理、另一台机器的全新安装、演示现场网络与硬件。
-- 独立人工幻觉率、全量组件消融、答案完整性、弃权精确度和修订成功率。
-- Mistral 的 60 天输入仍产生非法格式。这是保留的模型失败，正式演示默认采用已通过上述案例的 Llama 3；不能承诺新输入全部成功。
+- CUDA/CPU/MPS physical model inference, fresh installation on another machine, demo venue network and hardware.
+- Independent manual hallucination rate, full component ablation, answer completeness, abstention precision, and revision success rate.
+- Mistral's 60-day input still produces invalid format. This is preserved model failure; official demo defaults to Llama 3 which passed above cases; cannot promise all new inputs succeed.
 
-启动方式、功能和集成边界见 [UI 交接](../../UI_HANDOFF.md)。
+Launch method, functionality, and integration boundaries see [UI Handoff](../../UI_HANDOFF.md).

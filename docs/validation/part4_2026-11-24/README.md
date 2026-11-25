@@ -1,26 +1,26 @@
-# Part 4：全量记录分析与指标核对（2026-11-24）
+# Part 4: Full Record Analysis and Metric Verification (2026-11-24)
 
-负责人：Li Xinru。本页是已完成实验的分析交付，不是课程报告。
+Owner: Li Xinru. This page is analysis delivery of completed experiments, not the course report.
 
-已取得并逐条核对 AutoDL 导出的 **18,666 条预测**：两个模型 × 两个数据集 × 三种方法，共 12 组；ContractNLI 每组 2,091 条，CUAD 每组 1,020 条。本次没有重新运行模型。CUAD 范围为仓库提供的 10 类，不是官方全部 41 类。
+Obtained and item-by-item verified AutoDL-exported **18,666 predictions**: two models × two datasets × three methods, total 12 groups; ContractNLI 2,091 items per group, CUAD 1,020 items per group. This iteration did not re-run models. CUAD scope is 10 classes provided by repository, not official full 41 classes.
 
-**已完成：** 文件完整性、SQLite/JSONL 一致性、数据及样本 ID、证据原文与位置、全部组汇总核对；全量错误统计、修订前后标签比较、20 个可回查案例，以及可计算指标汇总。
+**Completed:** File integrity, SQLite/JSONL consistency, data and sample IDs, evidence original text and positions, all group summary verification; full error statistics, pre- and post-revision label comparison, 20 traceable cases, and computable metric summary.
 
-**仍未完成：** 三种方法最终回答的统一独立幻觉评估。人工标注数为 0，对应幻觉率保持 null；内部初答验证不能代替该项。
+**Still incomplete:** Unified independent hallucination assessment of final answers across three methods. Manual annotation count is 0, corresponding hallucination rate remains null; internal initial answer verification cannot substitute for this item.
 
-## 文件入口
+## File Entry Points
 
-- [下载完整分析包](COMP7608B-Part4-Full-Trace-Analysis-v2.zip)：与本地已交付 v2 包逐字节相同。
-- [20 个案例的可读索引](CASES.md)；[完整案例及合同、证据记录](analysis/CASES.jsonl)。
-- [全量分析 JSON](analysis/RESULTS.json)；[18,666 条逐条统计（gzip）](analysis/row_metrics.jsonl.gz)。
-- [完整指标 JSON](metrics-followup/METRICS.json)：含分母、内部验证统计及替代指标。
-- [全量分析 HTML](analysis/SUMMARY.html) 与 [指标说明 HTML](metrics-followup/METRICS_REVIEW.html)：下载后用浏览器打开。
+- [Download Complete Analysis Package](COMP7608B-Part4-Full-Trace-Analysis-v2.zip): Byte-identical to locally delivered v2 package.
+- [Readable index of 20 cases](CASES.md); [Complete cases with contract and evidence records](analysis/CASES.jsonl).
+- [Full analysis JSON](analysis/RESULTS.json); [18,666 item-by-item statistics (gzip)](analysis/row_metrics.jsonl.gz).
+- [Complete metrics JSON](metrics-followup/METRICS.json): Contains denominators, internal validation statistics, and alternative metrics.
+- [Full analysis HTML](analysis/SUMMARY.html) and [Metrics explanation HTML](metrics-followup/METRICS_REVIEW.html): Download and open in browser.
 
-## 可以使用的任务指标
+## Usable Task Metrics
 
-格式失败保留在准确率分母，并计为错误；Macro-F1 对各数据集合法类别取平均。初次检索 Recall@5 仅计有金标证据的样本：ContractNLI 1,188 条、CUAD 599 条；Direct 没有检索，记 N/A。最终提示的证据覆盖另见完整 JSON。
+Format failures remain in accuracy denominator and count as errors; Macro-F1 averages over valid classes for each dataset. Initial retrieval Recall@5 only counts samples with gold evidence: ContractNLI 1,188 items, CUAD 599 items; Direct has no retrieval, recorded as N/A. Final prompt evidence coverage also see complete JSON.
 
-|模型|数据集|方法|准确率|Macro-F1|初检 Recall@5|平均耗时（秒）|
+|Model|Dataset|Method|Accuracy|Macro-F1|Initial Recall@5|Avg Time (sec)|
 |---|---|---|---:|---:|---:|---:|
 |llama3|contractnli|Direct|47.01%|0.4491|N/A|1.45|
 |llama3|contractnli|RAG|42.52%|0.4271|97.89%|1.85|
@@ -35,13 +35,13 @@
 |mistral|cuad|RAG|69.71%|0.7284|61.75%|1.39|
 |mistral|cuad|Agent|63.24%|0.6971|57.89%|6.32|
 
-耗时来自原服务器 8 并行运行，不代表串行吞吐。完整 JSON 分别记录全部调用的输入和生成 token；token 数不是货币费用。
+Time from original server 8-parallel execution, does not represent serial throughput. Complete JSON separately records all calls' input and generation tokens; token count is not monetary cost.
 
-## 全量错误统计
+## Full Error Statistics
 
-下列事件可以重叠，不能相加当成互斥错误类别。标签错误包含格式失败；引用越界和抽取依据错误另列。合法的 CUAD absent 空抽取不计为异常拦截。
+Following events can overlap, cannot sum as mutually exclusive error categories. Label errors include format failures; citation overflow and extraction evidence errors listed separately. Valid CUAD absent empty extraction does not count as abnormal interception.
 
-|模型|数据集|方法|标签错误|格式失败|引用越界|依据检查错误|
+|Model|Dataset|Method|Label Errors|Format Failures|Citation Overflow|Evidence Check Errors|
 |---|---|---|---:|---:|---:|---:|
 |llama3|contractnli|Direct|1108|0|0|0|
 |llama3|contractnli|RAG|1202|4|151|0|
@@ -56,35 +56,35 @@
 |mistral|cuad|RAG|309|92|107|0|
 |mistral|cuad|Agent|375|192|128|223|
 
-## Agent 修订前后
+## Agent Pre- and Post-Revision
 
-这里只描述同一次 Agent 运行中标签的变化，不等于受控组件消融，也不能称为语义修订成功率。
+This only describes label changes within same Agent run, not equivalent to controlled component ablation, nor can be called semantic revision success rate.
 
-|模型|数据集|发生修订|标签错→对|标签对→错|初答正确/总数|终答正确/总数|
+|Model|Dataset|Revisions Occurred|Label Wrong→Right|Label Right→Wrong|Initial Correct/Total|Final Correct/Total|
 |---|---|---:|---:|---:|---:|---:|
 |llama3|contractnli|1555|262|44|943/2091|1161/2091|
 |llama3|cuad|498|19|56|670/1020|633/1020|
 |mistral|contractnli|1466|9|2|768/2091|775/2091|
 |mistral|cuad|662|14|49|680/1020|645/1020|
 
-## 指标口径与旧实现问题
+## Metric Criteria and Old Implementation Issues
 
-1. 旧 `MetricsCalculator` 读 `verification_results`，服务器记录为 `verification.claims`。直接调用旧幻觉率函数会在未计数时返回 0；`compute_all_metrics` 则跳过这一指标。不能把缺测写成零幻觉。
-2. 记录中的语义验证仅针对 Agent 初答，且部分初答因格式或依据错误没有进入验证。Direct/RAG 无同类记录，修订后答案没有二次语义验证。因此内部统计不能用于三方法最终幻觉率比较。
-3. 验证器格式失败会被映射为 `not_enough_info`。JSON 同时保留含失败的原始比例、失败数量和有效检查子集比例；后者存在选择偏差，两者均不是独立真值。
-4. 旧标签归一化将非法值当成 neutral；例如 Mistral / ContractNLI / Agent 会由正确的 37.06% 虚增至 42.99%。本页沿用已核对的任务专用评分。共享评估器本次未修改。
-5. 词集合召回只适用于 CUAD 的 599 个非空参考答案，不等于语义完整性；ContractNLI 参考答案全为 null。弃权标志实际均对应 neutral 分类，只作为旧规则代理统计，零分母记 N/A。
+1. Old `MetricsCalculator` reads `verification_results`; server records as `verification.claims`. Directly calling old hallucination rate function returns 0 when uncounted; `compute_all_metrics` skips this metric. Cannot write missing measurement as zero hallucination.
+2. Semantic verification in records only targets Agent initial answers, and some initial answers did not enter verification due to format or evidence errors. Direct/RAG have no similar records; revised answers have no second semantic verification. Therefore internal statistics cannot be used for three-method final hallucination rate comparison.
+3. Verifier format failures are mapped to `not_enough_info`. JSON simultaneously preserves original proportion with failures, failure count, and valid check subset proportion; latter has selection bias, neither is independent ground truth.
+4. Old label normalization treats invalid values as neutral; e.g., Mistral / ContractNLI / Agent inflates from correct 37.06% to 42.99%. This page reuses verified task-specific scoring. Shared evaluator not modified this iteration.
+5. Word set recall only applies to CUAD's 599 non-empty reference answers, not equivalent to semantic completeness; ContractNLI reference answers all null. Abstention flags actually all correspond to neutral classification, only counted as old rule proxy statistics; zero denominator recorded as N/A.
 
-## 验证记录
+## Validation Records
 
-- [源文件 SHA256 核对](file_integrity.json)：四个数据库/压缩逐条文件均与导出清单一致。
-- [调用轨迹核对](analysis/call_trace_checks.json)：37,834 次调用，阶段顺序及输入输出记录检查通过。
-- [分析独立检查](analysis/output_validation.json) 与 [指标独立检查](metrics-followup/VALIDATION.json)：含 SQL 对照、缺测值和分母检查。
-- [交付文件清单](publication_manifest.json)：本次上传内容的 SHA256 与原始分析脚本哈希核验。
+- [Source file SHA256 verification](file_integrity.json): Four database/compressed item-by-item files all consistent with export manifest.
+- [Call trace verification](analysis/call_trace_checks.json): 37,834 calls, phase order and input/output record checks passed.
+- [Analysis independent check](analysis/output_validation.json) and [Metrics independent check](metrics-followup/VALIDATION.json): Contains SQL comparison, missing values, and denominator checks.
+- [Delivery file manifest](publication_manifest.json): SHA256 of this upload content and original analysis script hash verification.
 
-## 离线复现
+## Offline Reproduction
 
-分析脚本保留当时原文件与哈希，不依赖本人的绝对路径；其约定是分析目录与名为 `legal-hallucination-ui-review` 的仓库目录同放一父目录。使用 Python 3.12，在仓库根目录执行以下命令，RUN_ROOT 和 ZIP 路径替换为自己的新目录和收到的原始数据包。输出目录必须尚不存在。
+Analysis scripts preserve original files and hashes at that time, do not depend on personal absolute paths; convention is analysis directory and repository directory named `legal-hallucination-ui-review` placed in same parent directory. Use Python 3.12, execute following commands in repository root, replace RUN_ROOT and ZIP paths with your own new directory and received original data package. Output directory must not yet exist.
 
 ```bash
 python -m pip install -r requirements-retrieval.txt scikit-learn
@@ -99,6 +99,6 @@ python "$RUN_ROOT/trace-audit/analyze_traces.py"
 python "$RUN_ROOT/trace-audit/calculate_available_metrics.py"
 ```
 
-复现使用本分支代码；原评估器诊断所对应的源码 blob 为 `4f0a612fe5fe483266c7f289955a9169a753c78d`。若组员后续修正共享评估器，诊断输出应另存新版本，不能覆盖本次记录。
+Reproduction uses this branch code; source code blob corresponding to original evaluator diagnostics is `4f0a612fe5fe483266c7f289955a9169a753c78d`. If team members subsequently correct shared evaluator, diagnostic output should save as new version, cannot overwrite this record.
 
-大型原始 SQLite、原始全量 JSONL、模型权重未放入本次提交；复现需团队保管的原始 ZIP。600 条空白盲评材料仅为本地抽样草案，尚未确定工作分配，本次不上传草案及模型方法解码表。该数量不是新增给某一位成员的任务。
+Large original SQLite, original full JSONL, model weights not included in this submission; reproduction requires original ZIP maintained by team. 600 blank blind review materials are only local sampling draft, work allocation not yet determined, draft and model method decoding table not uploaded this iteration. This quantity is not a new task added to any single member.

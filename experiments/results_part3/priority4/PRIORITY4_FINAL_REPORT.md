@@ -1,15 +1,15 @@
-# Priority 4 实验结果对比报告
+# Priority 4 Experiment Results Comparison Report
 
-**实验时间**: 2026-11-20 至 2026-11-23
-**负责人**: Wang Zhengyao (3036795675)
-**样本数**: 全量数据集（ContractNLI: 2091样本, CUAD: 1020样本）
-**实验配置**: 3种（Full Agentic RAG / No Verification / No Revision）
+**Experiment Period**: November 20 - November 23, 2026
+**Lead**: Wang Zhengyao (3036795675)
+**Sample Size**: Full datasets (ContractNLI: 2091 samples, CUAD: 1020 samples)
+**Experiment Configurations**: 3 types (Full Agentic RAG / No Verification / No Revision)
 
 ---
 
-## 表1：主要性能指标对比
+## Table 1: Main Performance Metrics Comparison
 
-| 数据集 | 实验配置 | 样本数 | 耗时 | 平均延迟 | 总Tokens | 幻觉检测 | 自动修订 |
+| Dataset | Experiment Configuration | Samples | Duration | Avg Latency | Total Tokens | Hallucination Detection | Auto Revision |
 |:------:|:--------|:------:|:----:|:--------:|:--------:|:--------:|:--------:|
 | **ContractNLI** | Full Agentic RAG | 2091 | 15.2 h | 26.25 s | 10,085,165 | 314/2091 (15%) | 314/2091 (15%) |
 | ContractNLI | No Verification | 2091 | 3.9 h | 6.63 s | 9,238,915 | 0/2091 (0%) | 0/2091 (0%) |
@@ -20,144 +20,144 @@
 
 ---
 
-## 表2：消融实验分析
+## Table 2: Ablation Experiment Analysis
 
-相对于 Full Agentic RAG 的性能变化：
+Performance changes relative to Full Agentic RAG:
 
-| 数据集 | 消融配置 | 速度提升 | Token变化 | 幻觉检测能力 |
+| Dataset | Ablation Configuration | Speed Improvement | Token Change | Hallucination Detection Capability |
 |:------:|:--------|:--------:|:---------:|:------------|
-| **ContractNLI** | 去除验证 | 3.90x 更快 | -8.4% | ❌ 无法检测 |
-| ContractNLI | 去除修订 | 1.38x 更快 | -8.7% | ⚠️ 能检测但不修正 |
-| **CUAD** | 去除验证 | 2.17x 更快 | -13.7% | ❌ 无法检测 |
-| CUAD | 去除修订 | 1.13x 更快 | -12.8% | ⚠️ 能检测但不修正 |
+| **ContractNLI** | Remove Verification | 3.90x faster | -8.4% | ❌ Cannot detect |
+| ContractNLI | Remove Revision | 1.38x faster | -8.7% | ⚠️ Can detect but not correct |
+| **CUAD** | Remove Verification | 2.17x faster | -13.7% | ❌ Cannot detect |
+| CUAD | Remove Revision | 1.13x faster | -12.8% | ⚠️ Can detect but not correct |
 
-注：Token变化为负值表示去除组件后token消耗减少（相对Full系统）
+Note: Negative token change indicates reduced token consumption after removing component (relative to Full system)
 
 ---
 
-## 表3：跨数据集对比
+## Table 3: Cross-Dataset Comparison
 
-| 指标 | ContractNLI | CUAD | 对比分析 |
+| Metric | ContractNLI | CUAD | Comparative Analysis |
 |:-----|:-----------:|:----:|:---------|
-| **任务类型** | NLI (逻辑推理) | QA (信息抽取) | 不同任务 |
-| **平均延迟** | 26.25 秒 | 22.30 秒 | ContractNLI 慢 1.18x |
-| **幻觉检测率 (Full)** | 15% (314/2091) | 25% (255/1020) | CUAD 更高 |
-| **幻觉检测率 (No-rev)** | 25% (523/2091) | 10% (102/1020) | ContractNLI 更高 |
-| **修订成功率** | 100% (314/314) | 100% (255/255) | ✅ 完美 |
-| **总Token消耗** | 28,531,502 | 10,101,360 | ContractNLI 更多 |
+| **Task Type** | NLI (logical reasoning) | QA (information extraction) | Different tasks |
+| **Average Latency** | 26.25 sec | 22.30 sec | ContractNLI 1.18x slower |
+| **Hallucination Detection Rate (Full)** | 15% (314/2091) | 25% (255/1020) | CUAD higher |
+| **Hallucination Detection Rate (No-rev)** | 25% (523/2091) | 10% (102/1020) | ContractNLI higher |
+| **Revision Success Rate** | 100% (314/314) | 100% (255/255) | ✅ Perfect |
+| **Total Token Consumption** | 28,531,502 | 10,101,360 | ContractNLI more |
 
 ---
 
-## 关键发现
+## Key Findings
 
-### 1. 验证+修订机制的有效性 ✅
+### 1. Effectiveness of Verification+Revision Mechanism ✅
 
-- ✅ **两个数据集都能成功检测和修订幻觉**
-  - ContractNLI Full: 314/2091 (15%) 检测并修订
-  - ContractNLI No-revision: 523/2091 (25%) 检测但未修订
-  - CUAD Full: 255/1020 (25%) 检测并修订
-  - CUAD No-revision: 102/1020 (10%) 检测但未修订
+- ✅ **Successfully detects and revises hallucinations on both datasets**
+  - ContractNLI Full: 314/2091 (15%) detected and revised
+  - ContractNLI No-revision: 523/2091 (25%) detected but not revised
+  - CUAD Full: 255/1020 (25%) detected and revised
+  - CUAD No-revision: 102/1020 (10%) detected but not revised
 
-- ✅ **100% 的修订成功率**
-  - 所有检测到的幻觉都被成功修正（总计569个幻觉）
-  - No-revision版本虽能检测但无法纠正
-  - 在大规模数据集上验证了系统的稳定性和可靠性
+- ✅ **100% revision success rate**
+  - All detected hallucinations successfully corrected (total 569 hallucinations)
+  - No-revision version can detect but cannot correct
+  - Verified system stability and reliability on large-scale datasets
 
-- ✅ **跨数据集有效性**
-  - 在不同任务类型（NLI vs QA）上都能工作
-  - Full系统在两个数据集上都成功修订了所有检测到的幻觉
-  - 大规模测试证明了方法的泛化能力
+- ✅ **Cross-dataset effectiveness**
+  - Works on different task types (NLI vs QA)
+  - Full system successfully revised all detected hallucinations on both datasets
+  - Large-scale testing proved method's generalization capability
 
-### 2. 性能开销分析 📊
+### 2. Performance Overhead Analysis 📊
 
-**速度开销：**
-- ContractNLI: 去除验证后速度提升 3.90x
-- CUAD: 去除验证后速度提升 2.17x
-- 主要开销在于claim级别的验证（多次LLM调用）
+**Speed Overhead:**
+- ContractNLI: 3.90x speedup after removing verification
+- CUAD: 2.17x speedup after removing verification
+- Main overhead in claim-level verification (multiple LLM calls)
 
-**Token开销：**
-- Full系统比No-verification多消耗 **9.2% (ContractNLI)** 和 **15.9% (CUAD)** tokens
-- 验证和修订的token成本相对较低
-- 开销合理，性价比高
+**Token Overhead:**
+- Full system consumes **9.2% (ContractNLI)** and **15.9% (CUAD)** more tokens than No-verification
+- Token cost of verification and revision relatively low
+- Reasonable overhead, good cost-performance ratio
 
-**结论：**
-> 虽然Full系统比无验证版本慢约2-4倍，但能够检测并修正幻觉，且token成本增加不到16%，在生产环境中是值得的权衡。
+**Conclusion:**
+> Although Full system is about 2-4x slower than no-verification version, it can detect and correct hallucinations, and token cost increases by less than 16%, making it a worthwhile tradeoff in production environments.
 
-### 3. 数据集复杂度差异 🎯
+### 3. Dataset Complexity Differences 🎯
 
-| 特征 | ContractNLI | CUAD |
+| Feature | ContractNLI | CUAD |
 |:-----|:-----------:|:----:|
-| **任务** | 判断语句是否蕴含/矛盾/中立 | 抽取合同中的具体信息 |
-| **复杂度** | 较高（需要更多验证） | 中等（信息定位+抽取） |
-| **平均延迟** | 26.25s | 22.30s |
-| **观察** | Token消耗更高，幻觉检测差异大 | 幻觉率较稳定 |
+| **Task** | Judge entailment/contradiction/neutral | Extract specific information from contracts |
+| **Complexity** | Higher (requires more verification) | Medium (location + extraction) |
+| **Average Latency** | 26.25s | 22.30s |
+| **Observation** | Higher token consumption, large hallucination detection variance | More stable hallucination rate |
 
-### 4. 实际应用建议 💡
+### 4. Practical Application Recommendations 💡
 
-| 场景 | 推荐配置 | 理由 |
+| Scenario | Recommended Configuration | Rationale |
 |:-----|:--------|:-----|
-| **生产环境** | ✅ Full Agentic RAG | 质量优先，避免幻觉风险 |
-| **快速原型** | ⚠️ No Verification | Token消耗更低，但存在幻觉风险 |
-| **调试分析** | 🔍 No Revision | 可看到幻觉但不自动修正，便于分析 |
-| **成本敏感** | ⚠️ No Verification | 节省约9-14% token成本 |
+| **Production Environment** | ✅ Full Agentic RAG | Quality priority, avoid hallucination risk |
+| **Quick Prototyping** | ⚠️ No Verification | Lower token consumption, but hallucination risk exists |
+| **Debug Analysis** | 🔍 No Revision | Can see hallucinations but no auto-correction, convenient for analysis |
+| **Cost Sensitive** | ⚠️ No Verification | Save approximately 9-14% token cost |
 
 ---
 
-## 实验结论
+## Experimental Conclusions
 
-### 主要贡献
+### Main Contributions
 
-1. **证明了验证+修订机制的有效性**
-   - 在真实法律文本任务上成功检测并修正幻觉
-   - Full系统在两个数据集上都达到100%修订成功率
-   - 大规模验证：成功修订569个幻觉（314个ContractNLI + 255个CUAD）
-   - 跨数据集都能有效工作
+1. **Proved effectiveness of verification+revision mechanism**
+   - Successfully detected and corrected hallucinations on real legal text tasks
+   - Full system achieved 100% revision success rate on both datasets
+   - Large-scale validation: successfully revised 569 hallucinations (314 ContractNLI + 255 CUAD)
+   - Effective across datasets
 
-2. **量化了性能开销**
-   - 速度：2-4倍慢（取决于数据集）
-   - Token成本：仅增加9-16%
-   - 质量提升显著，开销可接受
-   - 在3111个样本上验证了开销的一致性
+2. **Quantified performance overhead**
+   - Speed: 2-4x slower (depends on dataset)
+   - Token cost: only 9-16% increase
+   - Significant quality improvement, acceptable overhead
+   - Verified overhead consistency across 3111 samples
 
-3. **展示了跨任务适用性**
-   - NLI任务（逻辑推理，2091样本）
-   - QA任务（信息抽取，1020样本）
-   - 两种不同任务上都有效
-   - 大规模测试证明了方法的稳定性
+3. **Demonstrated cross-task applicability**
+   - NLI task (logical reasoning, 2091 samples)
+   - QA task (information extraction, 1020 samples)
+   - Effective on both different task types
+   - Large-scale testing proved method stability
 
-### 局限性
+### Limitations
 
-- 仅测试了一个模型（Llama-3.1-8B）
-- 未与其他幻觉检测方法对比
+- Only tested one model (Llama-3.1-8B)
+- No comparison with other hallucination detection methods
 
-### 未来工作
+### Future Work
 
-- 测试不同规模的模型（70B、405B等）
-- 与baseline幻觉检测方法对比
-- 分析幻觉类型分布
-- 优化系统性能以降低延迟
-
----
-
-## 附录：实验配置
-
-**环境：**
-- 模型：meta-llama/llama-3.1-8b-instruct (via OpenRouter)
-- 检索器：BM25
-- Chunking：Fixed-length (512 tokens, 128 overlap)
-- Temperature：0.3
-
-**数据集：**
-- ContractNLI：2091 samples (全量测试)
-- CUAD：1020 samples (全量测试)
-
-**实验时间：**
-- 总耗时：约 45 小时
-- 总Token消耗：38,632,862 tokens
+- Test different model sizes (70B, 405B, etc.)
+- Compare with baseline hallucination detection methods
+- Analyze hallucination type distribution
+- Optimize system performance to reduce latency
 
 ---
 
-**文件位置：**
-- 详细结果：`experiments/results/priority4/`
-- 原始数据：`*_predictions.json` (含所有中间步骤)
-- 统计摘要：`*_stats.json`
+## Appendix: Experiment Configuration
+
+**Environment:**
+- Model: meta-llama/llama-3.1-8b-instruct (via OpenRouter)
+- Retriever: BM25
+- Chunking: Fixed-length (512 tokens, 128 overlap)
+- Temperature: 0.3
+
+**Datasets:**
+- ContractNLI: 2091 samples (full test)
+- CUAD: 1020 samples (full test)
+
+**Experiment Duration:**
+- Total duration: approximately 45 hours
+- Total token consumption: 38,632,862 tokens
+
+---
+
+**File Locations:**
+- Detailed results: `experiments/results/priority4/`
+- Raw data: `*_predictions.json` (contains all intermediate steps)
+- Statistical summary: `*_stats.json`

@@ -1,65 +1,65 @@
-# 检索与基线开发交接
+# Retrieval and Baseline Development Handoff
 
-基线负责人为 Qin Mengmeng，基线交付于 2026 年 11 月 20 日；本文在 2026 年 11 月 22 日追加 Li Xinru 的 Part 4 交接。本文供组员复现检索与基线实验、接入 Agent 和汇总报告使用。
+Baseline owner is Qin Mengmeng, baseline delivered on November 20, 2026; this document was supplemented on November 22, 2026 with Li Xinru's Part 4 handoff. This document is for team members to reproduce retrieval and baseline experiments, integrate Agent, and compile reports.
 
-**2026-11-22，Li Xinru 的 Part 4 接续：** 通用 runner 已接入任务接口、实际消融、逐条检查点和严格恢复；`retrieval` 基线导出及 Agent 类型导入做了最小集成修复。新跑 36 组全量检索与双模型固定小样本 Agent 消融，归档主实验单独核对。运行方式、适用范围与后续缺口见 [Part 4 实验交接](PART4_EXPERIMENTS.md)，实际数值和原始文件见 [本次结果](validation/part4_2026-11-22/RESULTS.md)。本次不续写课程报告。
+**2026-11-22, Li Xinru's Part 4 continuation:** Generic runner has integrated task interface, actual ablation, item-by-item checkpoints, and strict recovery; `retrieval` baseline export and Agent type import received minimal integration fixes. Newly ran 36 groups of full retrieval and dual-model fixed small-sample Agent ablation, archiving main experiments for separate verification. Execution method, applicable scope, and remaining gaps see [Part 4 Experiment Handoff](PART4_EXPERIMENTS.md), actual values and original files see [Current Results](validation/part4_2026-11-22/RESULTS.md). This iteration does not continue writing the course report.
 
-- [检索与基线全量结果](#检索与基线全量结果)
-- [已交付实现与接口](#已交付实现与接口)
-- [复现步骤](#复现步骤)
-- [开发验证与失败案例](#开发验证与失败案例)
-- [组员接续事项](#组员接续事项)
-- [GitHub 交付文件](#github-交付文件)
+- [Retrieval and Baseline Full Results](#retrieval-and-baseline-full-results)
+- [Delivered Implementation and Interface](#delivered-implementation-and-interface)
+- [Reproduction Steps](#reproduction-steps)
+- [Development Validation and Failure Cases](#development-validation-and-failure-cases)
+- [Team Member Follow-up Items](#team-member-follow-up-items)
+- [GitHub Delivery Files](#github-delivery-files)
 
-**2026-11-24，Part 4 分析接续：** 已取得服务器完整逐条输出，核验 18,666 条预测与 37,834 次调用，完成全量错误统计、修订前后标签对比、20 个可回查案例及可计算指标。见[全量分析与口径核对](validation/part4_2026-11-24/README.md)。本次仅追加分析交付；独立最终答案幻觉评估和人工标注尚未完成。
+**2026-11-24, Part 4 Analysis Continuation:** Complete server item-by-item output obtained, verifying 18,666 predictions and 37,834 calls, completing full error statistics, pre- and post-revision label comparison, 20 traceable cases, and computable metrics. See [Comprehensive Analysis and Criteria Verification](validation/part4_2026-11-24/README.md). This iteration only adds analysis delivery; independent final answer hallucination assessment and manual annotation not yet complete.
 
-## 检索与基线全量结果
+## Retrieval and Baseline Full Results
 
-Mistral 和 Llama 3 的 AutoDL 全量均已完成。每个模型在同一份 ContractNLI 的 2,091 条及 CUAD 的 1,020 条测试数据上运行三种方法。两条基线共 12,444 条预测，Verified Agentic RAG 对照共 6,222 条，总计 **18,666 条**。两套 SQLite 分别核对了 9,333 条记录和数据库完整性。[测试数据说明](../data/processed/README.md)
+Mistral and Llama 3 AutoDL full runs have all completed. Each model runs three methods on the same 2,091 ContractNLI and 1,020 CUAD test samples. Two baselines total 12,444 predictions, Verified Agentic RAG comparison totals 6,222, grand total **18,666**. Two SQLite databases separately verified 9,333 records each and database integrity. [Test Data Description](../data/processed/README.md)
 
-对应的模型版本、测试文件 SHA256、环境和各组统计保存在两份正式汇总中。
+Corresponding model versions, test file SHA256, environment, and per-group statistics are saved in two official summaries.
 
-| 模型 | 固定 revision | 格式通过 | 标签正确 | 全量汇总 |
+| Model | Fixed revision | Format Pass | Label Correct | Full Summary |
 | --- | --- | ---: | ---: | --- |
 | Mistral 7B Instruct v0.2 | `63a8b081895390a26e140280378bc85ec8bce07a` | 7,678/9,333 | 4,599/9,333 | [Mistral](validation/mistral_autodl_full_summary.json) |
 | Meta Llama 3 8B Instruct | `8afb486c1db24fe5011ec46dfbe5b5dccdb575c2` | 8,866/9,333 | 5,157/9,333 | [Llama 3](validation/llama3_autodl_full_summary.json) |
 
-每个模型使用一张 RTX 6000D 84 GB，vLLM 0.10.2，未量化 BF16，温度 0，seed 42，并行度 8。输入最多 4,096 token，单次任务回答最多 512 token。Standard RAG 在当前合同内用 BM25 取 top 5，固定分块为 512 词、重叠 128 词。正式汇总取自 AutoDL 全量任务。锁定试跑、阿里云 API 连通测试和本机暂停时的 83 条 Mistral 预测均另行留档。
+Each model uses one RTX 6000D 84 GB, vLLM 0.10.2, unquantized BF16, temperature 0, seed 42, parallelism 8. Input maximum 4,096 tokens, single task answer maximum 512 tokens. Standard RAG uses BM25 top 5 within current contract, fixed chunking of 512 words with 128-word overlap. Official summaries taken from AutoDL full runs. Locked trial runs, Alibaba Cloud API connectivity tests, and 83 Mistral predictions during local pauses are separately archived.
 
-格式通过要求输出可解析且标签属于相应任务。标签准确率以组内全部预测为分母，格式失败计错。Macro-F1 对任务的合法类别等权平均。单条平均耗时包含对应工作流实际执行的步骤。
+Format pass requires output to be parsable and label to belong to corresponding task. Label accuracy uses all predictions within group as denominator, format failures count as errors. Macro-F1 is equal-weight average across valid classes for the task. Per-item average time includes steps actually executed in corresponding workflow.
 
-| 数据集 | 模型 | 方法 | 格式通过率 | 标签准确率 | Macro-F1 | 平均耗时（秒） |
+| Dataset | Model | Method | Format Pass Rate | Label Accuracy | Macro-F1 | Avg Time (sec) |
 | --- | --- | --- | ---: | ---: | ---: | ---: |
-| ContractNLI | Mistral | Direct Prompting | 1,750/2,091（83.69%） | 908/2,091（43.42%） | 0.3253 | 1.93 |
-| ContractNLI | Mistral | Standard RAG | 1,718/2,091（82.16%） | 876/2,091（41.89%） | 0.2707 | 2.52 |
-| ContractNLI | Mistral | Verified Agentic RAG | 1,577/2,091（75.42%） | 775/2,091（37.06%） | 0.2305 | 10.82 |
-| ContractNLI | Llama 3 | Direct Prompting | 2,091/2,091（100.00%） | 983/2,091（47.01%） | 0.4491 | 1.45 |
-| ContractNLI | Llama 3 | Standard RAG | 2,087/2,091（99.81%） | 889/2,091（42.52%） | 0.4271 | 1.85 |
-| ContractNLI | Llama 3 | Verified Agentic RAG | 2,051/2,091（98.09%） | 1,161/2,091（55.52%） | 0.5283 | 9.94 |
-| CUAD | Mistral | Direct Prompting | 877/1,020（85.98%） | 684/1,020（67.06%） | 0.7214 | 1.51 |
-| CUAD | Mistral | Standard RAG | 928/1,020（90.98%） | 711/1,020（69.71%） | 0.7284 | 1.39 |
-| CUAD | Mistral | Verified Agentic RAG | 828/1,020（81.18%） | 645/1,020（63.24%） | 0.6971 | 6.32 |
-| CUAD | Llama 3 | Direct Prompting | 966/1,020（94.71%） | 791/1,020（77.55%） | 0.7851 | 1.28 |
-| CUAD | Llama 3 | Standard RAG | 866/1,020（84.90%） | 700/1,020（68.63%） | 0.7346 | 1.29 |
-| CUAD | Llama 3 | Verified Agentic RAG | 805/1,020（78.92%） | 633/1,020（62.06%） | 0.6834 | 5.89 |
+| ContractNLI | Mistral | Direct Prompting | 1,750/2,091 (83.69%) | 908/2,091 (43.42%) | 0.3253 | 1.93 |
+| ContractNLI | Mistral | Standard RAG | 1,718/2,091 (82.16%) | 876/2,091 (41.89%) | 0.2707 | 2.52 |
+| ContractNLI | Mistral | Verified Agentic RAG | 1,577/2,091 (75.42%) | 775/2,091 (37.06%) | 0.2305 | 10.82 |
+| ContractNLI | Llama 3 | Direct Prompting | 2,091/2,091 (100.00%) | 983/2,091 (47.01%) | 0.4491 | 1.45 |
+| ContractNLI | Llama 3 | Standard RAG | 2,087/2,091 (99.81%) | 889/2,091 (42.52%) | 0.4271 | 1.85 |
+| ContractNLI | Llama 3 | Verified Agentic RAG | 2,051/2,091 (98.09%) | 1,161/2,091 (55.52%) | 0.5283 | 9.94 |
+| CUAD | Mistral | Direct Prompting | 877/1,020 (85.98%) | 684/1,020 (67.06%) | 0.7214 | 1.51 |
+| CUAD | Mistral | Standard RAG | 928/1,020 (90.98%) | 711/1,020 (69.71%) | 0.7284 | 1.39 |
+| CUAD | Mistral | Verified Agentic RAG | 828/1,020 (81.18%) | 645/1,020 (63.24%) | 0.6971 | 6.32 |
+| CUAD | Llama 3 | Direct Prompting | 966/1,020 (94.71%) | 791/1,020 (77.55%) | 0.7851 | 1.28 |
+| CUAD | Llama 3 | Standard RAG | 866/1,020 (84.90%) | 700/1,020 (68.63%) | 0.7346 | 1.29 |
+| CUAD | Llama 3 | Verified Agentic RAG | 805/1,020 (78.92%) | 633/1,020 (62.06%) | 0.6834 | 5.89 |
 
-- **两条基线。** 在 ContractNLI 上，Standard RAG 相比 Direct Prompting 的准确率在 Mistral 和 Llama 3 上分别下降 1.53 和 4.50 个百分点。在 CUAD 上，Mistral 提高 2.65 个百分点，Llama 3 下降 8.92 个百分点。差值按未四舍五入的准确率计算。
-- **Agent 对照。** 在 Llama 3 的 ContractNLI 上，Verified Agentic RAG 达到 55.52%，较 Standard RAG 提高 13.01 个百分点，单条平均耗时从 1.85 秒升至 9.94 秒。其余三个模型与数据集组合中，Agent 的准确率均低于 Standard RAG。
-- **格式与证据。** ContractNLI 的格式失败均为缺失或非法任务标签，Mistral 有 1,228 条，Llama 3 有 44 条。Llama 3 在 CUAD 上有 220 条未返回完整的单一 JSON 对象，197 条的引用数组未满足正整数编号要求。CUAD 的 599 条金标正例中，同时满足标签正确、逐字抽取且未触发引用越界或证据错误的预测，在 Mistral Standard RAG 下有 179 条，在 Llama 3 Direct Prompting 下有 396 条。
+- **Two baselines.** On ContractNLI, Standard RAG compared to Direct Prompting has accuracy drops of 1.53 and 4.50 percentage points on Mistral and Llama 3 respectively. On CUAD, Mistral improves by 2.65 percentage points, Llama 3 drops by 8.92 percentage points. Differences calculated from unrounded accuracy.
+- **Agent comparison.** On Llama 3's ContractNLI, Verified Agentic RAG reaches 55.52%, 13.01 percentage points higher than Standard RAG, with per-item average time rising from 1.85 to 9.94 seconds. In the other three model-dataset combinations, Agent accuracy is lower than Standard RAG.
+- **Format and evidence.** ContractNLI format failures are all missing or invalid task labels: Mistral has 1,228, Llama 3 has 44. Llama 3 on CUAD has 220 that did not return a complete single JSON object, 197 with citation arrays not meeting positive integer numbering requirements. Of CUAD's 599 gold-standard positive examples, predictions simultaneously meeting correct label, verbatim extraction, and not triggering citation overflow or evidence errors: Mistral Standard RAG has 179, Llama 3 Direct Prompting has 396.
 
-全量 JSON 还包含混淆矩阵、格式失败原因、引用越界及实际提示中的金标证据覆盖。跨方法的幻觉率仍需统一的答案支持性评估。逐条输出和生成轨迹已于 2026-11-24 从 AutoDL 导出并完成一致性核对；团队保管原始 ZIP，本次提交提供[分析结果、逐条统计及案例](validation/part4_2026-11-24/README.md)。报告引用数值可使用已核对的任务指标，独立幻觉率保持未测。
+Full JSON also includes confusion matrices, format failure reasons, citation overflow, and gold evidence coverage in actual prompts. Cross-method hallucination rates still require unified answer support assessment. Item-by-item output and generation traces exported from AutoDL on 2026-11-24 and completed consistency verification; team maintains original ZIP, this submission provides [analysis results, item-by-item statistics, and cases](validation/part4_2026-11-24/README.md). Report-cited values can use verified task metrics; independent hallucination rate remains untested.
 
-## 已交付实现与接口
+## Delivered Implementation and Interface
 
-| 模块 | 接手时需要知道的行为 |
+| Module | Behavior Team Members Need to Know |
 | --- | --- |
-| 分块与检索 | 固定窗口和条款分块保留原文及字符位置。BM25、Dense、Hybrid 支持稳定的 top-k 排序。低层检索调用要限制 `doc_id` 或只索引当前合同。 |
-| Direct Prompting | 在 token 预算内将当前合同前缀给模型。按数据集生成、解析并记录截断。 |
-| Standard RAG | 注册多份合同后通过 `doc_id` 定位，查询只检索该合同。批处理按合同复用索引，返回顺序与输入一致。 |
-| Verified Agentic RAG | 评估使用传入 `dataset` 的路径。初答格式错误或证据检查失败时保留轨迹，跳过模型查证。证据不足时可在同合同重检索，最多修订一次，按最终显式标签评分。 |
-| 独立评估入口 | 检索消融和正式全量保留独立 runner；通用 `experiments/run_experiments.py` 已支持任务评分、样本选择、实际消融及严格检查点恢复。独立幻觉率仍待人工评审。 |
+| Chunking and Retrieval | Fixed window and clause-level chunking preserve original text and character positions. BM25, Dense, Hybrid support stable top-k ranking. Low-level retrieval calls must restrict `doc_id` or only index current contract. |
+| Direct Prompting | Prefixes current contract to model within token budget. Generates, parses, and records truncation by dataset. |
+| Standard RAG | After indexing multiple contracts, locates via `doc_id`; queries only retrieve from that contract. Batch processing reuses index by contract, returns in input order. |
+| Verified Agentic RAG | Evaluation uses path of passed `dataset`. When initial answer format error or evidence check fails, preserves trace and skips model verification. When evidence insufficient, can re-retrieve within same contract, maximum one revision, scores by final explicit label. |
+| Independent Evaluation Entry | Retrieval ablation and official full runs maintain independent runners; generic `experiments/run_experiments.py` supports task scoring, sample selection, actual ablation, and strict checkpoint recovery. Independent hallucination rate still awaits manual review. |
 
-`chunk(text, metadata=None)` 返回带 `text`、`start`、`end`、`chunk_id` 的分块。`start` 和 `end` 是原文半开字符区间，满足 `source[start:end] == chunk["text"]`。`chunk_id` 与 `doc_id` 一起标识分块。检索器接口为 `index(chunks)` 与 `retrieve(query, top_k=5, doc_id=None)`，返回 `(chunk, score)` 列表。分块预算按词统计，4,096 的输入预算按生成模型 tokenizer 统计。
+`chunk(text, metadata=None)` returns chunks with `text`, `start`, `end`, `chunk_id`. `start` and `end` are half-open character intervals in original text, satisfying `source[start:end] == chunk["text"]`. `chunk_id` together with `doc_id` identifies chunk. Retriever interface is `index(chunks)` and `retrieve(query, top_k=5, doc_id=None)`, returning `(chunk, score)` list. Chunk budget counted by words, 4,096 input budget counted by generation model tokenizer.
 
 ```python
 from retrieval.baseline_rag import StandardRAGBaseline
@@ -78,20 +78,20 @@ rag.index_documents([contract_a, contract_b], doc_ids=["A", "B"])
 result = rag.answer(query, doc_id="A")
 ```
 
-也可通过 `rag.answer(query, context=contract_text)` 直接指定合同。组件集成可用 `StandardRAGBaseline(llm=None).retrieve_evidence(query, context=contract_text, doc_id=source_doc_id)` 单独检索。用于三方法对照的 Agent 入口为 `AgenticRAG.answer(query, context, dataset="contractnli", max_input_tokens=4096)`，CUAD 传 `dataset="cuad"`。批处理保留样本 ID 与 `metadata`，方便下游对齐和定位出处。
+Also available via `rag.answer(query, context=contract_text)` to directly specify contract. Component integration can use `StandardRAGBaseline(llm=None).retrieve_evidence(query, context=contract_text, doc_id=source_doc_id)` to retrieve separately. Agent entry for three-method comparison is `AgenticRAG.answer(query, context, dataset="contractnli", max_input_tokens=4096)`; for CUAD pass `dataset="cuad"`. Batch processing preserves sample ID and `metadata` for convenient downstream alignment and source location.
 
-**输出与评分约定**
+**Output and Scoring Conventions**
 
-- ContractNLI 使用 `entailment`、`contradiction`、`neutral`，提示词包含 `Label:` 和 `Answer:` 示例。CUAD 使用 `present`、`absent`，输出 JSON。正例要求提取原文，负例的答案和抽取列表为空。
-- 格式错误保留 `raw_response` 和 `parse_error`，归为 `label=invalid`。CUAD 的 `answer_is_extractive` 记录抽取片段是否逐字出现在模型输入中。Agent 会额外记录 `grounding_error`。最终格式或证据检查失败时，Agent 将展示用的 `final_answer` 留空，原标签与原响应仍可审计。
-- `retrieved_chunks` 保存原始 top-k 结果。计算检索 Recall 使用该字段。审计模型实际看到的内容使用预算裁剪后的 `prompt_evidence`。引用编号对应当次调用实际使用的证据块。
-- `prompt` 保存任务内容，`model_prompt` 保存实际应用聊天模板后的输入。两条基线的 `tokens` 记录生成 token 数，输入 token 数在 `input_budget`。Agent 的阶段调用另见 `generation_trace`。Python API 配置 `max_input_tokens` 时需要提供 tokenizer 或由模型适配器提供。
+- ContractNLI uses `entailment`, `contradiction`, `neutral`; prompts include `Label:` and `Answer:` examples. CUAD uses `present`, `absent`, outputs JSON. Positive examples require extracting original text; negative examples have empty answer and extraction lists.
+- Format errors preserve `raw_response` and `parse_error`, classified as `label=invalid`. CUAD's `answer_is_extractive` records whether extraction fragments appear verbatim in model input. Agent additionally records `grounding_error`. When final format or evidence check fails, Agent leaves display-use `final_answer` empty; original label and original response remain auditable.
+- `retrieved_chunks` saves original top-k results. Computing retrieval Recall uses this field. Auditing actual content seen by model uses budget-trimmed `prompt_evidence`. Citation numbers correspond to evidence chunks actually used in that call.
+- `prompt` saves task content, `model_prompt` saves actual input after applying chat template. Two baselines' `tokens` records generation token count, input token count in `input_budget`. Agent's stage calls also see `generation_trace`. When Python API configures `max_input_tokens`, must provide tokenizer or have model adapter provide it.
 
-## 复现步骤
+## Reproduction Steps
 
-### 本地测试与两条基线
+### Local Testing and Two Baselines
 
-在仓库根目录执行。最小环境用于本地逻辑、BM25 和 dry run。完整环境和 Dense 编码器或生成模型权重按需安装。
+Execute in repository root. Minimal environment for local logic, BM25, and dry run. Full environment and Dense encoder or generation model weights install as needed.
 
 ```bash
 python3.11 -m venv venv
@@ -102,7 +102,7 @@ python -m retrieval.baseline_direct --dataset contractnli --sample_size 10 --dry
 python -m retrieval.baseline_rag --dataset cuad --sample_size 10 --retriever bm25 --top_k 5 --dry_run
 ```
 
-需生成时另装 `requirements.txt`。以下示例需要 CUDA 及可读取的模型权重。省略 `--sample_size` 即读取完整划分。正式对照使用后续的固定 revision 全量入口。
+For generation, additionally install `requirements.txt`. Following examples require CUDA and readable model weights. Omitting `--sample_size` reads complete split. Official comparison uses subsequent fixed-revision full entry.
 
 ```bash
 python -m retrieval.baseline_direct --model mistral --dataset contractnli \
@@ -111,9 +111,9 @@ python -m retrieval.baseline_rag --model mistral --dataset contractnli \
   --sample_size 10 --device cuda --temperature 0 --output experiments/results/rag_mistral_contractnli.json
 ```
 
-独立基线 CLI 输出最终 JSON、逐条 JSONL 及 `.meta.json`。默认保护已有文件。JSONL 用于故障排查。全量 runner 保存 SQLite 检查点，可断点续跑。汇总时检查 `validation_status` 和 `parse_error_count`。
+Independent baseline CLI outputs final JSON, item-by-item JSONL, and `.meta.json`. Protects existing files by default. JSONL for troubleshooting. Full runner saves SQLite checkpoints, supports resume from breakpoint. Check `validation_status` and `parse_error_count` when summarizing.
 
-### 检索消融
+### Retrieval Ablation
 
 ```bash
 python -m retrieval.evaluate_retrieval --datasets contractnli cuad \
@@ -121,11 +121,11 @@ python -m retrieval.evaluate_retrieval --datasets contractnli cuad \
   --top_ks 3 5 10 --output experiments/results/retrieval_ablation.json
 ```
 
-36 组来自两个数据集、三种检索器、两种分块和三个 k。仅运行 BM25 时可使用最小环境。只有带金标证据的样本进入证据指标分母，ContractNLI 为 1,188 条，CUAD 为 599 条。固定分块为 512 词、重叠 128 词，条款分块最大 512 词、合并目标 50 词。Dense 用 all-MiniLM-L6-v2，编码上限 256 个 subword token。Hybrid 两侧权重各为 0.5。详细口径、Recall 对照和检索失败样例见[检索消融报告](validation/RETRIEVAL_RESULTS.md)与[完整结果](validation/retrieval_ablation_2026-11-20.json)。
+36 groups from two datasets, three retrievers, two chunking strategies, and three k values. When running only BM25, minimal environment can be used. Only samples with gold evidence enter evidence metric denominator: ContractNLI 1,188 items, CUAD 599 items. Fixed chunking is 512 words with 128-word overlap; clause-level chunking maximum 512 words, merge target 50 words. Dense uses all-MiniLM-L6-v2, encoding limit 256 subword tokens. Hybrid has 0.5 weight on each side. Detailed criteria, Recall comparison, and retrieval failure examples see [Retrieval Ablation Report](validation/RETRIEVAL_RESULTS.md) and [Complete Results](validation/retrieval_ablation_2026-11-20.json).
 
-### AutoDL 双模型全量
+### AutoDL Dual-Model Full Run
 
-在包含源代码、配置和两个仓库测试文件的冻结目录里运行。以下依赖基于 Linux x86-64、Python 3.12、PyTorch 2.8.0+cu128、CUDA 12.8 的 AutoDL 镜像。完成的两组运行参数见全量 JSON 的 `settings`。
+Run in frozen directory containing source code, configs, and two repository test files. Following dependencies based on Linux x86-64, Python 3.12, PyTorch 2.8.0+cu128, CUDA 12.8 AutoDL image. Completed two-group run parameters see full JSON's `settings`.
 
 ```bash
 python3.12 -m venv --system-site-packages venv
@@ -135,7 +135,7 @@ python -m pip install --extra-index-url https://download.pytorch.org/whl/cu128 \
   'openai==1.109.1' 'rank-bm25==0.2.2' 'pyyaml==6.0.3' 'requests==2.32.5'
 ```
 
-启动脚本加载固定 revision。在新环境直接向 Hugging Face 下载 Llama 3 时，用已开通该模型访问权限的账号执行 `hf auth login`。已有完整缓存时可为启动命令添加 `HF_HUB_OFFLINE=1`。正式实验用的 Llama 3 权重来自 ModelScope 固定版本，加载前核对了四个权重分片及六个配置、tokenizer 和索引文件。阿里云 PAI 仅用于 API 连通试验。[镜像校验脚本](../scripts/fetch_verified_llama3.py)
+Launch script loads fixed revision. When downloading Llama 3 directly from Hugging Face in new environment, execute `hf auth login` with account that has opened access to that model. When complete cache exists, can add `HF_HUB_OFFLINE=1` to launch command. Llama 3 weights used in official experiments from ModelScope fixed version; before loading verified four weight shards and six config, tokenizer, and index files. Alibaba Cloud PAI only used for API connectivity testing. [Image Verification Script](../scripts/fetch_verified_llama3.py)
 
 ```bash
 bash scripts/run_autodl_mistral.sh pilot mistral
@@ -144,53 +144,53 @@ bash scripts/run_autodl_mistral.sh pilot llama3
 bash scripts/run_autodl_mistral.sh full llama3
 ```
 
-同一实例上按模型顺序运行。每个模型先复核试跑的 30 条，再启动该模型全量。每次运行在 `experiments/results/<model>_autodl_<phase>/` 保存 `progress.json`、`predictions.sqlite3`、`vllm.log`，完成后生成 `summary.json`。以 `status=completed`、六组样本数和 `PRAGMA quick_check` 验收。SQLite 用 `(dataset, method, example_id)` 去重。续跑须复用同一输出目录、冻结代码、模型和配置。需要续跑正式检查点时，以该次运行自己的 `source_sha256` 为准。
+Run in model order on same instance. Each model first verifies 30-item pilot, then launches that model's full run. Each run saves `progress.json`, `predictions.sqlite3`, `vllm.log` in `experiments/results/<model>_autodl_<phase>/`, generates `summary.json` upon completion. Accept with `status=completed`, six-group sample counts, and `PRAGMA quick_check`. SQLite deduplicates by `(dataset, method, example_id)`. Resume must reuse same output directory, frozen code, model, and config. When needing to resume official checkpoint, use that run's own `source_sha256` as reference.
 
-## 开发验证与失败案例
+## Development Validation and Failure Cases
 
-- **Part 4 集成验证（2026-11-22）。** 本轮完整测试 `151 passed`，包含真实依赖环境下的既有检索测试和新增编排检查点、样本选择、消融开关、错误分母、token 记账及盲评导出测试。[本轮 JUnit](validation/part4_2026-11-22/tests.xml)。这些自动化测试与真实模型输出分别记录；真实检索复跑及 Agent 试跑详见 Part 4 结果表。
-- **自动化验收。** 整理交接时重跑完整环境，144 项通过。最小环境 123 项通过、4 项跳过。两条基线的 dry run 均成功选出 10 条。仓库中的记录对应此前的格式修复阶段。[JUnit 汇总](validation/test_summary.json) · [环境记录](validation/environment.json)
-- **Qwen 格式排查。** 首轮只通过 1/8。用新解析器重读原响应后通过 7/8，采用修复后的提示词重跑通过 8/8。旧结果中的 4 条 CUAD 在完整 JSON 前附有说明，2 条 ContractNLI Standard RAG 用对象表示引用，1 条 ContractNLI Direct Prompting 在 JSON 内生成了未转义引号。这 7 条均未用尽生成预算。引号案例通过带示例的两行提示改善，前两类由兼容解析与引用归一化处理。[复测记录](validation/qwen_format_retest)
-- **正式模型首次试跑。** Mistral 在本机用 MLX 完成 20 条基线预测，其中 11 条格式通过、6 条标签正确。Llama 3 当时的 Hugging Face 权重请求受限，未产出预测。双模型的有效对照后来在 AutoDL 完成。[Mistral 首轮结果](validation/official_baseline_pilot/mistral.json) · [Llama 3 首轮记录](validation/official_baseline_pilot/llama3.json)
-- **CUAD 协议修订。** 开发样本来自 CUAD 官方训练划分，并按合同标题和文本哈希与测试集隔离。最终提示词去掉题干中的律师审核措辞，要求结构化抽取。生成器在输出首个完整 JSON 对象后停止。在锁定的 4 条 CUAD 测试样本上，Direct Prompting、Standard RAG 和 Verified Agentic RAG 的格式均通过 4/4，标签正确数依次为 2/4、2/4、3/4。[开发样本来源](validation/cuad_output_development/source.json) · [开发复测](validation/cuad_output_development/final/mistral.json) · [锁定测试复测](validation/cuad_output_development/held_out/mistral.json)
-- **AutoDL 锁定试跑。** 两个模型共用 6 条 ContractNLI 和 4 条 CUAD 做三方法检查。Mistral 格式 27/30、标签正确 15/30，Llama 3 格式 30/30、标签正确 21/30。[Mistral 试跑](validation/mistral_autodl_pilot_summary.json) · [Llama 3 试跑](validation/llama3_autodl_pilot_summary.json)
+- **Part 4 Integration Validation (2026-11-22).** This round complete test `151 passed`, including existing retrieval tests in real dependency environment and new orchestration checkpoint, sample selection, ablation switches, error denominator, token accounting, and blind review export tests. [This Round JUnit](validation/part4_2026-11-22/tests.xml). These automated tests and real model outputs are recorded separately; real retrieval re-runs and Agent pilot runs detailed in Part 4 results table.
+- **Automated Acceptance.** Re-ran full environment during handoff organization, 144 items passed. Minimal environment 123 items passed, 4 skipped. Both baselines' dry runs successfully selected 10 items. Records in repository correspond to earlier format fix phase. [JUnit Summary](validation/test_summary.json) · [Environment Record](validation/environment.json)
+- **Qwen Format Investigation.** First round only passed 1/8. After re-reading original responses with new parser, passed 7/8; re-ran with fixed prompts passed 8/8. In old results, 4 CUAD items had explanations before complete JSON, 2 ContractNLI Standard RAG used objects to represent citations, 1 ContractNLI Direct Prompting generated unescaped quotes within JSON. These 7 all did not exhaust generation budget. Quote case improved with two-line prompt with examples; first two types handled by compatible parsing and citation normalization. [Retest Record](validation/qwen_format_retest)
+- **Official Model First Pilot.** Mistral completed 20 baseline predictions locally with MLX, of which 11 format pass, 6 label correct. Llama 3's Hugging Face weights at that time were access-restricted, produced no predictions. Effective dual-model comparison later completed on AutoDL. [Mistral First Round Results](validation/official_baseline_pilot/mistral.json) · [Llama 3 First Round Record](validation/official_baseline_pilot/llama3.json)
+- **CUAD Protocol Revision.** Development samples from CUAD official training split, isolated from test set by contract title and text hash. Final prompt removed lawyer review wording from question stem, requires structured extraction. Generator stops after outputting first complete JSON object. On locked 4 CUAD test samples, Direct Prompting, Standard RAG, and Verified Agentic RAG all format pass 4/4, label correct counts 2/4, 2/4, 3/4 respectively. [Development Sample Source](validation/cuad_output_development/source.json) · [Development Retest](validation/cuad_output_development/final/mistral.json) · [Locked Test Retest](validation/cuad_output_development/held_out/mistral.json)
+- **AutoDL Locked Pilot.** Two models share 6 ContractNLI and 4 CUAD for three-method check. Mistral format 27/30, label correct 15/30; Llama 3 format 30/30, label correct 21/30. [Mistral Pilot](validation/mistral_autodl_pilot_summary.json) · [Llama 3 Pilot](validation/llama3_autodl_pilot_summary.json)
 
-### 可回查的失败案例
+### Traceable Failure Cases
 
-| 样本或合同 | 观察 |
+| Sample or Contract | Observation |
 | --- | --- |
-| `contractnli_test_523_nda-8` | Mistral 三种方法均输出 `Label: true`，自然停止。非法标签导致格式和准确率均计错。 |
-| `contractnli_test_41_nda-1` | 标注为 `contradiction`。Agent 初次和修订后的提示都覆盖了标注证据，最终仍判为 `neutral`。 |
-| CUAD PACIRA 许可分销协议 | Agent 复测后经同合同重检索覆盖了金标续期通知条款，最终仍判为 `absent`。Standard RAG 从首次提示已覆盖金标，标签同样有误。 |
-| CUAD HPIL 合作协议 | 早期 Agent 判对日期和标签，但改写了原句，逐字校验失败。最终复测中 Agent 复制了原文日期，Standard RAG 标签正确但引用编号越界。 |
-| CUAD N2K 赞助协议 | 早期 Direct Prompting 用满 512 token 后仍未闭合 JSON。 |
+| `contractnli_test_523_nda-8` | Mistral all three methods output `Label: true`, natural stop. Invalid label causes both format and accuracy to count as errors. |
+| `contractnli_test_41_nda-1` | Annotated as `contradiction`. Agent's initial and post-revision prompts both covered annotated evidence, final still judged as `neutral`. |
+| CUAD PACIRA licensing distribution agreement | Agent retest after re-retrieval within same contract covered gold renewal notice clause, final still judged as `absent`. Standard RAG covered gold from first prompt, label likewise incorrect. |
+| CUAD HPIL cooperation agreement | Early Agent judged date and label correctly but rewrote original sentence, verbatim check failed. Final retest Agent copied original date, Standard RAG label correct but citation number out of bounds. |
+| CUAD N2K sponsorship agreement | Early Direct Prompting exhausted 512 tokens without closing JSON. |
 
-案例来源为[早期 Mistral 三方法逐条结果](validation/verified_agentic_rag_pilot/mistral.json)与[锁定测试复测](validation/cuad_output_development/held_out/mistral.json)。引用到报告时注明所用试跑阶段。
+Case sources are [Early Mistral Three-Method Item-by-Item Results](validation/verified_agentic_rag_pilot/mistral.json) and [Locked Test Retest](validation/cuad_output_development/held_out/mistral.json). When citing in report, note pilot phase used.
 
-## 组员接续事项
+## Team Member Follow-up Items
 
-| 负责人 | 接手事项 |
+| Owner | Handoff Items |
 | --- | --- |
-| Yin Fengling | 补齐从官方原始数据生成当前 JSON 的可复现转换流程。共享评估器区分两个数据集的标签、空答案和 `parse_error`，按实际检索 k 统计证据命中。 |
-| Wang Zhengyao | 演示入口显式传 `dataset`，展示 `final_answer`、查证结果及拦截原因。修订后目前只有确定性格式和证据检查，若加二次模型查证需单独记录。 |
-| Li Xinru | 已接入通用 runner、核对归档汇总并提供新实验结果与盲评导出入口。服务器逐条轨迹已取得，全量分析已补齐；后续需与评估负责人确认独立答案支持性方法和人工标注分工；新 Agent 消融是小样本，不等于全量组件消融。正式 UI 入口和验收见 [UI 交接](UI_HANDOFF.md)。 |
-| Qin Mengmeng | 协助提取逐条运行轨迹与分析漏判。若继续做 Dense 或 Hybrid 生成对照，保持模型、测试样本和输入预算固定，用开发集选参。 |
+| Yin Fengling | Complete reproducible conversion process from official raw data to current JSON. Shared evaluator distinguishes labels, empty answers, and `parse_error` for two datasets; statistics evidence hits by actual retrieval k. |
+| Wang Zhengyao | Demo entry explicitly passes `dataset`, displays `final_answer`, verification results, and interception reasons. Post-revision currently only has deterministic format and evidence checks; if adding second model verification, needs separate recording. |
+| Li Xinru | Has integrated generic runner, verified archived summaries, and provided new experiment results and blind review export entry. Server item-by-item traces obtained, comprehensive analysis completed; subsequently needs to confirm independent answer support method and manual annotation division of labor with evaluation lead; new Agent ablation is small-sample, not equivalent to full component ablation. Official UI entry and acceptance see [UI Handoff](UI_HANDOFF.md). |
+| Qin Mengmeng | Assist extracting item-by-item execution traces and analyzing false negatives. If continuing Dense or Hybrid generation comparison, keep model, test samples, and input budget fixed; use dev set for parameter selection. |
 
-## GitHub 交付文件
+## GitHub Delivery Files
 
-| 内容 | 仓库位置 |
+| Content | Repository Location |
 | --- | --- |
-| 分块、检索器、任务格式、两条基线与独立消融 | [`retrieval/`](../retrieval/) · [检索配置](../configs/retrieval_config.yaml) |
-| 接通三方法对照的 Agent 实现 | [`agent/`](../agent/) |
-| 双模型全量、锁定试跑、vLLM 接口和 CUAD 开发集构建 | [`experiments/`](../experiments/) · [AutoDL 启动脚本](../scripts/run_autodl_mistral.sh) |
-| 数据导入、延迟依赖与模型预算相关集成改动 | [`data/`](../data/) · [`utils/`](../utils/) · [完整依赖](../requirements.txt) · [最小依赖](../requirements-retrieval.txt) |
-| 自动化用例与正式、诊断结果 | [`tests/`](../tests/) · [`docs/validation/`](validation/) · [验证汇总脚本](../scripts/update_validation_report.py) |
-| 工作范围与历史核查 | [原始职责与验收清单](QIN_MENGMENG_TASKS.md) · [修复前项目核查](PROJECT_REVIEW_2026-11-20.md) |
+| Chunking, retrievers, task formats, two baselines, and independent ablation | [`retrieval/`](../retrieval/) · [Retrieval Config](../configs/retrieval_config.yaml) |
+| Agent implementation connecting three-method comparison | [`agent/`](../agent/) |
+| Dual-model full run, locked pilot, vLLM interface, and CUAD dev set construction | [`experiments/`](../experiments/) · [AutoDL Launch Script](../scripts/run_autodl_mistral.sh) |
+| Data import, lazy dependencies, and model budget related integration changes | [`data/`](../data/) · [`utils/`](../utils/) · [Full Dependencies](../requirements.txt) · [Minimal Dependencies](../requirements-retrieval.txt) |
+| Automated test cases and official, diagnostic results | [`tests/`](../tests/) · [`docs/validation/`](validation/) · [Validation Summary Script](../scripts/update_validation_report.py) |
+| Work scope and history verification | [Original Responsibilities and Acceptance Checklist](QIN_MENGMENG_TASKS.md) · [Pre-Fix Project Review](PROJECT_REVIEW_2026-11-20.md) |
 
-两个原始测试 JSON 已在仓库跟踪，本轮保持原样。随代码交付上述测试和经过汇总的实验产物。模型权重、虚拟环境、凭证和 `experiments/results/` 下的逐条运行产物留在工作环境。后续如修改接口、数据说明或实验结果，同步更新本文和对应验证文件。
+Two original test JSONs already tracked in repository, this round keeps as-is. Delivers above tests and summarized experimental artifacts with code. Model weights, virtual environments, credentials, and item-by-item run artifacts under `experiments/results/` remain in work environment. If subsequently modifying interfaces, data descriptions, or experiment results, synchronously update this document and corresponding validation files.
 
-## 期末交付复核
+## Final Delivery Review
 
-旧评估入口按 ContractNLI 和 CUAD 分开计分。非法标签及格式失败计错，检索召回与命中使用原文区间及统一的 k。初答 verifier 诊断单列，语义指标无独立标注时保持未测。用两份压缩逐条导出验证 12 组准确率、Macro-F1 和格式数，并复算全部 37,834 次调用的 87,512,435 个 token。[实验复核及启动说明](FINAL_SUBMISSION.md)
+Old evaluation entry scores ContractNLI and CUAD separately. Invalid labels and format failures count as errors; retrieval recall and hits use original text intervals and unified k. Initial answer verifier diagnostics listed separately; semantic metrics remain untested when independent annotation absent. Use two compressed item-by-item exports to verify 12 groups' accuracy, Macro-F1, and format counts, and recalculate all 37,834 calls' 87,512,435 tokens. [Experiment Review and Launch Instructions](FINAL_SUBMISSION.md)
 
-[最终评估修复记录](FINAL_EVALUATION_FIXES.md) 汇总四个已修复反例、报告更正、188 项回归和真实问答验收。
+[Final Evaluation Fix Record](FINAL_EVALUATION_FIXES.md) summarizes four fixed counterexamples, report corrections, 188 regression tests, and real Q&A acceptance.

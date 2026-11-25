@@ -1,37 +1,37 @@
-# 正式 UI 演示指引
+# Official UI Demonstration Guidelines
 
-本页用于当前 UI 的现场操作与结果说明，不是课程报告。正式入口、依赖和模型加载方式见 [UI_HANDOFF.md](UI_HANDOFF.md)。演示总时长以课程最新通知为准。
+This page is for on-site operation and result explanation of the current UI, not a course report. For official entry points, dependencies, and model loading methods, see [UI_HANDOFF.md](UI_HANDOFF.md). Demonstration total duration follows the latest course notification.
 
-## 先说明用途
+## First Explain the Purpose
 
-“我们让使用者粘贴合同、核对命题或查找条款。系统检索当前合同的证据，生成回答，再检查依据并按需尝试一次修订。页面会保留原文和检查情况，方便用户自己核对。模型检查可能出错，因此系统不承诺消除幻觉。”
+“We allow users to paste contracts, verify propositions, or search for clauses. The system retrieves evidence from the current contract, generates answers, checks the basis, and attempts one revision if needed. The page preserves the original text and check status for users to verify themselves. Model checking may be incorrect, so the system does not promise to eliminate hallucinations.”
 
-## 操作顺序
+## Operation Sequence
 
-1. 提前加载模型。打开本机页面，先跑一条输入确认服务可用。模型加载时间和推理时间分开说明。
-2. 点“30 天通知”并运行。指出左侧是当前合同、右侧是模型结论和这一次的原文证据。
-3. 点“改为 60 天通知”。让观众看到旧结果先清空，再提交；检查新回答的证据来自 60 天合同。也可按观众建议改英文原文或命题。
-4. 时间允许时，点“查找责任上限”，展示第二种任务。抽取原句必须与原文一致。
-5. 展开检查与运行记录，区分初始验证和最终修订。说明“修订发生”不等于“修订成功”，格式或引用错误会停止展示答案。
+1. Load the model in advance. Open the local page and run one input to confirm the service is available. Model loading time and inference time are explained separately.
+2. Click “30-day notice” and run. Point out that the left side is the current contract, and the right side is the model's conclusion and original text evidence for this run.
+3. Click “Change to 60-day notice”. Let the audience see the old result cleared first, then submit; check that the new answer's evidence comes from the 60-day contract. Can also modify the English original text or proposition based on audience suggestions.
+4. When time permits, click “Find liability cap” to demonstrate the second type of task. Extracted sentences must match the original text.
+5. Expand check and run records, distinguishing initial verification from final revision. Explain that “revision occurred” does not equal “revision succeeded”; format or citation errors will stop answer display.
 
-这些示例是手工构造的功能验收输入，不当作正式数据集结果。现场以实际输出为准；失败时展示错误和证据，不用手写成功答案替代真实运行。预录或已有验收记录只能明确作为备用记录展示。
+These examples are manually constructed functional acceptance inputs, not treated as official dataset results. On-site presentation follows actual output; when failures occur, display errors and evidence, don't substitute real runs with handwritten success answers. Pre-recorded or existing acceptance records can only be explicitly shown as backup records.
 
-## 能说的实验结论
+## Experimental Conclusions That Can Be Stated
 
-- 已核对两个模型、两个数据集、三种方法的 18,666 条服务器预测及 37,834 次模型调用，完成全量错误统计和 20 个可回查案例；这次分析没有重新运行模型。
-- 新跑 36 组完整测试划分的检索评测，以及同样 10 个问题的两模型、三变体 Agent 试点，共 60 条输出。
-- Agent 对标签准确率的收益不一致：Llama 3 / ContractNLI 从 RAG 的 42.52% 提升到 55.52%，其余三个模型/任务组合下降。
-- 组件试点 11 次修订中有 1 次标签错转对，也存在残留和新增引用错误。不能称“100% 修订成功”。
-- 独立幻觉率、语义答案完整性和有独立真值的弃权精确度尚未测得。全量指标文件另列了词汇重叠与旧规则代理值，不能当作这些语义指标；标签准确率、内部验证器状态与独立幻觉率也必须区分。
+- Verified 18,666 server predictions and 37,834 model calls across two models, two datasets, and three methods, completed full-scale error statistics and 20 traceable cases; this analysis did not rerun models.
+- New runs of 36 retrieval evaluation configurations across complete test splits, plus two models, three-variant Agent pilot on the same 10 questions, totaling 60 outputs.
+- Agent's benefit to label accuracy is inconsistent: Llama 3 / ContractNLI improved from RAG's 42.52% to 55.52%; the other three model/task combinations declined.
+- Among 11 revisions in the component pilot, 1 had label change from wrong to correct, with residual and newly introduced citation errors also present. Cannot claim “100% revision success”.
+- Independent hallucination rate, semantic answer completeness, and abstention precision with independent ground truth have not yet been measured. Full-scale metric files separately list lexical overlap and legacy rule proxy values, which cannot be treated as these semantic metrics; label accuracy, internal verifier status, and independent hallucination rate must also be distinguished.
 
-完整记录见 [全量分析](validation/part4_2026-11-24/README.md) 与 [报告](../FINAL_REPORT.md)。早期试点数值及来源见 [结果汇总](validation/part4_2026-11-22/RESULTS.md)、[RQ 结论](validation/part4_2026-11-23/RQ_FINDINGS.md) 与 [错误案例](validation/part4_2026-11-22/CASE_ANALYSIS.md)。不将每模型 10 题试点外推为全量组件效果；早期 9 个试点案例与后续 20 个全量案例均为目的性选取，不能当作总体错误类型占比。
+Complete records see [Full-scale Analysis](validation/part4_2026-11-24/README.md) and [Report](../FINAL_REPORT.md). Early pilot values and sources see [Results Summary](validation/part4_2026-11-22/RESULTS.md), [RQ Findings](validation/part4_2026-11-23/RQ_FINDINGS.md), and [Error Cases](validation/part4_2026-11-22/CASE_ANALYSIS.md). Do not extrapolate the 10-question pilot per model as full-scale component effects; both early 9 pilot cases and subsequent 20 full-scale cases are purposively selected and cannot be treated as overall error type proportions.
 
-## 常见追问
+## Common Follow-up Questions
 
-**为什么显示“检查通过”还要人工核对？** 页面检查了输出格式、引用编号范围和抽取原句，语义与证据充分性仍可能有误；验证器本身也使用模型。
+**Why does it still require manual verification when “check passed” is displayed?** The page checks output format, citation number range, and extracted sentences; semantics and evidence sufficiency may still be incorrect; the verifier itself also uses a model.
 
-**是否证明减少了幻觉？** 目前还没有完成三方法的独立支持性评估，现有标签准确率不能替代这个指标。已准备评估材料，具体方法和人工分工待团队确认。
+**Has it been proven to reduce hallucinations?** Independent support assessment across the three methods has not yet been completed; existing label accuracy cannot substitute for this metric. Evaluation materials have been prepared; specific method and human division of labor await team confirmation.
 
-**能否换模型？** 启动时选择 `--model llama3` 或 `--model mistral`，并提供对应模型目录；一次加载一个模型。页面里的当前模型会明确显示。
+**Can the model be changed?** At startup, choose `--model llama3` or `--model mistral` and provide the corresponding model directory; load one model at a time. The current model on the page will be explicitly displayed.
 
-**是否已经完成全量组件消融？** 没有。现有组件消融是固定 10 题的配对试点；扩展范围应结合团队实验要求与服务器资源确定。
+**Has full-scale component ablation been completed?** No. The existing component ablation is a paired pilot of fixed 10 questions; expanding scope should be determined in combination with team experimental requirements and server resources.

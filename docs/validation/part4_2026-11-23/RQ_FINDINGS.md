@@ -1,81 +1,83 @@
-# Part 4 研究结论与演示措辞核对
+# Part 4 Research Findings and Demo Wording Verification
 
-现有结果支持“收益依模型和任务而异，检索命中、标签正确和答案有依据是不同的检查层面”。现阶段不能声称已经证明系统降低了独立测得的幻觉率，也不能声称修订成功率为 100%。本文件供结果汇总与演示修订使用，不是课程报告。
+Existing results support “benefits vary by model and task; retrieval hits, label correctness, and answer groundedness are different verification layers.” At this stage, cannot claim to have proven the system reduced independently measured hallucination rates, nor claim 100% revision success rate. This file for results summary and demo revision use, not the course report.
 
-## 证据范围
+## Evidence Scope
 
-- 归档主实验：2 模型 × 2 数据集 × Direct、RAG、Agent，共 18,666 条系统输出。已核对汇总和混淆矩阵；服务器逐条输出尚未取回，因此这里只做归档指标比较。
-- 新跑检索评测：36 组完整测试集配置。ContractNLI 2,091 题，其中 1,188 题有金标证据；CUAD 1,020 题，其中 599 题有金标证据，覆盖所选 10 类。
-- 组件消融：固定 10 个问题，2 模型 × 3 变体，共 60 条输出。属于配对试点，不能称为 60 个独立问题或全量组件消融。
-- 错误案例：已有 9 个目的性选择案例，适合解释机制，不适合估计各错误类型的总体占比。
+- Archived main experiments: 2 models × 2 datasets × Direct, RAG, Agent, total 18,666 system outputs. Verified summaries and confusion matrices; server item-by-item output not yet retrieved, so only archived metric comparison here.
+- New retrieval evaluation runs: 36 groups complete test set configurations. ContractNLI 2,091 questions, 1,188 with gold evidence; CUAD 1,020 questions, 599 with gold evidence, covering selected 10 classes.
+- Component ablation: Fixed 10 questions, 2 models × 3 variants, total 60 outputs. Belongs to paired pilot, cannot claim 60 independent questions or full component ablation.
+- Error cases: Existing 9 purposefully selected cases, suitable for explaining mechanisms, not suitable for estimating overall proportions of error types.
 
-数据来源：[已发布实验汇总](https://github.com/1336516233abc-ship-it/legal-hallucination-auditing/blob/29b1d4643f7b40f654c3d525d0d9cceb3e2c67b3/docs/validation/part4_2026-11-22/RESULTS.md)、[归档主实验核对](https://github.com/1336516233abc-ship-it/legal-hallucination-auditing/blob/29b1d4643f7b40f654c3d525d0d9cceb3e2c67b3/docs/validation/part4_2026-11-22/archived_result_audit/results_tables.md)、[逐例分析](https://github.com/1336516233abc-ship-it/legal-hallucination-auditing/blob/29b1d4643f7b40f654c3d525d0d9cceb3e2c67b3/docs/validation/part4_2026-11-22/CASE_ANALYSIS.md)。输入哈希见前一日的 case_analysis.json；本次代码来源见 SOURCE_PROVENANCE.json。
+Data sources: [Published Experiment Summary](https://github.com/1336516233abc-ship-it/legal-hallucination-auditing/blob/29b1d4643f7b40f654c3d525d0d9cceb3e2c67b3/docs/validation/part4_2026-11-22/RESULTS.md), [Archived Main Experiment Verification](https://github.com/1336516233abc-ship-it/legal-hallucination-auditing/blob/29b1d4643f7b40f654c3d525d0d9cceb3e2c67b3/docs/validation/part4_2026-11-22/archived_result_audit/results_tables.md), [Case-by-Case Analysis](https://github.com/1336516233abc-ship-it/legal-hallucination-auditing/blob/29b1d4643f7b40f654c3d525d0d9cceb3e2c67b3/docs/validation/part4_2026-11-22/CASE_ANALYSIS.md). Input hashes see previous day's case_analysis.json; this code source see SOURCE_PROVENANCE.json.
 
-## RQ1 检索增强是否减少幻觉
+## RQ1 Does Retrieval Augmentation Reduce Hallucinations
 
-**目前不能直接回答幻觉率变化。** 各方法的独立支持性判定缺失；标签准确率和证据召回不能替代幻觉率。
+**Currently cannot directly answer hallucination rate changes.** Independent support judgment for each method is missing; label accuracy and evidence recall cannot substitute for hallucination rate.
 
-归档标签准确率中，RAG 相比 Direct 仅在 Mistral × CUAD 提升，其余三组下降。
+In archived label accuracy, RAG compared to Direct only improves in Mistral × CUAD, other three groups decline.
 
-|模型和数据集|Direct|RAG|变化百分点|
+|Model and Dataset|Direct|RAG|Change (percentage points)|
 |---|---:|---:|---:|
 |Mistral / ContractNLI|43.42%|41.89%|-1.53|
 |Mistral / CUAD|67.06%|69.71%|+2.65|
 |Llama 3 / ContractNLI|47.01%|42.52%|-4.50|
 |Llama 3 / CUAD|77.55%|68.63%|-8.92|
 
-可用于汇报的表述：“检索增强在部分设置改善标签表现，但不是普遍收益。我们还没有完成三种方法的独立幻觉率比较。”
+Statement available for reporting: “Retrieval augmentation improves label performance in some settings, but not universal benefit. We have not yet completed independent hallucination rate comparison across three methods.”
 
-检索证据方面，BM25 clause-level 的 Recall@5 在 NLI 为 98.62%，CUAD 为 64.24%；它们只以有金标证据的题为分母。CUAD 仍存在漏检空间，NLI 的高召回也不保证标签与解释一致。当前证据不能据此推导因果或最优检索器。
+Regarding retrieval evidence, BM25 clause-level Recall@5 is 98.62% for NLI, 64.24% for CUAD; they only use questions with gold evidence as denominator. CUAD still has room for missed detections; NLI's high recall does not guarantee label and explanation consistency. Current evidence cannot derive causality or optimal retriever from this.
 
-## RQ2 验证与修订是否改善标准 RAG
+## RQ2 Does Verification and Revision Improve Standard RAG
 
-归档 Agent 相比 RAG 在 Llama 3 × ContractNLI 提升 13.01 个百分点，在其余三组下降。
+Archived Agent compared to RAG improves by 13.01 percentage points on Llama 3 × ContractNLI, declines on other three groups.
 
-|模型和数据集|RAG|Agent|变化百分点|
+|Model and Dataset|RAG|Agent|Change (percentage points)|
 |---|---:|---:|---:|
 |Mistral / ContractNLI|41.89%|37.06%|-4.83|
 |Mistral / CUAD|69.71%|63.24%|-6.47|
 |Llama 3 / ContractNLI|42.52%|55.52%|+13.01|
 |Llama 3 / CUAD|68.63%|62.06%|-6.57|
 
-这是标签表现的描述性比较；不能据此声称幻觉下降或具有统计显著性。归档均值中 Agent/RAG 耗时比约为 4.29–5.36，不能把旧材料的“仅慢 2–4 倍”直接沿用；这些服务器结果也不能与本机 MLX 的耗时直接混比。
+This is descriptive comparison of label performance; cannot claim hallucination reduction or statistical significance. In archived means, Agent/RAG time ratio is about 4.29–5.36; cannot directly reuse old material's “only 2–4× slower”; these server results also cannot directly mix-compare with local MLX timing.
 
-配对组件试点中，Llama 3 × NLI 的 Full 标签正确数为 6/6，另两变体为 5/6；其余模型与任务组合标签正确数没有变。20 条 Full 输出发生 11 次修订：1 次标签错转对、4 次错转错、6 次对转对；2 次修订新增越界引用。唯一标签纠正案例仍有证据指向错误。
+In paired component pilot, Llama 3 × NLI's Full label correct count is 6/6, other two variants 5/6; other model-task combination label correct counts unchanged. Of 20 Full outputs, 11 revisions occurred: 1 label wrong-to-right, 4 wrong-to-wrong, 6 right-to-right; 2 revisions added out-of-bounds citations. Only label correction case still has evidence pointing to error.
 
-可用于汇报的表述：“验证和修订带来的收益依赖模型与任务。试点观察到一次标签纠正，也发现修订可能引入引用错误；尚未测得完整的修订成功率。”
+Statement available for reporting: “Benefits from verification and revision depend on model and task. Pilot observed one label correction, also found revision may introduce citation errors; complete revision success rate not yet measured.”
 
-No verification 同时关闭验证与依赖验证的修订；它不是“只去掉一个独立模块”的严格单因素干预。No revision 保留验证。这一设计须在消融表旁写明。
+No verification simultaneously disables verification and revision dependent on verification; it is not “removing only one independent module” strict single-factor intervention. No revision retains verification. This design must be noted beside ablation table.
 
-## RQ3 错误集中在哪些环节
+## RQ3 Where Are Errors Concentrated
 
-现有 9 例可说明以下失效方式，尚不能回答“哪类条款最容易出错”的总体排序。
+Existing 9 cases can illustrate following failure modes, cannot yet answer “which clause types most error-prone” overall ranking.
 
-|观察|已记录案例|能支持的结论|
-|检索补回金标后仍答 absent|C03、C04|检索成功不是正确生成的充分条件|
-|说明文字与标签矛盾|C02|需要同时审查任务标签和解释|
-|修订后编号仍存在但指向不同内容|C01|只检查引用编号范围不够|
-|原文中的占位符被当作所问答案|C06|逐字抽取通过不等于任务相关|
-|输出格式失败|C05|必须保留失败分母和停止状态|
-|新增或既有越界引用|C07–C09|标签正确也可能无法给出可用展示答案|
+|Observation|Recorded Cases|Supported Conclusions|
+|---|---|---|
+|After retrieval recovers gold, still answers absent|C03, C04|Retrieval success is not sufficient condition for correct generation|
+|Explanation text contradicts label|C02|Need to review both task label and explanation|
+|After revision, numbering still exists but points to different content|C01|Checking only citation number range is insufficient|
+|Placeholder in original text treated as answer to question|C06|Verbatim extraction pass does not equal task-relevant|
+|Output format failure|C05|Must retain failure denominator and stop status|
+|New or existing out-of-bounds citations|C07–C09|Correct label may still fail to provide usable display answer|
 
-这些是 AI 辅助、基于原文的案例核对，不是独立人工评审。没有把内部 verifier 状态当作人工真值。
+These are AI-assisted, original-text-based case verifications, not independent manual review. Did not treat internal verifier status as manual ground truth.
 
-## 建议替换的旧演示说法
+## Suggested Replacements for Old Demo Statements
 
-以下是本地修订建议，保留原文件，供团队审阅后再决定替换。
+Following are local revision suggestions, preserving original files, for team review before deciding to replace.
 
-|原位置|原说法或问题|建议替换|
-|DEMO_PREP_FINAL.md:77、112、138；DEMO_SCRIPT.md:99、181；DEMO_CHECKLIST.md:161–169|100% 幻觉修订成功|独立修订成功率尚未评估；试点 11 次修订仅有 1 次标签纠正，并有引用残留问题|
-|DEMO_SCRIPT.md:98、126–133|把 verifier 检测次数当真实幻觉率|只称“验证器触发次数”，另列待人工测定的支持性指标|
-|DEMO_PREP_FINAL.md:82；DEMO_SCRIPT.md:182|仅增加 9–14% token|旧统计存在口径问题；在统一完整调用计数前不作此成本结论|
-|DEMO_SCRIPT.md:180|已经证明显著减少幻觉|当前仅观察到特定设置的标签收益，独立幻觉率仍缺失|
-|DEMO_PREP_FINAL.md:63|Llama-3.1-8B|本次 Part 4 是 Meta-Llama-3-8B-Instruct，revision 8afb486c1db24fe5011ec46dfbe5b5dccdb575c2|
-|DEMO_SCRIPT.md:3；DEMO_PREP_FINAL.md:148；DEMO_CHECKLIST.md:101|15–20 分钟演示|按已核对的课程通知控制在 8 分钟内，其中 2 分钟 pitch；准备可现场改输入的操作|
-|示意的“30 天”成功修订场景|读者可能误认为正式数据集实测|标为手工构造输入；真实记录另附模型输出与轨迹，不编造成功修订过程|
+|Original Location|Original Statement or Issue|Suggested Replacement|
+|---|---|---|
+|DEMO_PREP_FINAL.md:77, 112, 138; DEMO_SCRIPT.md:99, 181; DEMO_CHECKLIST.md:161–169|100% hallucination revision success|Independent revision success rate not yet assessed; pilot 11 revisions had only 1 label correction, with citation residual issues|
+|DEMO_SCRIPT.md:98, 126–133|Treat verifier detection count as true hallucination rate|Only call “verifier trigger count”, separately list support metrics awaiting manual measurement|
+|DEMO_PREP_FINAL.md:82; DEMO_SCRIPT.md:182|Only adds 9–14% tokens|Old statistics have criteria issues; before unified complete call counting, do not make this cost conclusion|
+|DEMO_SCRIPT.md:180|Already proven to significantly reduce hallucinations|Currently only observed label benefits in specific settings, independent hallucination rate still missing|
+|DEMO_PREP_FINAL.md:63|Llama-3.1-8B|This Part 4 is Meta-Llama-3-8B-Instruct, revision 8afb486c1db24fe5011ec46dfbe5b5dccdb575c2|
+|DEMO_SCRIPT.md:3; DEMO_PREP_FINAL.md:148; DEMO_CHECKLIST.md:101|15–20 minute demo|Per verified course notice, control to within 8 minutes, including 2-minute pitch; prepare operations that can change input on-site|
+|Illustrated “30-day” successful revision scenario|Readers may mistake for formal dataset actual test|Mark as manually constructed input; actual records separately attach model output and traces, do not fabricate successful revision process|
 
-## 可用的两分钟讲述草稿
+## Usable Two-Minute Narration Draft
 
-“我们面向需要核对合同条款的使用者，提供检索证据、生成答案、检查声明和至多一次修订的流程。我们比较了两个模型、两个数据集和三种方法。当前结果不是 Agent 全面领先：Llama 3 在 ContractNLI 的标签准确率从 RAG 的 42.52% 提升到 55.52%，但另三组下降。检索命中和标签正确也不保证答案有充分依据。我们补做了配对组件试点，记录了修订仍引用错误证据、格式失败等案例。独立人工幻觉率仍在等待评审。现场将展示普通请求、修改合同条件后的行为，以及错误输出被停止展示的情况。”
+“We provide retrieval evidence, answer generation, claim checking, and at most one revision workflow for users needing to verify contract clauses. We compared two models, two datasets, and three methods. Current results show Agent is not comprehensively superior: Llama 3 on ContractNLI label accuracy improved from RAG's 42.52% to 55.52%, but other three groups declined. Retrieval hits and label correctness also do not guarantee answers have sufficient grounding. We supplemented paired component pilot, recorded cases of revision still citing incorrect evidence, format failures, etc. Independent manual hallucination rate still awaiting review. On-site will demonstrate normal requests, behavior after modifying contract conditions, and situations where erroneous output display is stopped.”
 
-使用前按实际演示候选的验证记录调整最后一句；不能称团队正式入口已经完成修复。
+Before use, adjust last sentence per actual demo candidate verification records; cannot claim team official entry already completed fixes.

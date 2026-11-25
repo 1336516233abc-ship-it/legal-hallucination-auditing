@@ -1,8 +1,8 @@
-# 实验结果核对表
+# Experiment Results Verification Table
 
-主实验：12 组，18,666 条系统输出。数据哈希与混淆矩阵核对通过；服务器逐条轨迹尚未复核。
+Main experiments: 12 groups, 18,666 system outputs. Data hash and confusion matrix verification passed; server item-by-item traces not yet reviewed.
 
-|数据集|模型|方法|n|准确率|Macro-F1|格式通过率|平均秒/条|
+|Dataset|Model|Method|n|Accuracy|Macro-F1|Format Pass Rate|Avg sec/item|
 |---|---|---|---:|---:|---:|---:|---:|
 |contractnli|mistral|Direct|2091|43.42%|0.3253|83.69%|1.93|
 |contractnli|mistral|RAG|2091|41.89%|0.2707|82.16%|2.52|
@@ -17,11 +17,11 @@
 |cuad|llama3|RAG|1020|68.63%|0.7346|84.90%|1.29|
 |cuad|llama3|Agent|1020|62.06%|0.6834|78.92%|5.89|
 
-准确率分母保留格式失败；Macro-F1 对任务合法类别取平均。所有独立幻觉率均为待评估，不填写为 0。
+Accuracy denominator retains format failures; Macro-F1 averages over task valid classes. All independent hallucination rates await assessment, not filled as 0.
 
-## 检索消融
+## Retrieval Ablation
 
-|数据集|检索器|切块|k|证据召回率|有效样本|
+|Dataset|Retriever|Chunking|k|Evidence Recall|Valid Samples|
 |---|---|---|---:|---:|---:|
 |contractnli|bm25|fixed_length|3|90.81%|1188|
 |contractnli|bm25|fixed_length|5|97.89%|1188|
@@ -60,13 +60,13 @@
 |cuad|hybrid|clause_level|5|63.77%|599|
 |cuad|hybrid|clause_level|10|82.86%|599|
 
-## 旧 Agent 消融审计
+## Old Agent Ablation Audit
 
-这 6 个文件不作为完整、受控的 2 数据集 × 3 变体结论。
+These 6 files not used as complete, controlled 2 datasets × 3 variants conclusion.
 
-- `experiments/results/priority4/agentic_rag_full_predictions.json`：实际数据集 {'cuad': 20}；问题：`dataset_id_mismatch; published_summary_mismatch:total_tokens; published_summary_mismatch:avg_latency; published_summary_mismatch:hallucinations_detected; published_summary_mismatch:revisions_made; legacy_trace_not_independently_evaluated`。
-- `experiments/results/priority4/agentic_rag_no_revision_predictions.json`：实际数据集 {'contractnli': 20}；问题：`legacy_trace_not_independently_evaluated`。
-- `experiments/results/priority4/agentic_rag_no_verification_predictions.json`：实际数据集 {'contractnli': 20}；问题：`legacy_trace_not_independently_evaluated`。
-- `experiments/results/priority4/cuad_agentic_rag_full_predictions.json`：实际数据集 {'cuad': 20}；问题：`invalid_task_label_schema; legacy_trace_not_independently_evaluated`。
-- `experiments/results/priority4/cuad_agentic_rag_no_revision_predictions.json`：实际数据集 {'cuad': 20}；问题：`invalid_task_label_schema; legacy_trace_not_independently_evaluated`。
-- `experiments/results/priority4/cuad_agentic_rag_no_verification_predictions.json`：实际数据集 {'cuad': 20}；问题：`invalid_task_label_schema; legacy_trace_not_independently_evaluated`。
+- `experiments/results/priority4/agentic_rag_full_predictions.json`: Actual dataset {'cuad': 20}; Issues: `dataset_id_mismatch; published_summary_mismatch:total_tokens; published_summary_mismatch:avg_latency; published_summary_mismatch:hallucinations_detected; published_summary_mismatch:revisions_made; legacy_trace_not_independently_evaluated`.
+- `experiments/results/priority4/agentic_rag_no_revision_predictions.json`: Actual dataset {'contractnli': 20}; Issues: `legacy_trace_not_independently_evaluated`.
+- `experiments/results/priority4/agentic_rag_no_verification_predictions.json`: Actual dataset {'contractnli': 20}; Issues: `legacy_trace_not_independently_evaluated`.
+- `experiments/results/priority4/cuad_agentic_rag_full_predictions.json`: Actual dataset {'cuad': 20}; Issues: `invalid_task_label_schema; legacy_trace_not_independently_evaluated`.
+- `experiments/results/priority4/cuad_agentic_rag_no_revision_predictions.json`: Actual dataset {'cuad': 20}; Issues: `invalid_task_label_schema; legacy_trace_not_independently_evaluated`.
+- `experiments/results/priority4/cuad_agentic_rag_no_verification_predictions.json`: Actual dataset {'cuad': 20}; Issues: `invalid_task_label_schema; legacy_trace_not_independently_evaluated`.

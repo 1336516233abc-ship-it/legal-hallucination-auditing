@@ -1,29 +1,29 @@
-# Agent组件开发与测试报告
+# Agent Component Development and Testing Report
 
-**负责人**: Wang Zhengyao (3036795675)
-**项目**: Legal Hallucination Auditing - Agentic RAG System
-**参考文档**: TEAM_TODO_LIST.md
-
----
-
-## 目录
-
-- [优先级1 & 2: 组件单元测试](#优先级1--2-组件单元测试)
-  - [1.1 Query Analyzer测试](#11-query-analyzer测试)
-  - [1.2 Generator/Verifier/Reviser测试](#12-generatorverifierreviser测试)
-  - [1.3 四组件联合测试](#13-四组件联合测试)
-- [优先级3: Agentic RAG集成测试](#优先级3-agentic-rag集成测试)
-- [优先级4: 数据集实验](#优先级4-数据集实验)
+**Lead**: Wang Zhengyao (3036795675)
+**Project**: Legal Hallucination Auditing - Agentic RAG System
+**Reference Document**: TEAM_TODO_LIST.md
 
 ---
 
-## 优先级1 & 2: 组件单元测试
+## Table of Contents
 
-### 1.1 Query Analyzer测试
+- [Priority 1 & 2: Component Unit Testing](#priority-1--2-component-unit-testing)
+  - [1.1 Query Analyzer Testing](#11-query-analyzer-testing)
+  - [1.2 Generator/Verifier/Reviser Testing](#12-generatorverifierreviser-testing)
+  - [1.3 Four-Component Integration Testing](#13-four-component-integration-testing)
+- [Priority 3: Agentic RAG Integration Testing](#priority-3-agentic-rag-integration-testing)
+- [Priority 4: Dataset Experiments](#priority-4-dataset-experiments)
 
-**测试命令**: `python test_query_analyzer_complete.py`
+---
 
-#### 测试结果
+## Priority 1 & 2: Component Unit Testing
+
+### 1.1 Query Analyzer Testing
+
+**Test Command**: `python test_query_analyzer_complete.py`
+
+#### Test Results
 
 ```
 ============================================================
@@ -145,15 +145,15 @@ Query Analyzer is now fully functional with both:
 2. LLM-enhanced analysis (better quality)
 ```
 
-**结论**: ✅ Query Analyzer 全部功能测试通过
+**Conclusion**: ✅ Query Analyzer all features passed testing
 
 ---
 
-### 1.2 Generator/Verifier/Reviser测试
+### 1.2 Generator/Verifier/Reviser Testing
 
-**测试命令**: `python test_agent_priority2.py`
+**Test Command**: `python test_agent_priority2.py`
 
-#### 测试结果
+#### Test Results
 
 ```
 Priority 2: Testing Generator, Verifier, Reviser
@@ -198,15 +198,15 @@ Priority 2 Tests Complete
 ============================================================
 ```
 
-**结论**: ✅ Generator、Verifier、Reviser及完整流程测试通过
+**Conclusion**: ✅ Generator, Verifier, Reviser and full pipeline testing passed
 
 ---
 
-### 1.3 四组件联合测试
+### 1.3 Four-Component Integration Testing
 
-**测试命令**: `python test_agent_components.py`
+**Test Command**: `python test_agent_components.py`
 
-#### 测试结果
+#### Test Results
 
 ```
 ============================================================
@@ -306,70 +306,70 @@ Agent Components Ready for Integration!
 ============================================================
 ```
 
-**结论**: ✅ 四个核心组件联合测试全部通过，准备集成
+**Conclusion**: ✅ All four core components integration testing passed, ready for integration
 
 ---
 
-## 优先级3: Agentic RAG集成测试
+## Priority 3: Agentic RAG Integration Testing
 
-**测试范围**: 完整Agentic RAG工作流 + ContractNLI小规模数据集测试
+**Test Scope**: Complete Agentic RAG workflow + ContractNLI small-scale dataset testing
 
-### Test 3.1: 完整 Agentic RAG 工作流
+### Test 3.1: Complete Agentic RAG Workflow
 
-**状态**: ✅ PASSED
+**Status**: ✅ PASSED
 
-**验证内容**:
-- ✅ Query Analysis → Retrieval → Generation → Verification → Revision 全流程正常
-- ✅ 所有中间步骤都已保存
-- ✅ 幻觉检测正常工作
-- ✅ 性能指标: 延迟 15.81秒，消耗 420 tokens
+**Validation**:
+- ✅ Query Analysis → Retrieval → Generation → Verification → Revision full process working
+- ✅ All intermediate steps saved
+- ✅ Hallucination detection working properly
+- ✅ Performance metrics: 15.81s latency, 420 tokens consumed
 
-### Test 3.2: 小规模数据集测试（5个样本）
+### Test 3.2: Small-Scale Dataset Testing (5 samples)
 
-**状态**: ✅ PASSED
+**Status**: ✅ PASSED
 
-**关键指标**:
-- **测试样本**: 5个 ContractNLI 数据
-- **幻觉检测**: 2/5 (40%) 检测到幻觉
-- **自动修订**: 2/5 (40%) 执行了修订
-- **平均延迟**: 26.24秒/query
-- **总消耗**: 28,370 tokens
+**Key Metrics**:
+- **Test Samples**: 5 ContractNLI data
+- **Hallucination Detection**: 2/5 (40%) detected hallucinations
+- **Auto Revision**: 2/5 (40%) executed revisions
+- **Average Latency**: 26.24s/query
+- **Total Consumption**: 28,370 tokens
 
-**输出验证**:
-- ✅ 所有字段完整 (id, query, final_answer, label, hallucination_detected, latency, tokens)
-- ✅ 幻觉检测功能正常
-- ✅ 结果已保存到 `experiments/results/priority3_test_results.json`
+**Output Validation**:
+- ✅ All fields complete (id, query, final_answer, label, hallucination_detected, latency, tokens)
+- ✅ Hallucination detection functioning properly
+- ✅ Results saved to `experiments/results/priority3_test_results.json`
 
-**结论**: ✅ Agentic RAG系统集成成功，小规模测试验证有效性
+**Conclusion**: ✅ Agentic RAG system integration successful, small-scale testing validated effectiveness
 
 ---
 
-## 优先级4: 数据集实验
+## Priority 4: Dataset Experiments
 
-**实验设计**:
-- **数据集**: ContractNLI + CUAD（两个数据集）
-- **样本量**: 全量数据集（ContractNLI: 2091样本, CUAD: 1020样本）
-- **实验配置**:
-  1. Full Agentic RAG（验证+修订）
-  2. No Verification（去除验证）
-  3. No Revision（去除修订）
+**Experiment Design**:
+- **Datasets**: ContractNLI + CUAD (two datasets)
+- **Sample Size**: Full datasets (ContractNLI: 2091 samples, CUAD: 1020 samples)
+- **Experiment Configurations**:
+  1. Full Agentic RAG (verification + revision)
+  2. No Verification (remove verification)
+  3. No Revision (remove revision)
 
-### 实验结果
+### Experiment Results
 
-**详细结果位置**:
-- 原始数据: `experiments/results/priority4/`
+**Detailed Results Location**:
+- Raw data: `experiments/results/priority4/`
   - `agentic_rag_full_predictions.json`
   - `agentic_rag_no_verification_predictions.json`
   - `agentic_rag_no_revision_predictions.json`
   - `cuad_agentic_rag_full_predictions.json`
   - `cuad_agentic_rag_no_verification_predictions.json`
   - `cuad_agentic_rag_no_revision_predictions.json`
-- 统计摘要: `experiments/results/priority4/*_stats.json`
-- **完整报告**: `experiments/results/priority4/PRIORITY4_FINAL_REPORT.md`
+- Statistical summary: `experiments/results/priority4/*_stats.json`
+- **Complete Report**: `experiments/results/priority4/PRIORITY4_FINAL_REPORT.md`
 
-### 主要发现
+### Main Findings
 
-| 数据集 | 实验配置 | 样本数 | 耗时 | 平均延迟 | 总Tokens | 幻觉检测 | 自动修订 |
+| Dataset | Experiment Configuration | Samples | Duration | Avg Latency | Total Tokens | Hallucination Detection | Auto Revision |
 |:------:|:--------|:------:|:----:|:--------:|:--------:|:--------:|:--------:|
 | **ContractNLI** | Full Agentic RAG | 2091 | 15.2 h | 26.25 s | 10,085,165 | 314/2091 (15%) | 314/2091 (15%) |
 | ContractNLI | No Verification | 2091 | 3.9 h | 6.63 s | 9,238,915 | 0/2091 (0%) | 0/2091 (0%) |
@@ -378,55 +378,55 @@ Agent Components Ready for Integration!
 | CUAD | No Verification | 1020 | 2.9 h | 10.39 s | 3,186,582 | 0/1020 (0%) | 0/1020 (0%) |
 | CUAD | No Revision | 1020 | 5.6 h | 19.78 s | 3,221,613 | 102/1020 (10%) | 0/1020 (0%) |
 
-### 关键结论
+### Key Conclusions
 
-1. **验证+修订机制有效性** ✅
-   - ContractNLI: 检测并修订 314个幻觉（15%），100%修订成功率
-   - CUAD: 检测并修订 255个幻觉（25%），100%修订成功率
-   - 大规模验证：成功修订569个幻觉，证明系统稳定性
+1. **Verification+Revision Mechanism Effectiveness** ✅
+   - ContractNLI: Detected and revised 314 hallucinations (15%), 100% revision success rate
+   - CUAD: Detected and revised 255 hallucinations (25%), 100% revision success rate
+   - Large-scale validation: Successfully revised 569 hallucinations, proving system stability
 
-2. **性能开销可接受** 📊
-   - 速度: Full系统比No-verification慢 2-4倍
-   - Token成本: 仅增加 9-16%
-   - 质量提升显著，开销合理
-   - 在3111个样本上验证了开销的一致性
+2. **Acceptable Performance Overhead** 📊
+   - Speed: Full system 2-4x slower than No-verification
+   - Token cost: Only 9-16% increase
+   - Significant quality improvement, reasonable overhead
+   - Verified overhead consistency across 3111 samples
 
-3. **跨数据集泛化性** 🎯
-   - 在不同任务类型（NLI vs QA）上都能工作
-   - 修订机制在两个数据集上都达到100%成功率
-   - 大规模测试证明了方法的稳定性和可靠性
+3. **Cross-Dataset Generalization** 🎯
+   - Works on different task types (NLI vs QA)
+   - Revision mechanism achieved 100% success rate on both datasets
+   - Large-scale testing proved method stability and reliability
 
-**详细分析**: 请参阅 `experiments/results/priority4/PRIORITY4_FINAL_REPORT.md`
+**Detailed Analysis**: Please refer to `experiments/results/priority4/PRIORITY4_FINAL_REPORT.md`
 
 ---
 
-## 总结
+## Summary
 
-| 优先级 | 任务内容 | 完成状态 |
+| Priority | Task Content | Completion Status |
 |:------:|:--------|:--------:|
-| 1 | Query Analyzer测试 | ✅ 完成 |
-| 2 | Generator/Verifier/Reviser测试 | ✅ 完成 |
-| 3 | Agentic RAG集成 + 小规模测试 | ✅ 完成 |
-| 4 | 双数据集实验 + 消融研究 | ✅ 完成 |
+| 1 | Query Analyzer Testing | ✅ Complete |
+| 2 | Generator/Verifier/Reviser Testing | ✅ Complete |
+| 3 | Agentic RAG Integration + Small-scale Testing | ✅ Complete |
+| 4 | Dual-Dataset Experiments + Ablation Study | ✅ Complete |
 
-**总计完成**:
-- ✅ 4个核心组件开发与单元测试
-- ✅ 完整Agentic RAG系统集成
-- ✅ 2个数据集 × 3种配置 = 6个实验
-- ✅ 3111个样本的大规模实验验证（ContractNLI 2091 + CUAD 1020）
-- ✅ 569个幻觉成功检测并修订
-- ✅ 完整的实验报告和分析
+**Total Completion**:
+- ✅ 4 core components development and unit testing
+- ✅ Complete Agentic RAG system integration
+- ✅ 2 datasets × 3 configurations = 6 experiments
+- ✅ Large-scale experiment validation of 3111 samples (ContractNLI 2091 + CUAD 1020)
+- ✅ 569 hallucinations successfully detected and revised
+- ✅ Complete experiment report and analysis
 
-**实验规模**:
-- **总样本数**: 9,333个推理（3,111样本 × 3种配置）
-- **总耗时**: 约45小时
-- **总Token消耗**: 约3863万tokens
-- **幻觉修订**: 569/569 (100%成功率)
+**Experiment Scale**:
+- **Total Samples**: 9,333 inferences (3,111 samples × 3 configurations)
+- **Total Duration**: Approximately 45 hours
+- **Total Token Consumption**: Approximately 38.63 million tokens
+- **Hallucination Revision**: 569/569 (100% success rate)
 
-**文件位置**:
-- 代码: `agent/` 目录
-- 测试脚本: `test_*.py`
-- 实验结果: `experiments/results/`
-- 最终报告: `experiments/results/priority4/PRIORITY4_FINAL_REPORT.md`
+**File Locations**:
+- Code: `agent/` directory
+- Test scripts: `test_*.py`
+- Experiment results: `experiments/results/`
+- Final report: `experiments/results/priority4/PRIORITY4_FINAL_REPORT.md`
 
 ---

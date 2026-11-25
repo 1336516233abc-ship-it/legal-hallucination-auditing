@@ -1,17 +1,17 @@
-# Part 4 实验结果汇总
+# Part 4 Experiment Results Summary
 
-本页为实验交付清单与数值表，未撰写课程报告。
+This page is experiment delivery checklist and numerical tables, course report not yet written.
 
-- 新跑：36 组完整测试集检索评测；两个原版模型各 30 条 Agent 消融输出，共 60 条。
-- 归档复核：两模型 × 两数据集 × 三方法的 18,666 条全量结果；核对了数据哈希和汇总混淆矩阵，未取回服务器逐条轨迹。
-- Agent 消融使用既有的固定 10 例（ContractNLI 6、CUAD 4），每个变体使用同样的样本。小样本结果只支持流程检查，不能外推为全测试集性能。
-- 独立幻觉率、答案完整性和拒答精确率仍未评估，不将缺失值写成 0。
+- New runs: 36 groups complete test set retrieval evaluation; each of two original models 30 Agent ablation outputs, total 60.
+- Archived review: Two models × two datasets × three methods, 18,666 full results; verified data hashes and summary confusion matrices, server item-by-item traces not yet retrieved.
+- Agent ablation uses existing fixed 10 cases (ContractNLI 6, CUAD 4); each variant uses same samples. Small-sample results only support process checking, cannot extrapolate to full test set performance.
+- Independent hallucination rate, answer completeness, and abstention precision not yet assessed; missing values not written as 0.
 
-## 新跑 Agent 组件消融
+## New Agent Component Ablation
 
-两个模型均为固定 revision、未量化的原版权重，MLX 本机推理，温度 0、seed 42、输入 4,096、单次输出 512 token。Full 开启验证和修订；No verification 同时关闭验证与依赖验证的修订；No revision 保留验证。
+Both models are fixed revision, unquantized original weights, MLX local inference, temperature 0, seed 42, input 4,096, single output 512 tokens. Full enables verification and revision; No verification simultaneously disables verification and revision dependent on verification; No revision retains verification.
 
-|模型|数据集|变体|标签正确|格式通过|Macro-F1|平均秒/条|生成 token 总数|修订次数|
+|Model|Dataset|Variant|Label Correct|Format Pass|Macro-F1|Avg sec/item|Total Gen Tokens|Revision Count|
 |---|---|---|---:|---:|---:|---:|---:|---:|
 |mistral|contractnli|full|3/6|5/6|0.4444|61.60|2127|4|
 |mistral|contractnli|no_verification|3/6|5/6|0.4444|22.24|751|0|
@@ -26,13 +26,13 @@
 |llama3|cuad|no_verification|1/4|4/4|0.2000|25.84|490|0|
 |llama3|cuad|no_revision|1/4|4/4|0.2000|33.83|615|0|
 
-格式失败保留在分母。token 数合计所有模型调用；修订次数只说明修订发生，不代表修订成功。首次组的耗时可能包含权重首次加载，不能用于严谨的跨变体速度结论，也不能与服务器 vLLM 耗时直接比较。
+Format failures retained in denominator. Token count totals all model calls; revision count only indicates revision occurred, does not represent revision success. First group timing may include initial weight loading; cannot be used for rigorous cross-variant speed conclusions, nor directly compared with server vLLM timing.
 
-## 新跑检索评测
+## New Retrieval Evaluation
 
-36 组与归档指标的最大绝对差异：`5.55e-16`。运行 JSON 没有固定编码器 revision；离线运行所用的唯一缓存版本已另行核对并记录在 `retrieval_environment.json`，依赖版本在运行 JSON 中。
+Maximum absolute difference from archived metrics across 36 groups: `5.55e-16`. Run JSON does not have fixed encoder revision; unique cached version used in offline runs separately verified and recorded in `retrieval_environment.json`; dependency versions in run JSON.
 
-|数据集|检索器|分块|k|证据召回率|有效样本|
+|Dataset|Retriever|Chunking|k|Evidence Recall|Valid Samples|
 |---|---|---|---:|---:|---:|
 |contractnli|bm25|clause_level|3|93.76%|1188|
 |contractnli|bm25|clause_level|5|98.62%|1188|
@@ -71,16 +71,16 @@
 |cuad|hybrid|fixed_length|5|60.47%|599|
 |cuad|hybrid|fixed_length|10|81.12%|599|
 
-召回率要求完整金标区间被检索块并集覆盖；无金标证据的 903 条 ContractNLI、421 条 CUAD 不进入该指标分母。召回率不等于答案支持率。
+Recall requires complete gold interval covered by union of retrieved chunks; 903 ContractNLI and 421 CUAD without gold evidence do not enter this metric denominator. Recall does not equal answer support rate.
 
-## 归档主实验
+## Archived Main Experiments
 
-详见 [12 组主实验与旧消融审计表](archived_result_audit/results_tables.md)。原服务器已完成全量生成，本次没有重新运行这 18,666 条预测。旧 `priority4` 消融有样本数据集错配与 CUAD 标签协议不符，不能用于受控对照；本次新跑记录单独保存。
+See [12-Group Main Experiments and Old Ablation Audit Table](archived_result_audit/results_tables.md) for details. Original server completed full generation; this iteration did not re-run these 18,666 predictions. Old `priority4` ablation has sample dataset mismatches and CUAD label protocol inconsistencies, cannot be used for controlled comparison; this new run records saved separately.
 
-## 可回查文件
+## Traceable Files
 
-- `summary.json`：机器可读的汇总、配对正确性变化及输入文件 SHA256。
-- `agent_ablation/<model>/manifest.json`：权重哈希、代码哈希、环境、样本 ID。
-- `agent_ablation/<model>/<dataset>/<variant>/predictions.jsonl`：逐条预测、评估和完整模型调用轨迹。
-- `bm25_full_rerun.json`、`dense_hybrid_full_rerun.json`：36 组全量检索结果和失败样例。
-- `tests.xml`：自动化测试记录，与真实模型输出分开。
+- `summary.json`: Machine-readable summary, paired correctness changes, and input file SHA256.
+- `agent_ablation/<model>/manifest.json`: Weight hash, code hash, environment, sample IDs.
+- `agent_ablation/<model>/<dataset>/<variant>/predictions.jsonl`: Item-by-item predictions, evaluation, and complete model call traces.
+- `bm25_full_rerun.json`, `dense_hybrid_full_rerun.json`: 36 groups full retrieval results and failure examples.
+- `tests.xml`: Automated test records, separate from real model outputs.
